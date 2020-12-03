@@ -1,6 +1,39 @@
+import 'package:artemis/artemis.dart';
 import 'package:flutter/material.dart';
+import 'graphql/graphql_api.dart';
+import 'package:http/http.dart' as http;
+
+class AuthorizedClient extends http.BaseClient{
+  http.Client _httpClient = new http.Client();
+
+  var token;
+
+  AuthorizedClient(this.token);
+
+  @override
+  Future<http.StreamedResponse> send(http.BaseRequest request) {
+    request.headers.addAll({'Authorization': 'Bearer ${token}'});
+    return _httpClient.send(request);
+  }
+}
+
+Future<void> runGraphQL() async {
+  final graphqlEndpoint = "https://1ylvczhwa9.execute-api.us-east-1.amazonaws.com/dev/graphql";
+
+  final blaClient = AuthorizedClient("eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ZDZhOGIwMC0yZTg5LTQ1MjItOGIyMi05ZDYyZTc1NmZmNDMiLCJpc3MiOiI2YjhiNGE4Zi0zNDIxLTQyMDEtYTZjMi0yZjY3OWI3NGMxODgiLCJpYXQiOjE2MDcwMzExMTMsImV4cCI6MTYwNzExNzUxM30.vhLipgiiLEhysSuk0v-7S_7Cgm19saUGRMMemJVklZdDlf5N4XTAQB3d87ir2YT_qmoLag27daypWM5aj88rtZheXtHYfOKYN78aDoD2gdx60qrfl4a4427gJ4-EJNprgz637HrUjOPBtJMpRVwH7GrvqK4mF3DrLRPkmnmeUKGlMC8yMdYCALOVyYAw8Zhtw_eoBs0HvybFkkd4hqiIy7yAIvrJwVrp3wA4vNVVeLAM5STF9V65ILFXHcjEJwi6nPTiBKd3bu1v16qdHTDRkbMJs99Nz_Dy7OtiGC1jMvguxo5mCXf8xOIVTLjWctKk64VnwUPvKu7nZVpuwsX5cw");
+  final client = ArtemisClient(graphqlEndpoint, httpClient: blaClient);
+  
+  final basicInfoQuery = BasicInfoQuery();
+
+  final basicInfoQueryResponse = await client.execute(basicInfoQuery);
+  client.dispose();
+
+  print("Basic Query response: me.id: ${basicInfoQueryResponse.data.me.id}");
+}
 
 void main() {
+  runGraphQL();
+
   runApp(MyApp());
 }
 
