@@ -1,3 +1,5 @@
+[![CircleCI][circle-shield]][circle-pipeline]
+
 # yonomi_flutter_demo
 
  Demo Application built in flutter leveraging the Yonomi Platform
