@@ -1,39 +1,10 @@
-import 'package:artemis/artemis.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'graphql/graphql_api.dart';
-import 'package:http/http.dart' as http;
-
-class AuthorizedClient extends http.BaseClient{
-  http.Client _httpClient = new http.Client();
-
-  var token;
-
-  AuthorizedClient(this.token);
-
-  @override
-  Future<http.StreamedResponse> send(http.BaseRequest request) {
-    request.headers.addAll({'Authorization': 'Bearer ${token}'});
-    return _httpClient.send(request);
-  }
-}
-
-Future<void> runGraphQL() async {
-  final graphqlEndpoint = "https://1ylvczhwa9.execute-api.us-east-1.amazonaws.com/dev/graphql";
-
-  final blaClient = AuthorizedClient("eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ZDZhOGIwMC0yZTg5LTQ1MjItOGIyMi05ZDYyZTc1NmZmNDMiLCJpc3MiOiI2YjhiNGE4Zi0zNDIxLTQyMDEtYTZjMi0yZjY3OWI3NGMxODgiLCJpYXQiOjE2MDcwMzExMTMsImV4cCI6MTYwNzExNzUxM30.vhLipgiiLEhysSuk0v-7S_7Cgm19saUGRMMemJVklZdDlf5N4XTAQB3d87ir2YT_qmoLag27daypWM5aj88rtZheXtHYfOKYN78aDoD2gdx60qrfl4a4427gJ4-EJNprgz637HrUjOPBtJMpRVwH7GrvqK4mF3DrLRPkmnmeUKGlMC8yMdYCALOVyYAw8Zhtw_eoBs0HvybFkkd4hqiIy7yAIvrJwVrp3wA4vNVVeLAM5STF9V65ILFXHcjEJwi6nPTiBKd3bu1v16qdHTDRkbMJs99Nz_Dy7OtiGC1jMvguxo5mCXf8xOIVTLjWctKk64VnwUPvKu7nZVpuwsX5cw");
-  final client = ArtemisClient(graphqlEndpoint, httpClient: blaClient);
-  
-  final basicInfoQuery = BasicInfoQuery();
-
-  final basicInfoQueryResponse = await client.execute(basicInfoQuery);
-  client.dispose();
-
-  print("Basic Query response: me.id: ${basicInfoQueryResponse.data.me.id}");
-}
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:yonomi_flutter_demo/graphql/basic_info.dart';
 
 void main() {
-  runGraphQL();
-
   runApp(MyApp());
 }
 
@@ -41,7 +12,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final HttpLink httpLink = HttpLink(
+      uri: 'https://1ylvczhwa9.execute-api.us-east-1.amazonaws.com/dev/graphql',
+    );
+
+    final String token =
+        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ZDZhOGIwMC0yZTg5LTQ1MjItOGIyMi05ZDYyZTc1NmZmNDMiLCJpc3MiOiI2YjhiNGE4Zi0zNDIxLTQyMDEtYTZjMi0yZjY3OWI3NGMxODgiLCJpYXQiOjE2MDcwMzExMTMsImV4cCI6MTYwNzExNzUxM30.vhLipgiiLEhysSuk0v-7S_7Cgm19saUGRMMemJVklZdDlf5N4XTAQB3d87ir2YT_qmoLag27daypWM5aj88rtZheXtHYfOKYN78aDoD2gdx60qrfl4a4427gJ4-EJNprgz637HrUjOPBtJMpRVwH7GrvqK4mF3DrLRPkmnmeUKGlMC8yMdYCALOVyYAw8Zhtw_eoBs0HvybFkkd4hqiIy7yAIvrJwVrp3wA4vNVVeLAM5STF9V65ILFXHcjEJwi6nPTiBKd3bu1v16qdHTDRkbMJs99Nz_Dy7OtiGC1jMvguxo5mCXf8xOIVTLjWctKk64VnwUPvKu7nZVpuwsX5cw';
+    final AuthLink authLink = AuthLink(
+      getToken: () async => 'Bearer ' + token,
+      // OR
+      // getToken: () => 'Bearer <YOUR_PERSONAL_ACCESS_TOKEN>',
+    );
+
+    final Link link = authLink.concat(httpLink);
+    final GraphQLClient gqlClient = GraphQLClient(
+      cache: InMemoryCache(),
+      link: link,
+    );
+
+    ValueNotifier<GraphQLClient> client = ValueNotifier(gqlClient);
+
+    final MaterialApp app = MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -60,6 +51,11 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
+    );
+
+    return GraphQLProvider(
+      client: client,
+      child: app
     );
   }
 }
@@ -137,6 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
+            GraphCall()
           ],
         ),
       ),
@@ -146,5 +143,36 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+}
+
+class GraphCall extends StatelessWidget {
+  Widget build(BuildContext context) {
+    final QueryOptions qo = QueryOptions(
+        documentNode: BasicInfoQuery().document);
+    final Query query = Query(
+        options: qo,
+        builder: (
+            QueryResult result, {
+              Future<QueryResult> Function() refetch,
+              FetchMore fetchMore,
+            }) {
+          if (result.hasException) {
+            return Text(result.exception.toString());
+          }
+
+          if (result.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          return Column(
+            children: <Widget>[
+              Text(JsonEncoder.withIndent('  ').convert(result.data)),
+            ],
+          );
+        });
+    return query;
   }
 }
