@@ -9,5 +9,5 @@ targets:
         options:
           schema_mapping:
             - schema: schema.graphql
-              queries_glob: graphql/*.graphql
-              output: lib/graphql/graphql_api.dart
+              queries_glob: graphql/basic_info.graphql
+              output: lib/graphql/basic_info.dart
