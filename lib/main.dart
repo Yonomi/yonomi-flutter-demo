@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:yonomi_flutter_demo/graphql/basic_info.dart';
 
 void main() {
   runApp(MyApp());
@@ -8,7 +12,27 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    final HttpLink httpLink = HttpLink(
+      uri: 'https://x9pob7epve.execute-api.us-east-1.amazonaws.com/dev/graphql',
+    );
+
+    final String token =
+        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYjUxZWNjNC01OWEzLTRiOWQtYmQ0Yy04YzUxYTczZGEwYTYiLCJpc3MiOiJkNmFjYzA1Yi1jNzk5LTQ5OGMtYWJhZS00ZTU5OWJjMzQyNDkiLCJpYXQiOjE2MDczNjIxNzksImV4cCI6MTYwNzQ0ODU3OX0.wbCVUEP4gQwFQXP-a9_VRFH1JWEjZd_L-tSEUhAabt7_p8u0CTTGgDLJtU7QifCfwvxOtdEx8CpLgyhJaqg6XaeiTAOyVFwXHuHSGGLCeTE3KulfZU1zSLkohhVBXMtkrf-4h6bSqZK76n5qYYcyQ91WXQZj9augq-6RueGRQEHWne_6-tXA5f9zji-ZEdRIQhO2Mr9A5CAiMjPpa5wLgDG77WlYzN_zYG6-LWDtGmL_4_sx8Pks1rBL6qtk-ARG4Txr6E9hsW31qWU2K9JxB_F1h897hci4PPaKbRGguxscYpBrK130w646R7UkzUht2qjEhTFPQQMcAiE6Lsn9Nw';
+    final AuthLink authLink = AuthLink(
+      getToken: () async => 'Bearer ' + token,
+      // OR
+      // getToken: () => 'Bearer <YOUR_PERSONAL_ACCESS_TOKEN>',
+    );
+
+    final Link link = authLink.concat(httpLink);
+    final GraphQLClient gqlClient = GraphQLClient(
+      cache: InMemoryCache(),
+      link: link,
+    );
+
+    ValueNotifier<GraphQLClient> client = ValueNotifier(gqlClient);
+
+    final MaterialApp app = MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -28,6 +52,8 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
+
+    return GraphQLProvider(client: client, child: app);
   }
 }
 
@@ -50,18 +76,27 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _selectedIndex = 0;
 
-  void _incrementCounter() {
+  void _navigateTo(int index) {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _selectedIndex = index;
     });
   }
+
+  final Center userWidget = Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[GraphCall()],
+    ),
+  );
+
+  final Center devicesWidget = Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[GraphCallDevices()],
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -71,47 +106,152 @@ class _MyHomePageState extends State<MyHomePage> {
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+    const BottomNavigationBarItem user = BottomNavigationBarItem(
+      icon: Icon(Icons.person),
+      label: 'User',
     );
+    const BottomNavigationBarItem devices = BottomNavigationBarItem(
+      icon: Icon(Icons.handyman),
+      label: 'Devices',
+    );
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: [userWidget, devicesWidget][_selectedIndex],
+        bottomNavigationBar: BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[user, devices],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Colors.amber[800],
+            onTap: _navigateTo)
+        // This trailing comma makes auto-formatting nicer for build methods.
+        );
+  }
+}
+
+class GraphCall extends StatelessWidget {
+  Widget build(BuildContext context) {
+    final QueryOptions qo =
+        QueryOptions(documentNode: BasicInfoQuery().document);
+    final Query query = Query(
+        options: qo,
+        builder: (
+          QueryResult result, {
+          Future<QueryResult> Function() refetch,
+          FetchMore fetchMore,
+        }) {
+          if (result.hasException) {
+            return Text(result.exception.toString());
+          }
+
+          if (result.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          print(result.data);
+          return Column(
+            children: <Widget>[
+              Text(JsonEncoder.withIndent('  ').convert(result.data)),
+            ],
+          );
+        });
+    return query;
+  }
+}
+
+class GraphCallDevices extends StatelessWidget {
+  Widget build(BuildContext context) {
+    final QueryOptions qo = QueryOptions(documentNode: gql(r'''
+      query myDevices {
+      me {
+        devices {
+          pageInfo { hasNextPage }
+          edges {
+            node {
+              ... DeviceDetails
+            }
+          }
+        }
+      }
+    }
+
+    # you can use the "filter" parameter to only find devices that have at least
+    # one matching trait in the filter
+
+    query allDevicesWithPower {
+      me {
+        devices (filter: { traits: [POWER] }) {
+          pageInfo { hasNextPage }
+          edges {
+            node {
+              ... DeviceDetails
+            }
+          }
+        }
+      }
+    }
+
+
+    # fragments can be used to re-use parts of a query
+    fragment DeviceDetails on Device {
+      id
+      createdAt
+      traits {
+        name instance
+        ... on LockUnlockDeviceTrait {
+          properties { supportsIsJammed }
+          state {
+            isLocked {
+              reported { value sampledAt createdAt }
+              desired { value delta updatedAt }
+            }
+          }
+        }
+        ... on PowerDeviceTrait {
+          properties { supportsToggle supportsDiscreteOnOff }
+          state {
+            power {
+              reported { value sampledAt createdAt }
+              desired { value delta updatedAt }
+            }
+          }
+        }
+        ... on BrightnessDeviceTrait {
+          properties { supportsRelativeBrightness }
+          state {
+            brightness {
+              reported { value sampledAt createdAt }
+              desired { value delta updatedAt }
+            }
+          }
+        }
+      }
+    }
+      '''));
+    final Query query = Query(
+        options: qo,
+        builder: (
+          QueryResult result, {
+          Future<QueryResult> Function() refetch,
+          FetchMore fetchMore,
+        }) {
+          if (result.hasException) {
+            return Text(result.exception.toString());
+          }
+
+          if (result.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          print(result.data);
+          return Column(
+            children: <Widget>[
+              Text(JsonEncoder.withIndent('  ').convert(result.data)),
+            ],
+          );
+        });
+    return query;
   }
 }

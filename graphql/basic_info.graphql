@@ -1,0 +1,12 @@
+query basicInfo {
+  # "me" is the entry point to any data specific to the current user
+  me {
+    id
+  }
+
+  # basic information about the tenant
+  tenant {
+    id
+    displayName
+  }
+}
