@@ -7,13 +7,22 @@ part of 'basic_info.graphql.dart';
 // **************************************************************************
 
 BasicInfo$Query$User _$BasicInfo$Query$UserFromJson(Map<String, dynamic> json) {
-  return BasicInfo$Query$User()..id = json['id'] as String;
+  return BasicInfo$Query$User()
+    ..id = json['id'] as String
+    ..firstActivityAt = json['firstActivityAt'] == null
+        ? null
+        : DateTime.parse(json['firstActivityAt'] as String)
+    ..lastActivityAt = json['lastActivityAt'] == null
+        ? null
+        : DateTime.parse(json['lastActivityAt'] as String);
 }
 
 Map<String, dynamic> _$BasicInfo$Query$UserToJson(
         BasicInfo$Query$User instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'firstActivityAt': instance.firstActivityAt?.toIso8601String(),
+      'lastActivityAt': instance.lastActivityAt?.toIso8601String(),
     };
 
 BasicInfo$Query$Tenant _$BasicInfo$Query$TenantFromJson(

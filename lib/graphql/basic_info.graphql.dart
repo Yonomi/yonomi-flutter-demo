@@ -15,8 +15,12 @@ class BasicInfo$Query$User with EquatableMixin {
 
   String id;
 
+  DateTime firstActivityAt;
+
+  DateTime lastActivityAt;
+
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [id, firstActivityAt, lastActivityAt];
   Map<String, dynamic> toJson() => _$BasicInfo$Query$UserToJson(this);
 }
 
@@ -71,6 +75,18 @@ class BasicInfoQuery extends GraphQLQuery<BasicInfo$Query, JsonSerializable> {
               selectionSet: SelectionSetNode(selections: [
                 FieldNode(
                     name: NameNode(value: 'id'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null),
+                FieldNode(
+                    name: NameNode(value: 'firstActivityAt'),
+                    alias: null,
+                    arguments: [],
+                    directives: [],
+                    selectionSet: null),
+                FieldNode(
+                    name: NameNode(value: 'lastActivityAt'),
                     alias: null,
                     arguments: [],
                     directives: [],
