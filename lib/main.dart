@@ -1,23 +1,36 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:yonomi_flutter_demo/graphql/basic_info.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 void main() {
   runApp(MyApp());
 }
+
+const String successPageMessage = '''
+<!DOCTYPE html><html>
+<head><title>Navigation Delegate Example</title></head>
+<body>
+<p>
+Account link succeeded
+</p>
+</body>
+</html>
+''';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final HttpLink httpLink = HttpLink(
-      uri: 'https://x9pob7epve.execute-api.us-east-1.amazonaws.com/dev/graphql',
+      uri: 'https://x00m1goyc1.execute-api.us-east-1.amazonaws.com/dev/graphql',
     );
 
     final String token =
-        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYjUxZWNjNC01OWEzLTRiOWQtYmQ0Yy04YzUxYTczZGEwYTYiLCJpc3MiOiJkNmFjYzA1Yi1jNzk5LTQ5OGMtYWJhZS00ZTU5OWJjMzQyNDkiLCJpYXQiOjE2MDczNjIxNzksImV4cCI6MTYwNzQ0ODU3OX0.wbCVUEP4gQwFQXP-a9_VRFH1JWEjZd_L-tSEUhAabt7_p8u0CTTGgDLJtU7QifCfwvxOtdEx8CpLgyhJaqg6XaeiTAOyVFwXHuHSGGLCeTE3KulfZU1zSLkohhVBXMtkrf-4h6bSqZK76n5qYYcyQ91WXQZj9augq-6RueGRQEHWne_6-tXA5f9zji-ZEdRIQhO2Mr9A5CAiMjPpa5wLgDG77WlYzN_zYG6-LWDtGmL_4_sx8Pks1rBL6qtk-ARG4Txr6E9hsW31qWU2K9JxB_F1h897hci4PPaKbRGguxscYpBrK130w646R7UkzUht2qjEhTFPQQMcAiE6Lsn9Nw';
+        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1MTAzZmZkYi1mZjVmLTRhNjktODQyMi0yNTllYTVhMTQzZTUiLCJpc3MiOiJkYTQ0MWNiOC1kNzA4LTRkM2ItYjIyMS1mMGNlZjQyN2UzZWMiLCJpYXQiOjE2MDc0NjM1NzcsImV4cCI6MTYwNzU0OTk3N30.WgBfMcu_U93SFYz1fmgYIYY4x60GSiPDFygsUbPGniIzxSENsQSv4TcCptH-OLgzqvwByhHU_TUotV2ruCMqoFeZ41amlvxKyGQD-prnta2pChRBPrkZZsRVKZNIfOTpnm7C4DYW9_sA_o7EIJibCBBq4LEJO43lC12KjBndDtB6OUmsj3vusuBzLPhgCWPV8ZtiWyFW2jAcAuELZo9noTyY4OwWjf-LrOdtC9rFOXks6UgpgNJNMFvOmlQQjZzy_TgglqlNwwFBUtQc2QBM_6yyg9GVEGxt0XzywgJCVrIlBywWIEnESUInLbuIRC3kJUamIYhc8cktpiKf46nXuA';
     final AuthLink authLink = AuthLink(
       getToken: () async => 'Bearer ' + token,
       // OR
@@ -98,6 +111,13 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   );
 
+  final Center integrationWidget = Center(
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[GraphCallIntegrations()],
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -114,13 +134,17 @@ class _MyHomePageState extends State<MyHomePage> {
       icon: Icon(Icons.handyman),
       label: 'Devices',
     );
+    const BottomNavigationBarItem integrations = BottomNavigationBarItem(
+      icon: Icon(Icons.power),
+      label: 'Integrations',
+    );
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: [userWidget, devicesWidget][_selectedIndex],
+        body: [userWidget, devicesWidget, integrationWidget][_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[user, devices],
+            items: const <BottomNavigationBarItem>[user, devices, integrations],
             currentIndex: _selectedIndex,
             selectedItemColor: Colors.amber[800],
             onTap: _navigateTo)
@@ -149,7 +173,6 @@ class GraphCall extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          print(result.data);
           return Column(
             children: <Widget>[
               Text(JsonEncoder.withIndent('  ').convert(result.data)),
@@ -253,5 +276,215 @@ class GraphCallDevices extends StatelessWidget {
           );
         });
     return query;
+  }
+}
+
+class GraphCallIntegrations extends StatelessWidget {
+  Widget build(BuildContext context) {
+    final QueryOptions qo = QueryOptions(documentNode: gql(r'''
+    query getAllIntegrations {
+      integrations {
+        edges {
+          node {
+            id
+            displayName
+          }
+        }
+      }
+    }
+    '''));
+    final Query query = Query(
+        options: qo,
+        builder: (
+          QueryResult result, {
+          Future<QueryResult> Function() refetch,
+          FetchMore fetchMore,
+        }) {
+          if (result.hasException) {
+            return Text(result.exception.toString());
+          }
+
+          if (result.loading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          print(result.data);
+          final GetIntegrationResponse response =
+              GetIntegrationResponse.fromJson(result.data);
+          return Column(
+            children: <Widget>[
+              GraphCallLoginButton(response.integrations.edges[0].node.id,
+                  response.integrations.edges[0].node.displayName),
+            ],
+          );
+        });
+    return query;
+  }
+}
+
+// ignore: must_be_immutable
+class GraphCallLoginButton extends StatelessWidget {
+  String id;
+  String name;
+
+  GraphCallLoginButton(String id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
+  Widget build(BuildContext context) {
+    final MutationOptions mop = MutationOptions(
+        documentNode: gql(r'''
+        mutation generateAccountLinkingUrl ($integrationId: ID!) {
+          generateAccountLinkingUrl(integrationId: $integrationId) {
+            url
+            integration {
+              id
+              displayName
+            }
+          }
+        }
+        '''),
+        onCompleted: (dynamic resultData) {
+          String url = resultData['generateAccountLinkingUrl']['url'];
+          print(url);
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Scaffold(
+                      appBar: AppBar(),
+                      body: Column(
+                        children: [
+                          Expanded(
+                              child: WebView(
+                                  javascriptMode: JavascriptMode.unrestricted,
+                                  initialUrl: url,
+                                  gestureNavigationEnabled: true))
+                        ],
+                      ))));
+        });
+    final Mutation mutation = Mutation(
+      options: mop,
+      builder: (
+        RunMutation runMutation,
+        QueryResult result,
+      ) {
+        return FlatButton(
+          color: Colors.blue,
+          textColor: Colors.white,
+          disabledColor: Colors.grey,
+          disabledTextColor: Colors.black,
+          padding: EdgeInsets.all(8.0),
+          splashColor: Colors.blueAccent,
+          onPressed: () => runMutation({
+            'integrationId': this.id,
+          }),
+          child: Text(this.name),
+        );
+      },
+    );
+    return mutation;
+  }
+}
+
+class GetIntegrationResponse {
+  Integrations integrations;
+
+  GetIntegrationResponse({this.integrations});
+
+  GetIntegrationResponse.fromJson(Map<String, dynamic> json) {
+    integrations = json['integrations'] != null
+        ? new Integrations.fromJson(json['integrations'])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.integrations != null) {
+      data['integrations'] = this.integrations.toJson();
+    }
+    return data;
+  }
+}
+
+class Integrations {
+  List<Edges> edges;
+
+  Integrations({this.edges});
+
+  Integrations.fromJson(Map<String, dynamic> json) {
+    if (json['edges'] != null) {
+      edges = new List<Edges>();
+      json['edges'].forEach((v) {
+        edges.add(new Edges.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.edges != null) {
+      data['edges'] = this.edges.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Edges {
+  Node node;
+
+  Edges({this.node});
+
+  Edges.fromJson(Map<String, dynamic> json) {
+    node = json['node'] != null ? new Node.fromJson(json['node']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.node != null) {
+      data['node'] = this.node.toJson();
+    }
+    return data;
+  }
+}
+
+class Node {
+  String id;
+  String displayName;
+
+  Node({this.id, this.displayName});
+
+  Node.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    displayName = json['displayName'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['displayName'] = this.displayName;
+    return data;
+  }
+}
+
+class LoginWebView extends StatefulWidget {
+  @override
+  LoginWebViewState createState() => LoginWebViewState();
+}
+
+class LoginWebViewState extends State<LoginWebView> {
+  @override
+  void initState() {
+    super.initState();
+    // Enable hybrid composition.
+    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WebView(
+      initialUrl: 'https://flutter.dev',
+    );
   }
 }
