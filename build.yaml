@@ -11,3 +11,6 @@ targets:
             - schema: schema.graphql
               queries_glob: graphql/basic_info.graphql
               output: lib/graphql/basic_info.dart
+          scalar_mapping:
+            - graphql_type: DateTime
+              dart_type: DateTime
