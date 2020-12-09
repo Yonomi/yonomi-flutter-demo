@@ -14,11 +14,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HttpLink httpLink = HttpLink(
-      uri: 'https://x9pob7epve.execute-api.us-east-1.amazonaws.com/dev/graphql',
+      uri: 'https://1ylvczhwa9.execute-api.us-east-1.amazonaws.com/dev/graphql',
     );
 
     final String token =
-        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYjUxZWNjNC01OWEzLTRiOWQtYmQ0Yy04YzUxYTczZGEwYTYiLCJpc3MiOiJkNmFjYzA1Yi1jNzk5LTQ5OGMtYWJhZS00ZTU5OWJjMzQyNDkiLCJpYXQiOjE2MDczNjIxNzksImV4cCI6MTYwNzQ0ODU3OX0.wbCVUEP4gQwFQXP-a9_VRFH1JWEjZd_L-tSEUhAabt7_p8u0CTTGgDLJtU7QifCfwvxOtdEx8CpLgyhJaqg6XaeiTAOyVFwXHuHSGGLCeTE3KulfZU1zSLkohhVBXMtkrf-4h6bSqZK76n5qYYcyQ91WXQZj9augq-6RueGRQEHWne_6-tXA5f9zji-ZEdRIQhO2Mr9A5CAiMjPpa5wLgDG77WlYzN_zYG6-LWDtGmL_4_sx8Pks1rBL6qtk-ARG4Txr6E9hsW31qWU2K9JxB_F1h897hci4PPaKbRGguxscYpBrK130w646R7UkzUht2qjEhTFPQQMcAiE6Lsn9Nw';
+        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4NTVlZDUyOS04ZjIyLTQ1Y2MtOWRiYi1iZWU0NThkMTA3MzkiLCJpc3MiOiIyYTFjOWFkNy02MTFhLTQ3NDQtYjQzOS00NzliM2ZkYTU1ZGYiLCJpYXQiOjE2MDc1MzQxNTksImV4cCI6MTYwNzYyMDU1OX0.UMf7NQJgXscEXT5JOJTqwiHAIdMjT4YbQBtv8TQmy4LMvnQ1gsHGByo-3FG_Dkt1Wa5rPZrYuyCQyA1BCyhWSo6P1fHlfwrdjqO8QXeo6_pLyvOo62IdKnk_zJZA_ErNk9BzLJ0SZeaNcnEz2dYIkTniPftwoRxcpR4qpqSmUkrxfweIIswRRWdQiJqJhh-gPtP6xva5j2tfKFAp_0zMcUKQbmqHEqDC2H1nfR6US8M5_eS1_g57hhySQwX3NcDg3Nx3NE9bps3VSuP859cVaIqrcAHR9sLbwgZzVwdBlFsSn9SsPSQ_DimrHzxrCSB-NPIEDSn92yHB1C_4laGRiA';
     final AuthLink authLink = AuthLink(
       getToken: () async => 'Bearer ' + token,
       // OR
@@ -109,11 +109,14 @@ class _MyHomePageState extends State<MyHomePage> {
       icon: Icon(Icons.handyman),
       label: 'Devices',
     );
+
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: [userScreenWidget, devicesWidget][_selectedIndex],
+        body: [
+          StatefulUserScreenWidget(),
+          devicesWidget][_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[user, devices],
             currentIndex: _selectedIndex,

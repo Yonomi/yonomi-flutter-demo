@@ -2,6 +2,8 @@ query basicInfo {
   # "me" is the entry point to any data specific to the current user
   me {
     id
+    firstActivityAt
+    lastActivityAt
   }
 
   # basic information about the tenant
