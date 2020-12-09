@@ -192,12 +192,13 @@ class _StatefulUserScreenWidgetState extends State<StatefulUserScreenWidget> {
               );
             }
 
-            final tenantId = BasicInfo$Query.fromJson(result.data).tenant.id;
-            final tenantName = BasicInfo$Query.fromJson(result.data).tenant.displayName;
+            final basicInfo = BasicInfo$Query.fromJson(result.data);
+            final tenantId = basicInfo.tenant.id;
+            final tenantName = basicInfo.tenant.displayName;
 
-            final userId = BasicInfo$Query.fromJson(result.data).me.id;
-            final userFirst = BasicInfo$Query.fromJson(result.data).me.firstActivityAt;
-            final userLast = BasicInfo$Query.fromJson(result.data).me.lastActivityAt;
+            final userId = basicInfo.me.id;
+            final userFirst = basicInfo.me.firstActivityAt;
+            final userLast = basicInfo.me.lastActivityAt;
 
             return Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
