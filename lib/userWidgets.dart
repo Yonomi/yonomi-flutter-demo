@@ -109,13 +109,62 @@ class _idSectionWidgetState extends State<idSectionWidget> {
 
 }
 
-final Center activitySectionWidget = Center(
-    child: Column(children: [
-      Text("id"),
-      Text("lastActivityAt"),
-      Text("firstActivityAt"),
-    ],)
-);
+class ActivitySectionWidget extends StatefulWidget {
+  final String userId;
+  final DateTime userFirstActivity;
+  final DateTime userLastActivity;
+
+  const ActivitySectionWidget({this.userId, this.userFirstActivity, this.userLastActivity});
+
+  @override
+  _ActivitySectionWidget createState() => _ActivitySectionWidget();
+}
+
+class _ActivitySectionWidget extends State<ActivitySectionWidget> {
+
+  String userId = "";
+  DateTime userFirstActivity;
+  DateTime userLastActivity;
+
+  @override
+  void initState() {
+    userId = widget.userId;
+    userFirstActivity = widget.userFirstActivity;
+    userLastActivity = widget.userLastActivity;
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+        Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(child:
+          Text("User Id: ", style: TextStyle(fontSize: 20))),
+          Expanded(child:
+          Text(userId, style: TextStyle(fontSize: 16))),
+        ]),
+      Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(child:
+            Text("User First Activity: ", style: TextStyle(fontSize: 20))),
+            Expanded(child:
+            Text(userLastActivity.toString(), style: TextStyle(fontSize: 16))),
+          ]),
+      Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Flexible(child:
+            Text("User Last Activity: ", style: TextStyle(fontSize: 20))),
+            Expanded(child:
+            Text(userFirstActivity.toString(), style: TextStyle(fontSize: 16))),
+          ]),
+    ],);
+  }
+
+}
 
 class StatefulUserScreenWidget extends StatefulWidget {
   @override
@@ -155,7 +204,9 @@ class _StatefulUserScreenWidgetState extends State<StatefulUserScreenWidget> {
               children: <Widget>[
                 tenantSectionWidget(tenantId: tenantId, tenantName: tenantName),
                 idSectionWidget(userId: userId),
-                activitySectionWidget
+                ActivitySectionWidget(userId: userId,
+                  userFirstActivity: userFirst,
+                  userLastActivity: userLast,)
               ],
             );
       },
