@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:yonomi_flutter_demo/graphql/basic_info.dart';
+import 'package:yonomi_flutter_demo/userWidgets.dart';
 
 void main() {
   runApp(MyApp());
@@ -84,22 +85,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  final Center userWidget = Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[GraphCall()],
-    ),
-  );
-
-  final Center devicesWidget = Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[GraphCallDevices()],
-    ),
-  );
 
   @override
   Widget build(BuildContext context) {
+
+    final Center devicesWidget = Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[GraphCallDevices()],
+      ),
+    );
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -118,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        body: [userWidget, devicesWidget][_selectedIndex],
+        body: [userScreenWidget, devicesWidget][_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
             items: const <BottomNavigationBarItem>[user, devices],
             currentIndex: _selectedIndex,
