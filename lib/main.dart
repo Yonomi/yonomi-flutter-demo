@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:yonomi_flutter_demo/graphql/basic_info.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +15,7 @@ const String successPageMessage = '''
 <head><title>Navigation Delegate Example</title></head>
 <body>
 <p>
-Account link succeeded
+Account link succeeded. Go back to the main window
 </p>
 </body>
 </html>
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
     );
 
     final String token =
-        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI1MTAzZmZkYi1mZjVmLTRhNjktODQyMi0yNTllYTVhMTQzZTUiLCJpc3MiOiJkYTQ0MWNiOC1kNzA4LTRkM2ItYjIyMS1mMGNlZjQyN2UzZWMiLCJpYXQiOjE2MDc0NjM1NzcsImV4cCI6MTYwNzU0OTk3N30.WgBfMcu_U93SFYz1fmgYIYY4x60GSiPDFygsUbPGniIzxSENsQSv4TcCptH-OLgzqvwByhHU_TUotV2ruCMqoFeZ41amlvxKyGQD-prnta2pChRBPrkZZsRVKZNIfOTpnm7C4DYW9_sA_o7EIJibCBBq4LEJO43lC12KjBndDtB6OUmsj3vusuBzLPhgCWPV8ZtiWyFW2jAcAuELZo9noTyY4OwWjf-LrOdtC9rFOXks6UgpgNJNMFvOmlQQjZzy_TgglqlNwwFBUtQc2QBM_6yyg9GVEGxt0XzywgJCVrIlBywWIEnESUInLbuIRC3kJUamIYhc8cktpiKf46nXuA';
+        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDFkYjdlNy1mN2U1LTQ1OGMtYjZhOS0xMzUzNDA0MGZmOWIiLCJpc3MiOiIwMzQ0OGY0Ny1kZTBiLTQ3YzEtOTgyMC0yODc1ZjcxZmJlZTUiLCJpYXQiOjE2MDc1NTAzMjYsImV4cCI6MTYwNzYzNjcyNn0.KPL3HBeCgFCfwZhz9y39ifnTsflUIXQdkjbuj58tKOFb9Mu7kg4KMWMDOI8WoeaUXm7d01NIBuEsNFVwit6u9QNYkvBfq9aIwSqLlKZyE95fYf4hNpBpkSFqw8VcU9DEANMZUO6Wk7ReDXiTfhQymmFhgYgyS9-u7YgDEOgjf-B28pCslwd1ZNAl6ARn0GVTXK_QKpt3q8rW6rdQzuvkZhGwBulzcWeZsdj88TqFPb9H_ywFSeKSetu1d6i55IwWwmmVllC9181MYL5nUbnNLU-aPGcxGm-_9SnCyqc5NXBm2_nrmiiWkmecLutHLHSDnJdU7I3vlnHHvEpplUzpjA';
     final AuthLink authLink = AuthLink(
       getToken: () async => 'Bearer ' + token,
       // OR
@@ -346,23 +346,13 @@ class GraphCallLoginButton extends StatelessWidget {
           }
         }
         '''),
-        onCompleted: (dynamic resultData) {
+        onCompleted: (dynamic resultData) async {
           String url = resultData['generateAccountLinkingUrl']['url'];
-          print(url);
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Scaffold(
-                      appBar: AppBar(),
-                      body: Column(
-                        children: [
-                          Expanded(
-                              child: WebView(
-                                  javascriptMode: JavascriptMode.unrestricted,
-                                  initialUrl: url,
-                                  gestureNavigationEnabled: true))
-                        ],
-                      ))));
+          if (await canLaunch(url)) {
+            await launch(url);
+          } else {
+            throw 'Could not launch $url';
+          }
         });
     final Mutation mutation = Mutation(
       options: mop,
@@ -465,26 +455,5 @@ class Node {
     data['id'] = this.id;
     data['displayName'] = this.displayName;
     return data;
-  }
-}
-
-class LoginWebView extends StatefulWidget {
-  @override
-  LoginWebViewState createState() => LoginWebViewState();
-}
-
-class LoginWebViewState extends State<LoginWebView> {
-  @override
-  void initState() {
-    super.initState();
-    // Enable hybrid composition.
-    if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return WebView(
-      initialUrl: 'https://flutter.dev',
-    );
   }
 }
