@@ -84,16 +84,16 @@ class _StatefulTenantSectionWidgetState extends State<StatefulTenantSectionWidge
 }
 
 
-class idSectionWidget extends StatefulWidget {
+class UserIdSectionWidget extends StatefulWidget {
   final String userId;
 
-  idSectionWidget({this.userId});
+  UserIdSectionWidget({this.userId});
 
   @override
-  _idSectionWidgetState createState() => _idSectionWidgetState();
+  _UserIdSectionWidgetState createState() => _UserIdSectionWidgetState();
 }
 
-class _idSectionWidgetState extends State<idSectionWidget> {
+class _UserIdSectionWidgetState extends State<UserIdSectionWidget> {
   TextEditingController userIdController;
 
   String userId;
@@ -218,7 +218,7 @@ class _StatefulUserScreenWidgetState extends State<StatefulUserScreenWidget> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
                 TenantSectionWidget(tenantId: tenantId, tenantName: tenantName),
-                idSectionWidget(userId: userId),
+                UserIdSectionWidget(userId: userId),
                 ActivitySectionWidget(
                   userId: userId,
                   userFirstActivity: userFirst,
