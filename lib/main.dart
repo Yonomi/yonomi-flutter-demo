@@ -1,36 +1,26 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:yonomi_flutter_demo/graphql/basic_info.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'components/profile.dart';
+import 'components/devices.dart';
+import 'components/integrations.dart';
+import 'components/accounts.dart';
 
 void main() {
   runApp(MyApp());
 }
-
-const String successPageMessage = '''
-<!DOCTYPE html><html>
-<head><title>Navigation Delegate Example</title></head>
-<body>
-<p>
-Account link succeeded. Go back to the main window
-</p>
-</body>
-</html>
-''';
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final HttpLink httpLink = HttpLink(
-      uri: 'https://x00m1goyc1.execute-api.us-east-1.amazonaws.com/dev/graphql',
+      uri: 'https://lui95yypaj.execute-api.us-east-1.amazonaws.com/dev/graphql',
     );
 
     final String token =
-        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNDFkYjdlNy1mN2U1LTQ1OGMtYjZhOS0xMzUzNDA0MGZmOWIiLCJpc3MiOiIwMzQ0OGY0Ny1kZTBiLTQ3YzEtOTgyMC0yODc1ZjcxZmJlZTUiLCJpYXQiOjE2MDc1NTAzMjYsImV4cCI6MTYwNzYzNjcyNn0.KPL3HBeCgFCfwZhz9y39ifnTsflUIXQdkjbuj58tKOFb9Mu7kg4KMWMDOI8WoeaUXm7d01NIBuEsNFVwit6u9QNYkvBfq9aIwSqLlKZyE95fYf4hNpBpkSFqw8VcU9DEANMZUO6Wk7ReDXiTfhQymmFhgYgyS9-u7YgDEOgjf-B28pCslwd1ZNAl6ARn0GVTXK_QKpt3q8rW6rdQzuvkZhGwBulzcWeZsdj88TqFPb9H_ywFSeKSetu1d6i55IwWwmmVllC9181MYL5nUbnNLU-aPGcxGm-_9SnCyqc5NXBm2_nrmiiWkmecLutHLHSDnJdU7I3vlnHHvEpplUzpjA';
+        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTYzZDU0My03MzQ4LTRhNmYtOTM2OC1iODllZjdiZDU0YzIiLCJpc3MiOiIyMjdhZGZjMS03NzhjLTQyYzEtODYxZi00N2U3MmIyYTgzYjQiLCJpYXQiOjE2MDgyMzI4NTcsImV4cCI6MTYwODMxOTI1N30.LUmGyUeZ5JQ_vJVtV0nK521b9vEOnjbMH-kxpT7B-mIh6yZ7TfvEk7R3aIb3teugisEjxsZLIjulrQR8jnHxOtRT7ir0zYdPTESJflqK3Tr6GygMn6RRnUZbl9wxAtNiirOeGrY4R8klKCRNn705pEh8HOW4SsgNBsn5myqcB-n43Owo8lo_WrWeGFpMLT9Lt_7PRmp-bR-EYfBOjrfMEkWiZ0xrELtOcMX0-J_4ZBZe7R4SvQoLQJiYaCGonej3iWPxoPh4qXQwPI8bpbtvSylQMkbE8AEdgkju0ZX0lxsd43rf9PtilfpEmOZeJAZElSbcDDcUlhL19vbKTVHApQ';
     final AuthLink authLink = AuthLink(
       getToken: () async => 'Bearer ' + token,
       // OR
@@ -57,13 +47,13 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.yellow,
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Wander Jaunt'),
     );
 
     return GraphQLProvider(client: client, child: app);
@@ -97,27 +87,27 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  final Center userWidget = Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[GraphCall()],
-    ),
+  final Column userWidget = Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: <Widget>[ProfileWidget()],
   );
 
-  final Center devicesWidget = Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[GraphCallDevices()],
-    ),
+  final Column devicesWidget = Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: <Widget>[DevicesWidget()],
   );
 
   final Center integrationWidget = Center(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[GraphCallIntegrations()],
+      children: <Widget>[IntegrationsWidget()],
     ),
   );
 
+  final Column accountsWidget = Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[AccountsWidget()],
+  );
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -135,325 +125,33 @@ class _MyHomePageState extends State<MyHomePage> {
       label: 'Devices',
     );
     const BottomNavigationBarItem integrations = BottomNavigationBarItem(
-      icon: Icon(Icons.power),
+      icon: Icon(Icons.add),
       label: 'Integrations',
     );
+    const BottomNavigationBarItem accounts = BottomNavigationBarItem(
+      icon: Icon(Icons.admin_panel_settings),
+      label: 'Accounts',
+    );
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: [userWidget, devicesWidget, integrationWidget][_selectedIndex],
+        appBar: AppBar(title: Text(widget.title)),
+        body: [
+          userWidget,
+          devicesWidget,
+          integrationWidget,
+          accountsWidget
+        ][_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[user, devices, integrations],
+            items: const <BottomNavigationBarItem>[
+              user,
+              devices,
+              integrations,
+              accounts
+            ],
             currentIndex: _selectedIndex,
+            unselectedItemColor: Colors.black38,
             selectedItemColor: Colors.amber[800],
             onTap: _navigateTo)
         // This trailing comma makes auto-formatting nicer for build methods.
         );
-  }
-}
-
-class GraphCall extends StatelessWidget {
-  Widget build(BuildContext context) {
-    final QueryOptions qo =
-        QueryOptions(documentNode: BasicInfoQuery().document);
-    final Query query = Query(
-        options: qo,
-        builder: (
-          QueryResult result, {
-          Future<QueryResult> Function() refetch,
-          FetchMore fetchMore,
-        }) {
-          if (result.hasException) {
-            return Text(result.exception.toString());
-          }
-
-          if (result.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          return Column(
-            children: <Widget>[
-              Text(JsonEncoder.withIndent('  ').convert(result.data)),
-            ],
-          );
-        });
-    return query;
-  }
-}
-
-class GraphCallDevices extends StatelessWidget {
-  Widget build(BuildContext context) {
-    final QueryOptions qo = QueryOptions(documentNode: gql(r'''
-      query myDevices {
-      me {
-        devices {
-          pageInfo { hasNextPage }
-          edges {
-            node {
-              ... DeviceDetails
-            }
-          }
-        }
-      }
-    }
-
-    # you can use the "filter" parameter to only find devices that have at least
-    # one matching trait in the filter
-
-    query allDevicesWithPower {
-      me {
-        devices (filter: { traits: [POWER] }) {
-          pageInfo { hasNextPage }
-          edges {
-            node {
-              ... DeviceDetails
-            }
-          }
-        }
-      }
-    }
-
-
-    # fragments can be used to re-use parts of a query
-    fragment DeviceDetails on Device {
-      id
-      createdAt
-      traits {
-        name instance
-        ... on LockUnlockDeviceTrait {
-          properties { supportsIsJammed }
-          state {
-            isLocked {
-              reported { value sampledAt createdAt }
-              desired { value delta updatedAt }
-            }
-          }
-        }
-        ... on PowerDeviceTrait {
-          properties { supportsToggle supportsDiscreteOnOff }
-          state {
-            power {
-              reported { value sampledAt createdAt }
-              desired { value delta updatedAt }
-            }
-          }
-        }
-        ... on BrightnessDeviceTrait {
-          properties { supportsRelativeBrightness }
-          state {
-            brightness {
-              reported { value sampledAt createdAt }
-              desired { value delta updatedAt }
-            }
-          }
-        }
-      }
-    }
-      '''));
-    final Query query = Query(
-        options: qo,
-        builder: (
-          QueryResult result, {
-          Future<QueryResult> Function() refetch,
-          FetchMore fetchMore,
-        }) {
-          if (result.hasException) {
-            return Text(result.exception.toString());
-          }
-
-          if (result.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          print(result.data);
-          return Column(
-            children: <Widget>[
-              Text(JsonEncoder.withIndent('  ').convert(result.data)),
-            ],
-          );
-        });
-    return query;
-  }
-}
-
-class GraphCallIntegrations extends StatelessWidget {
-  Widget build(BuildContext context) {
-    final QueryOptions qo = QueryOptions(documentNode: gql(r'''
-    query getAllIntegrations {
-      integrations {
-        edges {
-          node {
-            id
-            displayName
-          }
-        }
-      }
-    }
-    '''));
-    final Query query = Query(
-        options: qo,
-        builder: (
-          QueryResult result, {
-          Future<QueryResult> Function() refetch,
-          FetchMore fetchMore,
-        }) {
-          if (result.hasException) {
-            return Text(result.exception.toString());
-          }
-
-          if (result.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          print(result.data);
-          final GetIntegrationResponse response =
-              GetIntegrationResponse.fromJson(result.data);
-          return Column(
-            children: <Widget>[
-              GraphCallLoginButton(response.integrations.edges[0].node.id,
-                  response.integrations.edges[0].node.displayName),
-            ],
-          );
-        });
-    return query;
-  }
-}
-
-// ignore: must_be_immutable
-class GraphCallLoginButton extends StatelessWidget {
-  String id;
-  String name;
-
-  GraphCallLoginButton(String id, String name) {
-    this.id = id;
-    this.name = name;
-  }
-
-  Widget build(BuildContext context) {
-    final MutationOptions mop = MutationOptions(
-        documentNode: gql(r'''
-        mutation generateAccountLinkingUrl ($integrationId: ID!) {
-          generateAccountLinkingUrl(integrationId: $integrationId) {
-            url
-            integration {
-              id
-              displayName
-            }
-          }
-        }
-        '''),
-        onCompleted: (dynamic resultData) async {
-          String url = resultData['generateAccountLinkingUrl']['url'];
-          if (await canLaunch(url)) {
-            await launch(url);
-          } else {
-            throw 'Could not launch $url';
-          }
-        });
-    final Mutation mutation = Mutation(
-      options: mop,
-      builder: (
-        RunMutation runMutation,
-        QueryResult result,
-      ) {
-        return FlatButton(
-          color: Colors.blue,
-          textColor: Colors.white,
-          disabledColor: Colors.grey,
-          disabledTextColor: Colors.black,
-          padding: EdgeInsets.all(8.0),
-          splashColor: Colors.blueAccent,
-          onPressed: () => runMutation({
-            'integrationId': this.id,
-          }),
-          child: Text(this.name),
-        );
-      },
-    );
-    return mutation;
-  }
-}
-
-class GetIntegrationResponse {
-  Integrations integrations;
-
-  GetIntegrationResponse({this.integrations});
-
-  GetIntegrationResponse.fromJson(Map<String, dynamic> json) {
-    integrations = json['integrations'] != null
-        ? new Integrations.fromJson(json['integrations'])
-        : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.integrations != null) {
-      data['integrations'] = this.integrations.toJson();
-    }
-    return data;
-  }
-}
-
-class Integrations {
-  List<Edges> edges;
-
-  Integrations({this.edges});
-
-  Integrations.fromJson(Map<String, dynamic> json) {
-    if (json['edges'] != null) {
-      edges = new List<Edges>();
-      json['edges'].forEach((v) {
-        edges.add(new Edges.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.edges != null) {
-      data['edges'] = this.edges.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
-}
-
-class Edges {
-  Node node;
-
-  Edges({this.node});
-
-  Edges.fromJson(Map<String, dynamic> json) {
-    node = json['node'] != null ? new Node.fromJson(json['node']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.node != null) {
-      data['node'] = this.node.toJson();
-    }
-    return data;
-  }
-}
-
-class Node {
-  String id;
-  String displayName;
-
-  Node({this.id, this.displayName});
-
-  Node.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    displayName = json['displayName'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['displayName'] = this.displayName;
-    return data;
   }
 }
