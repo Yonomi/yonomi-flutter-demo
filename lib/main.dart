@@ -1,8 +1,11 @@
-import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:yonomi_flutter_demo/graphql/basic_info.dart';
+import 'components/profile.dart';
+import 'components/devices.dart';
+import 'components/integrations.dart';
+import 'components/accounts.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,11 +16,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HttpLink httpLink = HttpLink(
-      uri: 'https://x9pob7epve.execute-api.us-east-1.amazonaws.com/dev/graphql',
+      uri: '',
     );
 
-    final String token =
-        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYjUxZWNjNC01OWEzLTRiOWQtYmQ0Yy04YzUxYTczZGEwYTYiLCJpc3MiOiJkNmFjYzA1Yi1jNzk5LTQ5OGMtYWJhZS00ZTU5OWJjMzQyNDkiLCJpYXQiOjE2MDczNjIxNzksImV4cCI6MTYwNzQ0ODU3OX0.wbCVUEP4gQwFQXP-a9_VRFH1JWEjZd_L-tSEUhAabt7_p8u0CTTGgDLJtU7QifCfwvxOtdEx8CpLgyhJaqg6XaeiTAOyVFwXHuHSGGLCeTE3KulfZU1zSLkohhVBXMtkrf-4h6bSqZK76n5qYYcyQ91WXQZj9augq-6RueGRQEHWne_6-tXA5f9zji-ZEdRIQhO2Mr9A5CAiMjPpa5wLgDG77WlYzN_zYG6-LWDtGmL_4_sx8Pks1rBL6qtk-ARG4Txr6E9hsW31qWU2K9JxB_F1h897hci4PPaKbRGguxscYpBrK130w646R7UkzUht2qjEhTFPQQMcAiE6Lsn9Nw';
+    final String token = '';
     final AuthLink authLink = AuthLink(
       getToken: () async => 'Bearer ' + token,
       // OR
@@ -44,13 +46,13 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.yellow,
         // This makes the visual density adapt to the platform that you run
         // the app on. For desktop platforms, the controls will be smaller and
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Wander Jaunt'),
     );
 
     return GraphQLProvider(client: client, child: app);
@@ -84,20 +86,27 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  final Center userWidget = Center(
+  final Column userWidget = Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: <Widget>[ProfileWidget()],
+  );
+
+  final Column devicesWidget = Column(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: <Widget>[DevicesWidget()],
+  );
+
+  final Center integrationWidget = Center(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[GraphCall()],
+      children: <Widget>[IntegrationsWidget()],
     ),
   );
 
-  final Center devicesWidget = Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[GraphCallDevices()],
-    ),
+  final Column accountsWidget = Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: <Widget>[AccountsWidget()],
   );
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -114,144 +123,34 @@ class _MyHomePageState extends State<MyHomePage> {
       icon: Icon(Icons.handyman),
       label: 'Devices',
     );
+    const BottomNavigationBarItem integrations = BottomNavigationBarItem(
+      icon: Icon(Icons.add),
+      label: 'Integrations',
+    );
+    const BottomNavigationBarItem accounts = BottomNavigationBarItem(
+      icon: Icon(Icons.admin_panel_settings),
+      label: 'Accounts',
+    );
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: [userWidget, devicesWidget][_selectedIndex],
+        appBar: AppBar(title: Text(widget.title)),
+        body: [
+          userWidget,
+          devicesWidget,
+          integrationWidget,
+          accountsWidget
+        ][_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[user, devices],
+            items: const <BottomNavigationBarItem>[
+              user,
+              devices,
+              integrations,
+              accounts
+            ],
             currentIndex: _selectedIndex,
+            unselectedItemColor: Colors.black38,
             selectedItemColor: Colors.amber[800],
             onTap: _navigateTo)
         // This trailing comma makes auto-formatting nicer for build methods.
         );
-  }
-}
-
-class GraphCall extends StatelessWidget {
-  Widget build(BuildContext context) {
-    final QueryOptions qo =
-        QueryOptions(documentNode: BasicInfoQuery().document);
-    final Query query = Query(
-        options: qo,
-        builder: (
-          QueryResult result, {
-          Future<QueryResult> Function() refetch,
-          FetchMore fetchMore,
-        }) {
-          if (result.hasException) {
-            return Text(result.exception.toString());
-          }
-
-          if (result.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          print(result.data);
-          return Column(
-            children: <Widget>[
-              Text(JsonEncoder.withIndent('  ').convert(result.data)),
-            ],
-          );
-        });
-    return query;
-  }
-}
-
-class GraphCallDevices extends StatelessWidget {
-  Widget build(BuildContext context) {
-    final QueryOptions qo = QueryOptions(documentNode: gql(r'''
-      query myDevices {
-      me {
-        devices {
-          pageInfo { hasNextPage }
-          edges {
-            node {
-              ... DeviceDetails
-            }
-          }
-        }
-      }
-    }
-
-    # you can use the "filter" parameter to only find devices that have at least
-    # one matching trait in the filter
-
-    query allDevicesWithPower {
-      me {
-        devices (filter: { traits: [POWER] }) {
-          pageInfo { hasNextPage }
-          edges {
-            node {
-              ... DeviceDetails
-            }
-          }
-        }
-      }
-    }
-
-
-    # fragments can be used to re-use parts of a query
-    fragment DeviceDetails on Device {
-      id
-      createdAt
-      traits {
-        name instance
-        ... on LockUnlockDeviceTrait {
-          properties { supportsIsJammed }
-          state {
-            isLocked {
-              reported { value sampledAt createdAt }
-              desired { value delta updatedAt }
-            }
-          }
-        }
-        ... on PowerDeviceTrait {
-          properties { supportsToggle supportsDiscreteOnOff }
-          state {
-            power {
-              reported { value sampledAt createdAt }
-              desired { value delta updatedAt }
-            }
-          }
-        }
-        ... on BrightnessDeviceTrait {
-          properties { supportsRelativeBrightness }
-          state {
-            brightness {
-              reported { value sampledAt createdAt }
-              desired { value delta updatedAt }
-            }
-          }
-        }
-      }
-    }
-      '''));
-    final Query query = Query(
-        options: qo,
-        builder: (
-          QueryResult result, {
-          Future<QueryResult> Function() refetch,
-          FetchMore fetchMore,
-        }) {
-          if (result.hasException) {
-            return Text(result.exception.toString());
-          }
-
-          if (result.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-          print(result.data);
-          return Column(
-            children: <Widget>[
-              Text(JsonEncoder.withIndent('  ').convert(result.data)),
-            ],
-          );
-        });
-    return query;
   }
 }
