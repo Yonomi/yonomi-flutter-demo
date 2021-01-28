@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'components/profile.dart';
+
+import 'components/accounts.dart';
 import 'components/devices.dart';
 import 'components/integrations.dart';
-import 'components/accounts.dart';
+import 'components/profile.dart';
 
 void main() {
   runApp(MyApp());
