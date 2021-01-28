@@ -63,15 +63,6 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -92,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
     children: <Widget>[ProfileWidget()],
   );
 
-  final Column devicesWidget = Column(
+  final Column routinesWidget = Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[DevicesWidget()],
   );
@@ -104,7 +95,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   );
 
-  final Column accountsWidget = Column(
+  final Column settingsWidget = Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[AccountsWidget()],
   );
@@ -117,36 +108,27 @@ class _MyHomePageState extends State<MyHomePage> {
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
     const BottomNavigationBarItem user = BottomNavigationBarItem(
-      icon: Icon(Icons.person),
-      label: 'User',
+      icon: Icon(Icons.home),
+      label: 'Home',
     );
     const BottomNavigationBarItem devices = BottomNavigationBarItem(
       icon: Icon(Icons.handyman),
-      label: 'Devices',
-    );
-    const BottomNavigationBarItem integrations = BottomNavigationBarItem(
-      icon: Icon(Icons.add),
-      label: 'Integrations',
+      label: 'Routines',
     );
     const BottomNavigationBarItem accounts = BottomNavigationBarItem(
       icon: Icon(Icons.admin_panel_settings),
-      label: 'Accounts',
+      label: 'Settings',
     );
     return Scaffold(
         appBar: AppBar(title: Text(widget.title)),
         body: [
           userWidget,
-          devicesWidget,
+          routinesWidget,
           integrationWidget,
-          accountsWidget
+          settingsWidget
         ][_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[
-              user,
-              devices,
-              integrations,
-              accounts
-            ],
+            items: const <BottomNavigationBarItem>[user, devices, accounts],
             currentIndex: _selectedIndex,
             unselectedItemColor: Colors.black38,
             selectedItemColor: Colors.amber[800],

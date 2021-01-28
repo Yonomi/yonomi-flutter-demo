@@ -9,7 +9,7 @@ void main() {
     await tester.pumpWidget(MyApp());
 
     // Tap the 'Home' icon
-    await tester.tap(find.byIcon(Icons.person));
+    await tester.tap(find.byIcon(Icons.home));
     await tester.pump();
 
     // Verify that we are in the 'Home' screen
