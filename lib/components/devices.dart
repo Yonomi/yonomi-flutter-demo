@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
 
 class DevicesWidget extends StatelessWidget {
+  static String title = "Devices";
+
   Widget build(BuildContext context) {
     final QueryOptions qo = QueryOptions(documentNode: gql(r'''
       query myDevices {
@@ -83,13 +86,21 @@ class DevicesWidget extends StatelessWidget {
               print(traitNames);
               return Container(
                   height: 50,
-                  color: Colors.yellow[50],
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: AppThemes.listViewBackgroundColor),
                   child: Center(
                     child: Column(
                       children: [
-                        Text(innerText),
+                        Text(
+                          innerText,
+                          style: TextStyle(color: AppThemes.listViewTextColor),
+                        ),
                         // Text('TRAITS:'),
-                        Text('TRAITS:' + traitNames)
+                        Text(
+                          'TRAITS:' + traitNames,
+                          style: TextStyle(color: AppThemes.listViewTextColor),
+                        )
                       ],
                     ),
                   ));
