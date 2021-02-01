@@ -23,6 +23,12 @@ class AppThemes {
 
   static const Color appBarTextColor = ColorConstants.yonomiYellow;
 
+  static const Color listViewBackgroundColor = Colors.white;
+
+  static const Color listViewTextColor = ColorConstants.darkGreyColor;
+
+  static const Color listViewSeparatorColor = ColorConstants.lighterGreyColor;
+
   static ThemeData getMainTheme(BuildContext context) {
     return ThemeData(
         primaryColor: _primaryColor,
