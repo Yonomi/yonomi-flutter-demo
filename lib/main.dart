@@ -114,10 +114,11 @@ class _MyHomePageState extends State<MyHomePage> {
           settingsWidget
         ][_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
+            backgroundColor: AppThemes.bottomAppBackgroundColor,
             items: const <BottomNavigationBarItem>[user, devices, accounts],
             currentIndex: _selectedIndex,
-            unselectedItemColor: Colors.black38,
-            selectedItemColor: Colors.amber[800],
+            unselectedItemColor: AppThemes.bottomAppBarUnselectedItemColor,
+            selectedItemColor: AppThemes.bottomAppBarSelectedItemColor,
             onTap: _navigateTo)
         // This trailing comma makes auto-formatting nicer for build methods.
         );
