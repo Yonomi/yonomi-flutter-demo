@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
 
 class AccountsWidget extends StatelessWidget {
   static String title = "Settings";
@@ -56,10 +57,17 @@ class AccountsWidget extends StatelessWidget {
               final innerText = (e['node']['integration']['displayName']);
               return Container(
                   height: 50,
-                  color: Colors.yellow[50],
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: AppThemes.listViewBackgroundColor),
                   child: Center(
                     child: Column(
-                      children: [Text(innerText)],
+                      children: [
+                        Text(
+                          innerText,
+                          style: TextStyle(color: AppThemes.listViewTextColor),
+                        )
+                      ],
                     ),
                   ));
             }).toList(),
