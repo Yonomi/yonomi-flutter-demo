@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
     final MaterialApp app = MaterialApp(
       title: 'Flutter Demo',
       theme: AppThemes.MainTheme,
-      home: MyHomePage(title: 'Wander Jaunt'),
+      home: MyHomePage(title: 'Yonomi Demo App'),
     );
 
     return GraphQLProvider(client: client, child: app);
