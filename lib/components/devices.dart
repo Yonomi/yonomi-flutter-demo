@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class DevicesWidget extends StatelessWidget {
+  static String title = "Devices";
+
   Widget build(BuildContext context) {
     final QueryOptions qo = QueryOptions(documentNode: gql(r'''
       query myDevices {

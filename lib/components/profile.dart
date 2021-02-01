@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
 class ProfileWidget extends StatelessWidget {
+  static String title = "Home";
+
   Widget build(BuildContext context) {
     final QueryOptions qo = QueryOptions(documentNode: gql(r'''
       query basicInfo {

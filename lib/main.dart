@@ -24,8 +24,6 @@ class MyApp extends StatelessWidget {
     final String token = '';
     final AuthLink authLink = AuthLink(
       getToken: () async => 'Bearer ' + token,
-      // OR
-      // getToken: () => 'Bearer <YOUR_PERSONAL_ACCESS_TOKEN>',
     );
 
     final Link link = authLink.concat(httpLink);
@@ -49,7 +47,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
-  final String title;
+  String title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -58,18 +56,25 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
+  var _titles = [
+    ProfileWidget.title,
+    DevicesWidget.title,
+    AccountsWidget.title
+  ];
+
   void _navigateTo(int index) {
     setState(() {
       _selectedIndex = index;
+      widget.title = _titles[index];
     });
   }
 
-  final Column userWidget = Column(
+  final Column homeWidget = Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[ProfileWidget()],
   );
 
-  final Column routinesWidget = Column(
+  final Column devicesWidget = Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[DevicesWidget()],
   );
@@ -85,6 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[AccountsWidget()],
   );
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -99,28 +105,23 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     const BottomNavigationBarItem devices = BottomNavigationBarItem(
       icon: Icon(Icons.handyman),
-      label: 'Routines',
+      label: 'Devices',
     );
     const BottomNavigationBarItem accounts = BottomNavigationBarItem(
       icon: Icon(Icons.admin_panel_settings),
       label: 'Settings',
     );
     return Scaffold(
-        appBar: AppBar(title: Text(widget.title)),
-        body: [
-          userWidget,
-          routinesWidget,
-          integrationWidget,
-          settingsWidget
-        ][_selectedIndex],
+        appBar: AppBar(
+          title: Text(widget.title),
+          centerTitle: false,
+        ),
+        body: [homeWidget, devicesWidget, settingsWidget][_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
-            backgroundColor: AppThemes.bottomAppBackgroundColor,
             items: const <BottomNavigationBarItem>[user, devices, accounts],
             currentIndex: _selectedIndex,
             unselectedItemColor: AppThemes.bottomAppBarUnselectedItemColor,
             selectedItemColor: AppThemes.bottomAppBarSelectedItemColor,
-            onTap: _navigateTo)
-        // This trailing comma makes auto-formatting nicer for build methods.
-        );
+            onTap: _navigateTo));
   }
 }

@@ -16,7 +16,7 @@ void main() {
     expect(find.text("Home"), findsOneWidget);
   });
 
-  testWidgets('Tapping on Routines Icon takes you to Routines screen',
+  testWidgets('Tapping on Devices Icon takes you to Devices screen',
       (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
