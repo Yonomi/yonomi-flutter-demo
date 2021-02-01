@@ -37,8 +37,8 @@ class MyApp extends StatelessWidget {
     ValueNotifier<GraphQLClient> client = ValueNotifier(gqlClient);
 
     final MaterialApp app = MaterialApp(
-      title: 'Flutter Demo',
-      theme: AppThemes.MainTheme,
+      title: 'Yonomi Flutter Demo',
+      theme: AppThemes.getMainTheme(context),
       home: MyHomePage(title: 'Yonomi Demo App'),
     );
 
