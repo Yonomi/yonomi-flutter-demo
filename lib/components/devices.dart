@@ -78,37 +78,64 @@ class DevicesWidget extends StatelessWidget {
             return Center(
               child: Text('No Devices'),
             );
-          return ListView(
-            children: edges.map((e) {
-              final innerText = (e['node']['id'].toString());
-              List traits = e['node']['traits'];
-              String traitNames = traits.map((t) => t['name']).toString();
-              print(traitNames);
-              return Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      color: AppThemes.listViewBackgroundColor),
-                  child: Center(
-                    child: Column(
-                      children: [
-                        Text(
-                          innerText,
-                          style: TextStyle(color: AppThemes.listViewTextColor),
+          return Column(
+            children: [
+              Wrap(
+                children: [
+                  AppIcons(
+                    imageUrl:
+                        'https://play-lh.googleusercontent.com/yUNBzmUsCaG56OD58bag3SXx4VczzgwFOpJ4Ch_dkK1gyIyxOQ5TYUrB9cwFUGMj1dw=s360-rw',
+                  )
+                ],
+              ),
+              ListView(
+                children: edges.map((e) {
+                  final innerText = (e['node']['id'].toString());
+                  List traits = e['node']['traits'];
+                  String traitNames = traits.map((t) => t['name']).toString();
+                  print(traitNames);
+                  return Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8.0),
+                          color: AppThemes.listViewBackgroundColor),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Text(
+                              innerText,
+                              style:
+                                  TextStyle(color: AppThemes.listViewTextColor),
+                            ),
+                            // Text('TRAITS:'),
+                            Text(
+                              'TRAITS:' + traitNames,
+                              style:
+                                  TextStyle(color: AppThemes.listViewTextColor),
+                            )
+                          ],
                         ),
-                        // Text('TRAITS:'),
-                        Text(
-                          'TRAITS:' + traitNames,
-                          style: TextStyle(color: AppThemes.listViewTextColor),
-                        )
-                      ],
-                    ),
-                  ));
-            }).toList(),
-            // children: [Text(edges[0]['node']['createdAt'].toString())],
-            shrinkWrap: true,
+                      ));
+                }).toList(),
+                // children: [Text(edges[0]['node']['createdAt'].toString())],
+                shrinkWrap: true,
+              )
+            ],
           );
         });
     return query;
+  }
+}
+
+class AppIcons extends StatelessWidget {
+  final String imageUrl;
+
+  const AppIcons({Key key, this.imageUrl}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Image(
+      image: NetworkImage(imageUrl),
+    );
   }
 }
