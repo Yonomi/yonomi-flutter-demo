@@ -116,5 +116,11 @@ class _MyHomePageState extends State<MyHomePage> {
             unselectedItemColor: AppThemes.bottomAppBarUnselectedItemColor,
             selectedItemColor: AppThemes.bottomAppBarSelectedItemColor,
             onTap: _navigateTo));
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        floatingActionButton: FloatingActionButton(
+          elevation: 2.0,
+          tooltip: StringConstants.add_account,
+          child: Icon(Icons.add),
+        ),
   }
 }
