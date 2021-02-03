@@ -57,7 +57,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  var _titles = [HomeWidget.title, DevicesWidget.title, AccountsWidget.title];
+  var _titles = [HomeWidget.title, DevicesWidget.title, SettingsWidget.title];
 
   void _navigateTo(int index) {
     setState(() {
@@ -85,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final Column settingsWidget = Column(
     mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[AccountsWidget()],
+    children: <Widget>[SettingsWidget()],
   );
 
   @override

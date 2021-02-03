@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
 
-class AccountsWidget extends StatelessWidget {
+class SettingsWidget extends StatelessWidget {
   static final String title = "Settings";
 
   Widget build(BuildContext context) {
