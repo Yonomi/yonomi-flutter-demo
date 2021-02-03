@@ -49,6 +49,7 @@ class AppThemes {
     return AppBarTheme(
       brightness: Brightness.dark,
       color: Colors.transparent,
+      elevation: 0,
       textTheme: Theme.of(context).textTheme.copyWith(
               headline6: TextStyle(
             color: appBarTextColor,

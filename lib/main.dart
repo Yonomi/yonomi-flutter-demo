@@ -103,24 +103,24 @@ class _MyHomePageState extends State<MyHomePage> {
       label: 'Settings',
     );
     return Scaffold(
-        extendBodyBehindAppBar: false,
-        appBar: AppBar(
-          elevation: 0,
-          title: Text(widget.title),
-          centerTitle: false,
-        ),
-        body: [homeWidget, devicesWidget, settingsWidget][_selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[user, devices, accounts],
-            currentIndex: _selectedIndex,
-            unselectedItemColor: AppThemes.bottomAppBarUnselectedItemColor,
-            selectedItemColor: AppThemes.bottomAppBarSelectedItemColor,
-            onTap: _navigateTo));
-        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: FloatingActionButton(
-          elevation: 2.0,
-          tooltip: StringConstants.add_account,
-          child: Icon(Icons.add),
-        ),
+      extendBodyBehindAppBar: false,
+      appBar: AppBar(
+        title: Text(widget.title),
+        centerTitle: false,
+      ),
+      body: [homeWidget, devicesWidget, settingsWidget][_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[user, devices, accounts],
+          currentIndex: _selectedIndex,
+          unselectedItemColor: AppThemes.bottomAppBarUnselectedItemColor,
+          selectedItemColor: AppThemes.bottomAppBarSelectedItemColor,
+          onTap: _navigateTo),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: FloatingActionButton(
+        elevation: 2.0,
+        tooltip: StringConstants.add_account,
+        child: Icon(Icons.add),
+      ),
+    );
   }
 }
