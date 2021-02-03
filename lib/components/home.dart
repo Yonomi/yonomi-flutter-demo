@@ -4,7 +4,7 @@ import 'package:yonomi_flutter_demo/components/devices.dart';
 import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
 
 class HomeWidget extends StatelessWidget {
-  static String title = "Home";
+  static final String title = "Home";
 
   Widget build(BuildContext context) {
     final Widget userQuery = getUserQueryWidget();

@@ -3,7 +3,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
 
 class DevicesWidget extends StatelessWidget {
-  static String title = "Devices";
+  static final String title = "Devices";
 
   Widget build(BuildContext context) {
     final QueryOptions qo = QueryOptions(documentNode: gql(r'''
