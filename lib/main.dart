@@ -108,7 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
       label: 'Settings',
     );
     return Scaffold(
+        extendBodyBehindAppBar: false,
         appBar: AppBar(
+          elevation: 0,
           title: Text(widget.title),
           centerTitle: false,
         ),
