@@ -8,6 +8,7 @@ import 'components/Home.dart';
 import 'components/accounts.dart';
 import 'components/devices.dart';
 import 'components/integrations.dart';
+import 'themes/StringConstants.dart';
 
 void main() {
   runApp(MyApp());
@@ -35,9 +36,9 @@ class MyApp extends StatelessWidget {
     ValueNotifier<GraphQLClient> client = ValueNotifier(gqlClient);
 
     final MaterialApp app = MaterialApp(
-      title: 'Yonomi Flutter Demo',
+      title: StringConstants.app_title,
       theme: AppThemes.getMainTheme(context),
-      home: MyHomePage(title: 'Yonomi Demo App'),
+      home: MyHomePage(title: StringConstants.default_app_bar_title),
     );
 
     return GraphQLProvider(client: client, child: app);
