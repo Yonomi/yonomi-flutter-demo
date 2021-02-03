@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
 
+import 'components/Home.dart';
 import 'components/accounts.dart';
 import 'components/devices.dart';
 import 'components/integrations.dart';
-import 'components/profile.dart';
 
 void main() {
   runApp(MyApp());
@@ -56,11 +56,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  var _titles = [
-    ProfileWidget.title,
-    DevicesWidget.title,
-    AccountsWidget.title
-  ];
+  var _titles = [HomeWidget.title, DevicesWidget.title, AccountsWidget.title];
 
   void _navigateTo(int index) {
     setState(() {
@@ -71,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final Column homeWidget = Column(
     mainAxisAlignment: MainAxisAlignment.start,
-    children: <Widget>[ProfileWidget()],
+    children: <Widget>[HomeWidget()],
   );
 
   final Column devicesWidget = Column(

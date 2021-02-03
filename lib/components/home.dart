@@ -3,7 +3,7 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:yonomi_flutter_demo/components/devices.dart';
 import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
 
-class ProfileWidget extends StatelessWidget {
+class HomeWidget extends StatelessWidget {
   static String title = "Home";
 
   Widget build(BuildContext context) {
