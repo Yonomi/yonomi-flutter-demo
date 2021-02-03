@@ -31,6 +31,7 @@ class AppThemes {
 
   static ThemeData getMainTheme(BuildContext context) {
     return ThemeData(
+        fontFamily: 'Objektiv',
         primaryColor: _primaryColor,
         bottomAppBarColor: _bottomAppBarColor,
         scaffoldBackgroundColor: _scaffoldBgColor,
@@ -53,7 +54,7 @@ class AppThemes {
       textTheme: Theme.of(context).textTheme.copyWith(
               headline6: TextStyle(
             color: appBarTextColor,
-            fontSize: 24.0,
+            fontSize: 26.0,
           )),
     );
   }
