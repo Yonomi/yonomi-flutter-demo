@@ -23,6 +23,8 @@ class AppThemes {
 
   static const Color appBarTextColor = ColorConstants.yonomiYellow;
 
+  static const Color appBarAlertIconColor = ColorConstants.yonomiYellow;
+
   static const Color listViewBackgroundColor = Colors.white;
 
   static const Color listViewTextColor = ColorConstants.darkGreyColor;

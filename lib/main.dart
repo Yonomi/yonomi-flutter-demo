@@ -107,6 +107,13 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
         centerTitle: false,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.notifications,
+                color: AppThemes.appBarAlertIconColor),
+            onPressed: () {},
+          )
+        ],
       ),
       body: [homeWidget, devicesWidget, settingsWidget][_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
