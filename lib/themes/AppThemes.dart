@@ -46,19 +46,13 @@ class AppThemes {
   }
 
   static AppBarTheme getAppBarTheme(BuildContext context) {
-    bool isDark = Theme.of(context).brightness == Brightness.dark;
-
-    TextTheme defaultTextTheme = isDark
-        ? Theme.of(context).typography.white
-        : Theme.of(context).typography.black;
-
     return AppBarTheme(
       color: Colors.transparent,
-      textTheme: defaultTextTheme.copyWith(
-          headline6: TextStyle(
-        color: appBarTextColor,
-        fontSize: 24.0,
-      )),
+      textTheme: Theme.of(context).textTheme.copyWith(
+              headline6: TextStyle(
+            color: appBarTextColor,
+            fontSize: 24.0,
+          )),
     );
   }
 

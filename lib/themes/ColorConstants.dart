@@ -1,9 +1,10 @@
 import 'dart:ui';
 
 // Here we define app's color palettes which should be decoupled
-// from specific UI components and their theme(s),
-// i.e.. Color names should not contain things such as BottomAppBar's text color,
-//  or Background container's text color
+// from specific UI components and their theme(s)
+//
+// i.e.. Think of it like this: color names should not contain
+// things such as BottomAppBar's text color, or container's bg color
 class ColorConstants {
   static const Color yonomiYellow = Color(0xFFFBE337);
 
