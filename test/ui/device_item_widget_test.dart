@@ -3,9 +3,11 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
 
-Widget createDeviceItemWidget({String state, String name, String location}) {
+Widget createDeviceItemWidget(
+    {String state, String name, String location, IconData iconData}) {
   return MaterialApp(
     home: DeviceItemWidget(
+      icon: iconData,
       state: state,
       name: name,
       location: location,
@@ -55,6 +57,13 @@ void main() {
           createDeviceItemWidget(location: "", name: "", state: "Off"));
 
       expect(find.text("Off"), findsOneWidget);
+    });
+
+    testWidgets('shows Icon', (WidgetTester tester) async {
+      await tester.pumpWidget(createDeviceItemWidget(
+          iconData: Icons.home, location: "", name: "", state: "Off"));
+
+      expect(find.byIcon(Icons.home), findsOneWidget);
     });
   });
 }
