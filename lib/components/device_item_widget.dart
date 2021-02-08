@@ -28,7 +28,7 @@ class DeviceItemWidget extends StatelessWidget {
             margin: const EdgeInsets.all(10.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(8.0)),
-              color: const Color.fromRGBO(255, 255, 255, 1.0),
+              color: Colors.white,
             ),
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
