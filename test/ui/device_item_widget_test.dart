@@ -17,49 +17,52 @@ Widget createDeviceItemWidget(
 
 void main() {
   group("DeviceItemWidget", () {
-    testWidgets('empty location - shows default text',
+    testWidgets('empty location - shows default text on label',
         (WidgetTester tester) async {
       await tester.pumpWidget(createDeviceItemWidget(name: "N", state: "S"));
 
       expect(find.text("No location set"), findsOneWidget);
     });
 
-    testWidgets('empty name - shows default text', (WidgetTester tester) async {
+    testWidgets('empty name - shows default text on label',
+        (WidgetTester tester) async {
       await tester
           .pumpWidget(createDeviceItemWidget(location: "L", state: "S"));
 
       expect(find.text("No name"), findsOneWidget);
     });
 
-    testWidgets('empty State - shows default text',
+    testWidgets('empty State - shows default text on label',
         (WidgetTester tester) async {
       await tester.pumpWidget(createDeviceItemWidget(location: "L", name: "N"));
 
       expect(find.text("Unknown"), findsOneWidget);
     });
 
-    testWidgets('shows Location name', (WidgetTester tester) async {
+    testWidgets('shows desired Location name on label',
+        (WidgetTester tester) async {
       await tester.pumpWidget(
           createDeviceItemWidget(location: "My Location", name: "", state: ""));
 
       expect(find.text("My Location"), findsOneWidget);
     });
 
-    testWidgets('shows Name', (WidgetTester tester) async {
+    testWidgets('shows desired Device Name on label',
+        (WidgetTester tester) async {
       await tester.pumpWidget(
           createDeviceItemWidget(location: "", name: "Device Name", state: ""));
 
       expect(find.text("Device Name"), findsOneWidget);
     });
 
-    testWidgets('shows State', (WidgetTester tester) async {
+    testWidgets('shows desired State on label', (WidgetTester tester) async {
       await tester.pumpWidget(
           createDeviceItemWidget(location: "", name: "", state: "Off"));
 
       expect(find.text("Off"), findsOneWidget);
     });
 
-    testWidgets('shows Icon', (WidgetTester tester) async {
+    testWidgets('shows configured Icon ', (WidgetTester tester) async {
       await tester.pumpWidget(createDeviceItemWidget(
           iconData: Icons.home, location: "", name: "", state: "Off"));
 
