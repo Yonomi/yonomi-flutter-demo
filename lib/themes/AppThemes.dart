@@ -54,8 +54,6 @@ class AppThemes {
       elevation: 0,
       textTheme: Theme.of(context).textTheme.copyWith(
               headline6: TextStyle(
-            fontFamily: 'Objektiv',
-            fontWeight: FontWeight.w700,
             color: appBarTextColor,
             fontSize: 26.0,
           )),
