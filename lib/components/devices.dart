@@ -134,8 +134,9 @@ class AppIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image(
-      image: NetworkImage(imageUrl),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8.0),
+      child: Image(image: NetworkImage(imageUrl), height: 48, width: 48),
     );
   }
 }

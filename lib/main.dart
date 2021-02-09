@@ -18,10 +18,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HttpLink httpLink = HttpLink(
-      uri: '',
+      uri: 'https://dhapuogzxl.execute-api.us-east-1.amazonaws.com/stg/graphql',
     );
 
-    final String token = '';
+    final String token =
+        'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4OWI3NTYyYi1hMDNmLTQ1YmEtODc5My03NGM5MTg4OTFlYTUiLCJpc3MiOiIwM2U3MTBjYy1kN2RjLTQ2YmMtYmUyMi1hYzYxNjE0YTVjMTIiLCJpYXQiOjE2MTI3OTk0ODUsImV4cCI6MTYxMjg4NTg4NX0.un47JPVJPpv2V19oLWD0zii_hGNNRbnnyzVFd9xzkvr04YzdODOtdXgXeLArNlfwzyynuiJLIiyoPFXPcbNcNX4kEOy-6uxaGDV39p3XOZoPwGdEJd5jwY6VvGqKtNfV40XpTmGGW_3aaq8RHGwRq0EfgNTHqUo9fydkJAOr3v9Rreuk4P985tOUbirY4_LMApshXY-1kq8aBLro7VzfPeFsPTrJhs2dIY1DERE9yNAYgxDBKfqFIMqn8KxmGCDli70dMMglGl4Q7hnkW5g0r0F0FymNoeK7JcPcHocAuxJv92KhKSuPEuUPbEwdrQwGD8IZWUpncrsF0vW42tggBw';
     final AuthLink authLink = AuthLink(
       getToken: () async => 'Bearer ' + token,
     );

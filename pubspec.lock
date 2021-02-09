@@ -197,6 +197,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  dart2_constant:
+    dependency: transitive
+    description:
+      name: dart2_constant
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.2+dart2"
   dart_style:
     dependency: transitive
     description:
@@ -204,6 +211,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.10"
+  dotenv:
+    dependency: transitive
+    description:
+      name: dotenv
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
   equatable:
     dependency: "direct main"
     description:
@@ -541,6 +555,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.24.1"
+  safe_config:
+    dependency: transitive
+    description:
+      name: safe_config
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.2"
   shelf:
     dependency: transitive
     description:
@@ -728,6 +749,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  yonomi_platform_sdk:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: decouple_client
+      resolved-ref: "75c204d99a1f80e26b73eb3d2cf1c13b421bccdf"
+      url: "https://github.com/Yonomi/yonomi-dart-sdk.git"
+    source: git
+    version: "0.0.1"
 sdks:
   dart: ">=2.10.0 <2.11.0"
   flutter: ">=1.22.0 <2.0.0"
