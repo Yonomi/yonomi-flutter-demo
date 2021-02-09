@@ -33,7 +33,6 @@ class AppThemes {
 
   static ThemeData getMainTheme(BuildContext context) {
     return ThemeData(
-        fontFamily: 'Objektiv',
         primaryColor: _primaryColor,
         bottomAppBarColor: bottomAppBarBgColor,
         scaffoldBackgroundColor: _scaffoldBgColor,
