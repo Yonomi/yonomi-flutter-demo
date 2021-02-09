@@ -5,13 +5,9 @@ import 'ColorConstants.dart';
 class AppThemes {
   static const Color _primaryColor = ColorConstants.yonomiYellow;
 
-  static const Color _bottomAppBarColor = ColorConstants.darkerBackground;
-
   static const Color _scaffoldBgColor = ColorConstants.darkestBackground;
 
   static const Color _buttonColors = ColorConstants.yonomiYellow;
-
-  static const Color bottomAppBackgroundColor = ColorConstants.darkerBackground;
 
   static const Color bottomAppBarUnselectedItemColor =
       ColorConstants.lightGreyColor;
@@ -31,11 +27,15 @@ class AppThemes {
 
   static const Color listViewSeparatorColor = ColorConstants.lighterGreyColor;
 
+  static const Color bottomAppBarBgColor = ColorConstants.lightGreyBackground;
+
+  static const Color floatingActionButtonColor = ColorConstants.yonomiYellow;
+
   static ThemeData getMainTheme(BuildContext context) {
     return ThemeData(
         fontFamily: 'Objektiv',
         primaryColor: _primaryColor,
-        bottomAppBarColor: _bottomAppBarColor,
+        bottomAppBarColor: bottomAppBarBgColor,
         scaffoldBackgroundColor: _scaffoldBgColor,
         primarySwatch: createMaterialColor(_primaryColor),
         colorScheme: ColorScheme.dark(),
