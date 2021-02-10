@@ -1,14 +1,14 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/models/accountModel.dart';
 import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
 
+import 'components/Home.dart';
 import 'components/accounts.dart';
 import 'components/devices.dart';
 import 'components/integrations.dart';
 import 'components/profile.dart';
-import 'package:provider/provider.dart';
+import 'themes/StringConstants.dart';
 
 void main() {
   runApp(MyApp());
@@ -67,19 +67,21 @@ class _MyHomePageState extends State<MyHomePage> {
   var _titles = [
     ProfileWidget.title,
     DevicesWidget.title,
-    AccountsWidget.title
+    SettingsWidget.title
   ];
 
   void _navigateTo(int index) {
-    setState(() {
-      _selectedIndex = index;
-      widget.title = _titles[index];
-    });
+    if (index < _titles.length) {
+      setState(() {
+        _selectedIndex = index;
+        widget.title = _titles[index];
+      });
+    }
   }
 
   final Column homeWidget = Column(
     mainAxisAlignment: MainAxisAlignment.start,
-    children: <Widget>[ProfileWidget()],
+    children: <Widget>[HomeWidget()],
   );
 
   final Column devicesWidget = Column(
@@ -96,17 +98,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final Column settingsWidget = Column(
     mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[AccountsWidget()],
+    children: <Widget>[SettingsWidget()],
   );
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     const BottomNavigationBarItem user = BottomNavigationBarItem(
       icon: Icon(Icons.home),
       label: 'Home',
@@ -119,17 +115,52 @@ class _MyHomePageState extends State<MyHomePage> {
       icon: Icon(Icons.admin_panel_settings),
       label: 'Settings',
     );
+
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-          centerTitle: false,
-        ),
-        body: [homeWidget, devicesWidget, settingsWidget][_selectedIndex],
-        bottomNavigationBar: BottomNavigationBar(
-            items: const <BottomNavigationBarItem>[user, devices, accounts],
-            currentIndex: _selectedIndex,
-            unselectedItemColor: AppThemes.bottomAppBarUnselectedItemColor,
-            selectedItemColor: AppThemes.bottomAppBarSelectedItemColor,
-            onTap: _navigateTo));
+      extendBodyBehindAppBar: false,
+      appBar: AppBar(
+        title: Text(widget.title),
+        centerTitle: false,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.notifications,
+                color: AppThemes.appBarAlertIconColor),
+            onPressed: () {},
+          )
+        ],
+      ),
+      body: [
+        homeWidget,
+        devicesWidget,
+        settingsWidget,
+      ][_selectedIndex],
+      bottomNavigationBar: BottomAppBar(
+          color: AppThemes.bottomAppBarBgColor,
+          shape: AutomaticNotchedShape(
+              RoundedRectangleBorder(), StadiumBorder(side: BorderSide())),
+          notchMargin: 8.0,
+          child: Container(
+            padding: EdgeInsets.only(right: 90.0),
+            child: BottomNavigationBar(
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                items: const <BottomNavigationBarItem>[
+                  user,
+                  devices,
+                  accounts,
+                ],
+                currentIndex: _selectedIndex,
+                unselectedItemColor: AppThemes.bottomAppBarUnselectedItemColor,
+                selectedItemColor: AppThemes.bottomAppBarSelectedItemColor,
+                onTap: _navigateTo),
+          )),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: AppThemes.floatingActionButtonColor,
+        elevation: 2.0,
+        tooltip: StringConstants.add_account,
+        child: Icon(Icons.add),
+      ),
+    );
   }
 }

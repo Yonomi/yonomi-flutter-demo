@@ -5,13 +5,9 @@ import 'ColorConstants.dart';
 class AppThemes {
   static const Color _primaryColor = ColorConstants.yonomiYellow;
 
-  static const Color _bottomAppBarColor = ColorConstants.darkerBackground;
-
   static const Color _scaffoldBgColor = ColorConstants.darkestBackground;
 
   static const Color _buttonColors = ColorConstants.yonomiYellow;
-
-  static const Color bottomAppBackgroundColor = ColorConstants.darkerBackground;
 
   static const Color bottomAppBarUnselectedItemColor =
       ColorConstants.lightGreyColor;
@@ -23,12 +19,17 @@ class AppThemes {
 
   static const Color appBarTextColor = ColorConstants.yonomiYellow;
 
+  static const Color appBarAlertIconColor = ColorConstants.yonomiYellow;
+
   static const Color listViewBackgroundColor = Colors.white;
 
   static const Color listViewTextColor = ColorConstants.darkGreyColor;
 
   static const Color listViewSeparatorColor = ColorConstants.lighterGreyColor;
 
+  static const Color bottomAppBarBgColor = ColorConstants.lightGreyBackground;
+
+  static const Color floatingActionButtonColor = ColorConstants.yonomiYellow;
   static const Color deviceItemBackgroundColor = Colors.white;
 
   static const TextStyle deviceItemTextLocation = TextStyle(
@@ -47,7 +48,7 @@ class AppThemes {
   static ThemeData getMainTheme(BuildContext context) {
     return ThemeData(
         primaryColor: _primaryColor,
-        bottomAppBarColor: _bottomAppBarColor,
+        bottomAppBarColor: bottomAppBarBgColor,
         scaffoldBackgroundColor: _scaffoldBgColor,
         primarySwatch: createMaterialColor(_primaryColor),
         colorScheme: ColorScheme.dark(),
@@ -61,19 +62,15 @@ class AppThemes {
   }
 
   static AppBarTheme getAppBarTheme(BuildContext context) {
-    bool isDark = Theme.of(context).brightness == Brightness.dark;
-
-    TextTheme defaultTextTheme = isDark
-        ? Theme.of(context).typography.white
-        : Theme.of(context).typography.black;
-
     return AppBarTheme(
+      brightness: Brightness.dark,
       color: Colors.transparent,
-      textTheme: defaultTextTheme.copyWith(
-          headline6: TextStyle(
-        color: appBarTextColor,
-        fontSize: 24.0,
-      )),
+      elevation: 0,
+      textTheme: Theme.of(context).textTheme.copyWith(
+              headline6: TextStyle(
+            color: appBarTextColor,
+            fontSize: 26.0,
+          )),
     );
   }
 

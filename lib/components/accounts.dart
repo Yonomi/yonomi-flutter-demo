@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:yonomi_flutter_demo/models/accountModel.dart';
 import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
 
-class AccountsWidget extends StatelessWidget {
-  static String title = "Settings";
+class SettingsWidget extends StatelessWidget {
+  static final String title = "Settings";
 
   Widget build(BuildContext context) {
     List<AccountModel> accounts = [AccountModel('Some DisplayName')];
