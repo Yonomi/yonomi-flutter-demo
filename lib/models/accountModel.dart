@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AccountModel extends ChangeNotifier {
+class AccountModel {
   final String _displayName;
 
   AccountModel(this._displayName);
