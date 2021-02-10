@@ -39,9 +39,9 @@ class MyApp extends StatelessWidget {
     // ValueNotifier<GraphQLClient> client = ValueNotifier(gqlClient);
 
     final MaterialApp app = MaterialApp(
-      title: StringConstants.app_title,
+      title: 'Yonomi Flutter Demo',
       theme: AppThemes.getMainTheme(context),
-      home: MyHomePage(title: StringConstants.default_app_bar_title),
+      home: MyHomePage(title: 'Yonomi Demo App'),
     );
     return MultiProvider(
       providers: [
@@ -66,7 +66,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  var _titles = [HomeWidget.title, DevicesWidget.title, SettingsWidget.title];
+  var _titles = [
+    ProfileWidget.title,
+    DevicesWidget.title,
+    AccountsWidget.title
+  ];
 
   void _navigateTo(int index) {
     if (index < _titles.length) {

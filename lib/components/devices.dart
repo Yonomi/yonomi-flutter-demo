@@ -3,7 +3,7 @@ import 'package:yonomi_flutter_demo/models/deviceModel.dart';
 import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
 
 class DevicesWidget extends StatelessWidget {
-  static final String title = "Devices";
+  static String title = "Routines";
 
   Widget build(BuildContext context) {
     List<DeviceModel> devices = [DeviceModel('deviceId')];
