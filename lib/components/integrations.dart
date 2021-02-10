@@ -1,52 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 import 'link-account.dart';
 
 class IntegrationsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
-    final QueryOptions qo = QueryOptions(documentNode: gql(r'''
-    query getAllIntegrations {
-      integrations {
-        edges {
-          node {
-            id
-            displayName
-          }
-        }
-      }
-    }
-    '''));
-    final Query query = Query(
-        options: qo,
-        builder: (
-          QueryResult result, {
-          Future<QueryResult> Function() refetch,
-          FetchMore fetchMore,
-        }) {
-          if (result.hasException) {
-            return Text(result.exception.toString());
-          }
-
-          if (result.loading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          final GetIntegrationResponse response =
-              GetIntegrationResponse.fromJson(result.data);
-          print(response.integrations.edges.isNotEmpty);
-          LinkAccountWidget linkAccountWidget;
-          if (response.integrations.edges.isNotEmpty) {
-            linkAccountWidget = LinkAccountWidget(
-                response.integrations.edges.first.node.id,
-                response.integrations.edges.first.node.displayName);
-          }
-          return Column(
-            children: <Widget>[linkAccountWidget ?? Text('No Integrations')],
-          );
-        });
-    return query;
+    Widget linkAccountWidget = LinkAccountWidget(
+        'response.integrations.edges.first.node.id',
+        'response.integrations.edges.first.node.displayName');
+    return Column(
+      children: <Widget>[linkAccountWidget ?? Text('No Integrations')],
+    );
   }
 }
 

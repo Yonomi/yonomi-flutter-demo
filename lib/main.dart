@@ -1,13 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:yonomi_flutter_demo/models/accountModel.dart';
 import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
 
 import 'components/accounts.dart';
 import 'components/devices.dart';
 import 'components/integrations.dart';
 import 'components/profile.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,30 +18,37 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final HttpLink httpLink = HttpLink(
-      uri: '',
-    );
+    // final HttpLink httpLink = HttpLink(
+    //   uri: 'https://dhapuogzxl.execute-api.us-east-1.amazonaws.com/stg/graphql',
+    // );
 
-    final String token = '';
-    final AuthLink authLink = AuthLink(
-      getToken: () async => 'Bearer ' + token,
-    );
+    // final String token =
+    //     'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4OWI3NTYyYi1hMDNmLTQ1YmEtODc5My03NGM5MTg4OTFlYTUiLCJpc3MiOiIwM2U3MTBjYy1kN2RjLTQ2YmMtYmUyMi1hYzYxNjE0YTVjMTIiLCJpYXQiOjE2MTI5NTc1MzYsImV4cCI6MTYxMzA0MzkzNn0.lPrkNHutuISp01vujaRHFGFXlyYIcCLYhRhIOhLjMUssn95rb6KMP4Jd-Y3u1yloxkZkFRapnofAVp6HSdGodwqLDBbeoklEc-PMaNiU7auV2OmIzC825kt8HT_8_SU7ErGT4zSRPdJ8i927xl7lQuXi4FpzoDKKwmLr8dJe5joIu0qg2qKshknnUI7qgZ6IZdofFeX3I-MBkxoabbexqhF_OS-oT2wHJqOYK-7sTZ3iW2g165_ol9ud4j-uUCdbii4SvA3zpgB50YrafRYbZjktC9g5d09XBQs0YjmllZfGF1RbImZVzTWSFMDx7-RmNq61h3TYyHQrEFBcXR1-0Q';
+    // final AuthLink authLink = AuthLink(
+    //   getToken: () async => 'Bearer ' + token,
+    // );
 
-    final Link link = authLink.concat(httpLink);
-    final GraphQLClient gqlClient = GraphQLClient(
-      cache: InMemoryCache(),
-      link: link,
-    );
+    // final Link link = authLink.concat(httpLink);
+    // final GraphQLClient gqlClient = GraphQLClient(
+    //   cache: InMemoryCache(),
+    //   link: link,
+    // );
 
-    ValueNotifier<GraphQLClient> client = ValueNotifier(gqlClient);
+    // ValueNotifier<GraphQLClient> client = ValueNotifier(gqlClient);
 
     final MaterialApp app = MaterialApp(
       title: 'Yonomi Flutter Demo',
       theme: AppThemes.getMainTheme(context),
       home: MyHomePage(title: 'Yonomi Demo App'),
     );
-
-    return GraphQLProvider(client: client, child: app);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => AccountModel('DisplayName'),
+        )
+      ],
+      child: app,
+    );
   }
 }
 
