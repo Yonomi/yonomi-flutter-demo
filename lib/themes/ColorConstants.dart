@@ -23,4 +23,10 @@ class ColorConstants {
   static const Color redAlert = Color(0xFFEE183F);
 
   static const Color transparent = Color(0x00000000);
+
+  static const Color textColorGrey = Color(0xFF5D657A);
+
+  static const Color deviceIconColor = Color(0xFF1E1F29);
+
+  static const Color textColorState = Color(0xFF00B3A6);
 }
