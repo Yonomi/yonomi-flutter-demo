@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/models/accountModel.dart';
 import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
 
@@ -8,9 +7,8 @@ import 'components/Home.dart';
 import 'components/accounts.dart';
 import 'components/devices.dart';
 import 'components/integrations.dart';
-import 'themes/StringConstants.dart';
 import 'components/profile.dart';
-import 'package:provider/provider.dart';
+import 'themes/StringConstants.dart';
 
 void main() {
   runApp(MyApp());
@@ -69,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
   var _titles = [
     ProfileWidget.title,
     DevicesWidget.title,
-    AccountsWidget.title
+    SettingsWidget.title
   ];
 
   void _navigateTo(int index) {
