@@ -26,39 +26,45 @@ class DeviceItemWidget extends StatelessWidget {
     String state = this.state ?? "Unknown";
 
     return Container(
-        width: 180.0,
-        height: 180.0,
-        color: ColorConstants.darkestBackground,
+        width: 175.0,
+        height: 175.0,
         child: Container(
-            padding: const EdgeInsets.all(20.0),
-            margin: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(16.0),
+            margin: const EdgeInsets.all(8.0),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(8.0)),
-              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(16.0)),
+              color: AppThemes.deviceItemBackgroundColor,
             ),
             child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Align(
-                      alignment: Alignment.topLeft,
-                      child: Icon(
-                        icon,
-                        size: 50,
-                        color: ColorConstants.deviceIconColor,
-                      )),
-                  Text(
-                    location,
-                    style: AppThemes.deviceItemTextLocation,
-                  ),
-                  Text(
-                    name,
-                    style: AppThemes.deviceItemTextName,
-                  ),
-                  Text(
-                    state,
-                    style: AppThemes.deviceItemTextState,
-                  ),
-                ])));
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Icon(
+                  icon,
+                  size: 60,
+                  color: ColorConstants.deviceIconColor,
+                ),
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        location,
+                        style: AppThemes.deviceItemTextLocation,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 4.0, bottom: 4.0),
+                        child: Text(
+                          name,
+                          style: AppThemes.deviceItemTextName,
+                        ),
+                      ),
+                      Text(
+                        state,
+                        style: AppThemes.deviceItemTextState,
+                      ),
+                    ]),
+              ],
+            )));
   }
 }
