@@ -5,13 +5,19 @@ import 'package:yonomi_flutter_demo/themes/ColorConstants.dart';
 
 class DeviceItemWidget extends StatelessWidget {
   const DeviceItemWidget(
-      {Key key, this.name, this.location, this.state, this.icon})
+      {Key key,
+      this.name,
+      this.location,
+      this.state,
+      this.icon,
+      this.onPressed})
       : super(key: key);
 
   final IconData icon;
   final String name;
   final String location;
   final String state;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {

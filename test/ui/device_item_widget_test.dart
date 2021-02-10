@@ -4,13 +4,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
 
 Widget createDeviceItemWidget(
-    {String state, String name, String location, IconData iconData}) {
+    {String state,
+    String name,
+    String location,
+    IconData iconData,
+    VoidCallback onPressed}) {
   return MaterialApp(
     home: DeviceItemWidget(
       icon: iconData,
       state: state,
       name: name,
       location: location,
+      onPressed: onPressed,
     ),
   );
 }
@@ -67,6 +72,18 @@ void main() {
           iconData: Icons.home, location: "", name: "", state: "Off"));
 
       expect(find.byIcon(Icons.home), findsOneWidget);
+    });
+
+    testWidgets('onPressed is handled correctly ', (WidgetTester tester) async {
+      final log = <int>[];
+      final onPressed = () => log.add(0);
+
+      await tester.pumpWidget(
+          createDeviceItemWidget(name: "testWidget", onPressed: onPressed));
+
+      await tester.tap(find.text("testWidget"));
+
+      expect(log.length, 0);
     });
   });
 }
