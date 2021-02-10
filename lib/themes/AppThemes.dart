@@ -29,6 +29,21 @@ class AppThemes {
 
   static const Color listViewSeparatorColor = ColorConstants.lighterGreyColor;
 
+  static const Color deviceItemBackgroundColor = Colors.white;
+
+  static const TextStyle deviceItemTextLocation = TextStyle(
+      fontWeight: FontWeight.w400,
+      color: ColorConstants.textColorGrey,
+      fontSize: 13.0);
+
+  static const TextStyle deviceItemTextName = TextStyle(
+      fontWeight: FontWeight.w700, color: Colors.black, fontSize: 15.0);
+
+  static const TextStyle deviceItemTextState = TextStyle(
+      fontWeight: FontWeight.w700,
+      color: ColorConstants.textColorState,
+      fontSize: 13.0);
+
   static ThemeData getMainTheme(BuildContext context) {
     return ThemeData(
         primaryColor: _primaryColor,
