@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yonomi_flutter_demo/models/accountModel.dart';
-import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
+import 'package:yonomi_flutter_demo/models/account_model.dart';
+import 'package:yonomi_flutter_demo/providers/user_provider.dart';
+import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
 import 'components/Home.dart';
 import 'components/accounts.dart';
 import 'components/devices.dart';
 import 'components/integrations.dart';
 import 'components/profile.dart';
-import 'themes/StringConstants.dart';
+import 'themes/string_constants.dart';
 
 void main() {
   runApp(MyApp());
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (context) => AccountModel('DisplayName'),
+          create: (context) => UserInfoProvider(),
         )
       ],
       child: app,

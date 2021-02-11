@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
-import 'package:yonomi_flutter_demo/themes/ColorConstants.dart';
+import 'package:yonomi_flutter_demo/themes/app_themes.dart';
+import 'package:yonomi_flutter_demo/themes/color_constants.dart';
 
 class DeviceItemWidget extends StatelessWidget {
   const DeviceItemWidget(

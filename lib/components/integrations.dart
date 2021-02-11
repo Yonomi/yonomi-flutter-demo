@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'link-account.dart';
+import 'link_account.dart';
 
 class IntegrationsWidget extends StatelessWidget {
   Widget build(BuildContext context) {

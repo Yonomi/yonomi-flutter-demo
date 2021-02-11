@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:yonomi_flutter_demo/models/deviceModel.dart';
-import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
+import 'package:yonomi_flutter_demo/models/device_model.dart';
+import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
 class DevicesWidget extends StatelessWidget {
   static String title = "Routines";

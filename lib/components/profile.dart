@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yonomi_flutter_demo/components/devices.dart';
-import 'package:yonomi_flutter_demo/themes/AppThemes.dart';
+import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
 class ProfileWidget extends StatelessWidget {
   static String title = "Home";

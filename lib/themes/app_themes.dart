@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'ColorConstants.dart';
+import 'color_constants.dart';
 
 class AppThemes {
   static const Color _primaryColor = ColorConstants.yonomiYellow;
