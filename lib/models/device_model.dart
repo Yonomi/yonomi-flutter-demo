@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DeviceModel extends ChangeNotifier {
+class DeviceModel {
   final String _id;
 
   DeviceModel(this._id);
