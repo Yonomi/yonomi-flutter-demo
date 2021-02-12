@@ -139,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
           color: AppThemes.bottomAppBarBgColor,
           shape: AutomaticNotchedShape(
               RoundedRectangleBorder(), StadiumBorder(side: BorderSide())),
-          notchMargin: 8.0,
+          notchMargin: 10.0,
           child: Container(
             padding: EdgeInsets.only(right: 90.0),
             child: BottomNavigationBar(
@@ -160,7 +160,10 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: AppThemes.floatingActionButtonColor,
         elevation: 2.0,
         tooltip: StringConstants.add_account,
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.add,
+          size: 45,
+        ),
       ),
     );
   }
