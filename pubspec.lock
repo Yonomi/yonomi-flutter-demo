@@ -22,13 +22,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.0"
-  artemis:
-    dependency: "direct main"
-    description:
-      name: artemis
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.17.1"
   async:
     dependency: transitive
     description:
@@ -247,41 +240,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.4"
-  gql_code_gen:
-    dependency: transitive
-    description:
-      name: gql_code_gen
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.5"
-  gql_dedupe_link:
-    dependency: transitive
-    description:
-      name: gql_dedupe_link
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.10"
-  gql_exec:
-    dependency: transitive
-    description:
-      name: gql_exec
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.5"
-  gql_http_link:
-    dependency: transitive
-    description:
-      name: gql_http_link
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.2"
-  gql_link:
-    dependency: transitive
-    description:
-      name: gql_link
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.1"
   graphs:
     dependency: transitive
     description:
@@ -457,20 +415,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.5"
-  recase:
-    dependency: transitive
-    description:
-      name: recase
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.1"
-  safe_config:
-    dependency: transitive
-    description:
-      name: safe_config
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.2"
   shelf:
     dependency: transitive
     description:
@@ -635,7 +579,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "3cfcc664f56859d76286991d6e33d72274ad4245"
+      resolved-ref: "1e45e5e94a1804e7541c6ca38b995ce4a184ba7f"
       url: "https://github.com/Yonomi/yonomi-dart-sdk.git"
     source: git
     version: "0.0.1"

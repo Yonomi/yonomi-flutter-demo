@@ -6,7 +6,9 @@ class SettingsWidget extends StatelessWidget {
   static final String title = "Settings";
 
   Widget build(BuildContext context) {
-    List<UserModel> accounts = [UserModel('Some DisplayName')];
+    List<UserModel> accounts = [
+      UserModel('Some DisplayName', DateTime.now(), DateTime.now())
+    ];
     if (accounts.isEmpty)
       return Center(
         child: Text('No Accounts'),

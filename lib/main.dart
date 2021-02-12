@@ -81,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final Column settingsWidget = Column(
     mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[SettingsWidget()],
+    children: <Widget>[ProfileWidget()],
   );
 
   @override

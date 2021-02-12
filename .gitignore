@@ -11,6 +11,11 @@
 .svn/
 .flutter-plugins-dependencies
 ios/Podfile
+ios/Flutter/.last_build_id
+ios/Flutter/*.xcconfig
+ios/Flutter/*.xcconfig
+ios/Runner.xcodeproj/*.pbxproj
+ios/Runner.xcworkspace/*.xcworkspacedata
 
 # IntelliJ related
 *.iml

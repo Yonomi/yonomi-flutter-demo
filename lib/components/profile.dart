@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/components/devices.dart';
@@ -13,7 +11,8 @@ class ProfileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final Widget user = getUserWidget();
     final Widget device = getDeviceWidget();
-
+    var userInfoProvider = Provider.of<UserInfoProvider>(context);
+    // userInfoProvider.fetchUserDetails();
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -51,8 +50,16 @@ class ProfileWidget extends StatelessWidget {
                 return Text(data.user.displayName);
               },
             ),
-            Text('me.lastActivityAt'),
-            Text('me.firstActivityAt'),
+            Consumer<UserInfoProvider>(
+              builder: (context, data, child) {
+                return Text(data.user.firstActivityAt.toString());
+              },
+            ),
+            Consumer<UserInfoProvider>(
+              builder: (context, data, child) {
+                return Text(data.user.lastActivityAt.toString());
+              },
+            ),
             SizedBox(height: 20) // Text(result.data['me']['firstActivityAt']),
           ],
         ),

@@ -6,15 +6,26 @@ import 'package:yonomi_platform_sdk/user.dart';
 class UserInfoProvider extends ChangeNotifier {
   UserModel _userModel;
 
+  UserInfoProvider() {
+    fetchUserDetails();
+  }
   String token =
-      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4OWI3NTYyYi1hMDNmLTQ1YmEtODc5My03NGM5MTg4OTFlYTUiLCJpc3MiOiIwM2U3MTBjYy1kN2RjLTQ2YmMtYmUyMi1hYzYxNjE0YTVjMTIiLCJpYXQiOjE2MTI5NTc1MzYsImV4cCI6MTYxMzA0MzkzNn0.lPrkNHutuISp01vujaRHFGFXlyYIcCLYhRhIOhLjMUssn95rb6KMP4Jd-Y3u1yloxkZkFRapnofAVp6HSdGodwqLDBbeoklEc-PMaNiU7auV2OmIzC825kt8HT_8_SU7ErGT4zSRPdJ8i927xl7lQuXi4FpzoDKKwmLr8dJe5joIu0qg2qKshknnUI7qgZ6IZdofFeX3I-MBkxoabbexqhF_OS-oT2wHJqOYK-7sTZ3iW2g165_ol9ud4j-uUCdbii4SvA3zpgB50YrafRYbZjktC9g5d09XBQs0YjmllZfGF1RbImZVzTWSFMDx7-RmNq61h3TYyHQrEFBcXR1-0Q';
+      'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4OWI3NTYyYi1hMDNmLTQ1YmEtODc5My03NGM5MTg4OTFlYTUiLCJpc3MiOiIwM2U3MTBjYy1kN2RjLTQ2YmMtYmUyMi1hYzYxNjE0YTVjMTIiLCJpYXQiOjE2MTMxNjg1NTUsImV4cCI6MTYxMzI1NDk1NX0.hQo5iws5CPZkwzdKV3CaAzxmuwkD9buJ-uXjKyUl_soTqhNGTGtV_VDBMbDN7KF0YjH9N9XMh5IfI49tjvtFodOJCkKn08X__lw2nJmwKXKGkJ7TDRx0dTm01oTF75OJBohShciX6tP3ShRtFn3_xo1Hu4eakOuCgrlsfAG92klQo9KRs_3NdU5NWUsgoYWpPI_JySpT_bsAj97Thv91axIctsfZUoGiKivO_602v16d3T910vpf0S8o-FRcfxpBx4ag4dgnUOjH1QasFqDCq2C9MySOd5eaFJFQ67nq8CLWGpPS96Oz4aIiRi1xgJQlDrSQesmQ-htAk5s4sPsKdg';
 
   Future<void> fetchUserDetails() async {
     Request request = Request(
         'https://dhapuogzxl.execute-api.us-east-1.amazonaws.com/stg/graphql',
         {'Authorization': 'Bearer $token'});
-    User user = await User.find().get(request);
-    _userModel = UserModel(user.id, user.firstActivityAt, user.lastActivityAt);
+    User userQuery = User.find()
+      ..project([
+        UserFields.firstActivityAt,
+        UserFields.lastActivityAt,
+        UserFields.id
+      ]);
+
+    User user = await userQuery.get(request);
+    _userModel = UserModel(user?.id ?? '', user?.firstActivityAt ?? '',
+        user?.lastActivityAt ?? '');
     notifyListeners();
   }
 
