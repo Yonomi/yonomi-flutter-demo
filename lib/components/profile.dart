@@ -1,21 +1,26 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/components/devices.dart';
+import 'package:yonomi_flutter_demo/models/account_model.dart';
+import 'package:yonomi_flutter_demo/providers/user_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
 class ProfileWidget extends StatelessWidget {
   static String title = "Home";
 
   Widget build(BuildContext context) {
-    final Widget userQuery = getUserQueryWidget();
-    final Widget deviceQuery = getDeviceQueryWidget();
+    final Widget user = getUserWidget();
+    final Widget device = getDeviceWidget();
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         SizedBox(height: 25),
-        userQuery,
+        user,
         SizedBox(height: 25),
-        deviceQuery,
+        device,
         // Expanded(
         //     child: Container(
         //   width: 100,
@@ -24,32 +29,39 @@ class ProfileWidget extends StatelessWidget {
     );
   }
 
-  Widget getUserQueryWidget() {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        children: [
-          ListTile(
-            tileColor: Colors.yellow,
-            title: Text("Profile",
-                style: const TextStyle(
-                  color: AppThemes.listViewTextColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20.0,
-                )),
-          ),
-          SizedBox(height: 20),
-          Text('me.id'),
-          Text('me.lastActivityAt'),
-          Text('me.firstActivityAt'),
-          SizedBox(height: 20) // Text(result.data['me']['firstActivityAt']),
-        ],
+  Widget getUserWidget() {
+    return ChangeNotifierProvider(
+      create: (context) => UserInfoProvider(),
+      child: Card(
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          children: [
+            ListTile(
+              tileColor: Colors.yellow,
+              title: Text("Profile",
+                  style: const TextStyle(
+                    color: AppThemes.listViewTextColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20.0,
+                  )),
+            ),
+            SizedBox(height: 20),
+            Consumer<UserInfoProvider>(
+              builder: (context, data, child) {
+                return Text(data.user.displayName);
+              },
+            ),
+            Text('me.lastActivityAt'),
+            Text('me.firstActivityAt'),
+            SizedBox(height: 20) // Text(result.data['me']['firstActivityAt']),
+          ],
+        ),
       ),
     );
   }
 }
 
-Widget getDeviceQueryWidget() {
+Widget getDeviceWidget() {
   final DevicesWidget devicesWidget = DevicesWidget();
 
   return Card(
