@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/models/account_model.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
@@ -104,16 +105,42 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    const BottomNavigationBarItem user = BottomNavigationBarItem(
-      icon: Icon(Icons.home),
+    Widget homeIcon = SvgPicture.asset(
+      'assets/icons/ic_home_unselected.svg',
+      color: Colors.grey,
+      semanticsLabel: "Home",
+    );
+
+    Widget routinesIcon = SvgPicture.asset(
+      'assets/icons/ic_routines_unselected.svg',
+      color: Colors.grey,
+      semanticsLabel: "Home",
+    );
+
+    Widget settingsIcon = SvgPicture.asset(
+      'assets/icons/ic_settings_unselected.svg',
+      color: Colors.grey,
+      semanticsLabel: "Home",
+    );
+
+    BottomNavigationBarItem user = BottomNavigationBarItem(
+      icon: homeIcon,
+      activeIcon: Icon(
+        Icons.circle,
+        size: 10,
+      ),
       label: 'Home',
     );
-    const BottomNavigationBarItem devices = BottomNavigationBarItem(
-      icon: Icon(Icons.handyman),
+
+    BottomNavigationBarItem devices = BottomNavigationBarItem(
+      icon: routinesIcon,
+      activeIcon: Icon(Icons.circle),
       label: 'Devices',
     );
-    const BottomNavigationBarItem accounts = BottomNavigationBarItem(
-      icon: Icon(Icons.admin_panel_settings),
+
+    BottomNavigationBarItem accounts = BottomNavigationBarItem(
+      icon: settingsIcon,
+      activeIcon: Icon(Icons.circle),
       label: 'Settings',
     );
 
@@ -145,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
             child: BottomNavigationBar(
                 elevation: 0,
                 backgroundColor: Colors.transparent,
-                items: const <BottomNavigationBarItem>[
+                items: <BottomNavigationBarItem>[
                   user,
                   devices,
                   accounts,
