@@ -10,6 +10,7 @@ import 'components/accounts.dart';
 import 'components/devices.dart';
 import 'components/integrations.dart';
 import 'components/profile.dart';
+import 'themes/custom_bottom_nav_bar.dart';
 import 'themes/string_constants.dart';
 
 void main() {
@@ -105,6 +106,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    const Widget dotIcon = Icon(
+      Icons.circle,
+      size: 10,
+    );
+
     Widget homeIcon = SvgPicture.asset(
       'assets/icons/ic_home_unselected.svg',
       color: Colors.grey,
@@ -125,22 +131,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
     BottomNavigationBarItem user = BottomNavigationBarItem(
       icon: homeIcon,
-      activeIcon: Icon(
-        Icons.circle,
-        size: 10,
-      ),
+      activeIcon: dotIcon,
       label: 'Home',
     );
 
     BottomNavigationBarItem devices = BottomNavigationBarItem(
       icon: routinesIcon,
-      activeIcon: Icon(Icons.circle),
+      activeIcon: dotIcon,
       label: 'Devices',
     );
 
     BottomNavigationBarItem accounts = BottomNavigationBarItem(
       icon: settingsIcon,
-      activeIcon: Icon(Icons.circle),
+      activeIcon: dotIcon,
       label: 'Settings',
     );
 
@@ -169,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
           notchMargin: 10.0,
           child: Container(
             padding: EdgeInsets.only(right: 90.0),
-            child: BottomNavigationBar(
+            child: CustomBottomNavigationBar(
                 elevation: 0,
                 backgroundColor: Colors.transparent,
                 items: <BottomNavigationBarItem>[

@@ -660,7 +660,13 @@ class _BottomNavigationTile extends StatelessWidget {
           showUnselectedLabels ?? bottomTheme.showUnselectedLabels,
     );
     List<Widget> tileIcons = selected
-        ? [labelWidget, tileIconWidget]
+        ? [
+            labelWidget,
+            SizedBox(
+              height: 8.0,
+            ),
+            tileIconWidget
+          ]
         : [tileIconWidget, labelWidget];
     Widget result = InkResponse(
       onTap: onTap,
