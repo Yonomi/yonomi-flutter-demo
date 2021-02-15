@@ -47,17 +47,17 @@ class ProfileWidget extends StatelessWidget {
             SizedBox(height: 20),
             Consumer<UserInfoProvider>(
               builder: (context, data, child) {
-                return Text(data.user.displayName);
+                return Text(data?.user?.displayName ?? '');
               },
             ),
             Consumer<UserInfoProvider>(
               builder: (context, data, child) {
-                return Text(data.user.firstActivityAt.toString());
+                return Text(data?.user?.firstActivityAt?.toString() ?? '');
               },
             ),
             Consumer<UserInfoProvider>(
               builder: (context, data, child) {
-                return Text(data.user.lastActivityAt.toString());
+                return Text(data?.user?.lastActivityAt?.toString() ?? '');
               },
             ),
             SizedBox(height: 20) // Text(result.data['me']['firstActivityAt']),
