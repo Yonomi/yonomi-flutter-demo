@@ -155,16 +155,37 @@ class _MyHomePageState extends State<MyHomePage> {
                 selectedItemColor: AppThemes.bottomAppBarSelectedItemColor,
                 onTap: _navigateTo),
           )),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppThemes.floatingActionButtonColor,
-        elevation: 2.0,
-        tooltip: StringConstants.add_account,
-        child: Icon(
-          Icons.add,
-          size: 45,
-        ),
-      ),
+      floatingActionButtonLocation: offsetFromEndDockedFabLocation(),
+      floatingActionButton: Container(
+          height: 65.0,
+          width: 65.0,
+          child: FittedBox(
+              child: FloatingActionButton(
+            backgroundColor: AppThemes.floatingActionButtonColor,
+            elevation: 2.0,
+            tooltip: StringConstants.add_account,
+            child: Icon(
+              Icons.add,
+              size: 45,
+            ),
+          ))),
     );
+  }
+}
+
+class offsetFromEndDockedFabLocation extends StandardFabLocation
+    with FabEndOffsetX, FabDockedOffsetY {
+  const offsetFromEndDockedFabLocation();
+
+  @override
+  String toString() => 'FloatingActionButtonLocation.endDocked';
+
+  @override
+  double getOffsetX(
+      ScaffoldPrelayoutGeometry scaffoldGeometry, double adjustment) {
+    final double directionalAdjustment =
+        scaffoldGeometry.textDirection == TextDirection.ltr ? -13.0 : 13.0;
+    return super.getOffsetX(scaffoldGeometry, adjustment) +
+        directionalAdjustment;
   }
 }
