@@ -6,6 +6,11 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:vector_math/vector_math_64.dart' show Vector3;
 
+/// This is an exact copy of [BottomNavigationBar]
+/// Except for the changes made in how the widgets are ordered in the
+/// [_BottomNavigationTile.build] method.
+/// We will proceed with this solution until we find a better solution
+/// to implement the design.
 class CustomBottomNavigationBar extends StatefulWidget {
   /// Creates a bottom navigation bar which is typically used as a
   /// [Scaffold]'s [Scaffold.bottomNavigationBar] argument.

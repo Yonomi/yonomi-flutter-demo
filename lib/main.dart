@@ -185,7 +185,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 selectedItemColor: AppThemes.bottomAppBarSelectedItemColor,
                 onTap: _navigateTo),
           )),
-      floatingActionButtonLocation: offsetFromEndDockedFabLocation(),
+      floatingActionButtonLocation: const offsetFromEndDockedFabLocation(),
       floatingActionButton: Container(
           height: 65.0,
           width: 65.0,
