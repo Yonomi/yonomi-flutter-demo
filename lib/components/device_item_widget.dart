@@ -28,43 +28,46 @@ class DeviceItemWidget extends StatelessWidget {
     return Container(
         width: 175.0,
         height: 175.0,
-        child: Container(
-            padding: const EdgeInsets.all(16.0),
-            margin: const EdgeInsets.all(8.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(16.0)),
-              color: AppThemes.deviceItemBackgroundColor,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Icon(
-                  icon,
-                  size: 60,
-                  color: ColorConstants.deviceIconColor,
-                ),
-                Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        location,
-                        style: AppThemes.deviceItemTextLocation,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 4.0, bottom: 4.0),
-                        child: Text(
-                          name,
-                          style: AppThemes.deviceItemTextName,
+        child: GestureDetector(
+          child: Container(
+              padding: const EdgeInsets.all(16.0),
+              margin: const EdgeInsets.all(8.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                color: AppThemes.deviceItemBackgroundColor,
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Icon(
+                    icon,
+                    size: 60,
+                    color: ColorConstants.deviceIconColor,
+                  ),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          location,
+                          style: AppThemes.deviceItemTextLocation,
                         ),
-                      ),
-                      Text(
-                        state,
-                        style: AppThemes.deviceItemTextState,
-                      ),
-                    ]),
-              ],
-            )));
+                        Padding(
+                          padding: EdgeInsets.only(top: 4.0, bottom: 4.0),
+                          child: Text(
+                            name,
+                            style: AppThemes.deviceItemTextName,
+                          ),
+                        ),
+                        Text(
+                          state,
+                          style: AppThemes.deviceItemTextState,
+                        ),
+                      ]),
+                ],
+              )),
+          onTap: onPressed,
+        ));
   }
 }

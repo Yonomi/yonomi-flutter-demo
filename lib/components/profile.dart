@@ -11,7 +11,6 @@ class ProfileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final Widget user = getUserWidget();
     final Widget device = getDeviceWidget();
-    var userInfoProvider = Provider.of<UserInfoProvider>(context);
     // userInfoProvider.fetchUserDetails();
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,

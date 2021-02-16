@@ -1,47 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:yonomi_flutter_demo/components/devices.dart';
-import 'package:yonomi_flutter_demo/themes/app_themes.dart';
+import 'package:provider/provider.dart';
+import 'package:yonomi_flutter_demo/assets/traits/name_icon_mapper.dart';
+import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
+import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
 
 class HomeWidget extends StatelessWidget {
   static final String title = "Home";
 
   Widget build(BuildContext context) {
-    final Widget deviceQuery = getDeviceQueryWidget();
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        SizedBox(height: 25),
-        deviceQuery,
-        // Expanded(
-        //     child: Container(
-        //   width: 100,
-        // ))
-      ],
-    );
-  }
-
-  Widget getDeviceQueryWidget() {
-    final DevicesWidget devicesWidget = DevicesWidget();
-
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        children: [
-          ListTile(
-            tileColor: Colors.yellow,
-            title: Text("Devices",
-                style: const TextStyle(
-                  color: AppThemes.listViewTextColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20.0,
-                )),
-          ),
-          SizedBox(height: 20),
-          devicesWidget,
-          SizedBox(height: 20)
-        ],
+    return ChangeNotifierProvider(
+      child: Consumer<DevicesProvider>(
+        builder: (context, data, child) {
+          return Expanded(
+            child: GridView.count(
+              primary: false,
+              padding: const EdgeInsets.all(20),
+              shrinkWrap: true,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              crossAxisCount: 2,
+              physics: ClampingScrollPhysics(),
+              children: data?.devices?.map((device) {
+                return DeviceItemWidget(
+                  icon: DeviceItemIcon.getIcon(device.traits),
+                  location: 'entryway',
+                  name: device.displayName,
+                  onPressed: () =>
+                      data.performAction(device.traits[0], device.id),
+                );
+              })?.toList(),
+            ),
+          );
+        },
       ),
+      create: (context) => DevicesProvider(),
     );
   }
+
+  // Widget getDeviceWidget() {
+
+  // }
 }

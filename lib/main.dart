@@ -87,9 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     const BottomNavigationBarItem user = BottomNavigationBarItem(
-      icon: Icon(Icons.home),
-      label: 'Home',
-    );
+        icon: Icon(Icons.home), label: 'Home', activeIcon: Icon(Icons.circle));
     const BottomNavigationBarItem devices = BottomNavigationBarItem(
       icon: Icon(Icons.handyman),
       label: 'Devices',
