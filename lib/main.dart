@@ -114,37 +114,37 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget homeIcon = SvgPicture.asset(
       'assets/icons/ic_home_unselected.svg',
       color: Colors.grey,
-      semanticsLabel: "Home",
+      semanticsLabel: "home",
     );
 
     Widget routinesIcon = SvgPicture.asset(
       'assets/icons/ic_routines_unselected.svg',
       color: Colors.grey,
-      semanticsLabel: "Routines",
+      semanticsLabel: "routines",
     );
 
     Widget settingsIcon = SvgPicture.asset(
       'assets/icons/ic_settings_unselected.svg',
       color: Colors.grey,
-      semanticsLabel: "Settings",
+      semanticsLabel: "settings",
     );
 
     BottomNavigationBarItem user = BottomNavigationBarItem(
       icon: homeIcon,
       activeIcon: dotIcon,
-      label: 'Home',
+      label: 'HOME',
     );
 
     BottomNavigationBarItem devices = BottomNavigationBarItem(
       icon: routinesIcon,
       activeIcon: dotIcon,
-      label: 'Devices',
+      label: 'DEVICES',
     );
 
     BottomNavigationBarItem accounts = BottomNavigationBarItem(
       icon: settingsIcon,
       activeIcon: dotIcon,
-      label: 'Settings',
+      label: 'SETTINGS',
     );
 
     return Scaffold(
