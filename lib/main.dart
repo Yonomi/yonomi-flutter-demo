@@ -120,13 +120,13 @@ class _MyHomePageState extends State<MyHomePage> {
     Widget routinesIcon = SvgPicture.asset(
       'assets/icons/ic_routines_unselected.svg',
       color: Colors.grey,
-      semanticsLabel: "Home",
+      semanticsLabel: "Routines",
     );
 
     Widget settingsIcon = SvgPicture.asset(
       'assets/icons/ic_settings_unselected.svg',
       color: Colors.grey,
-      semanticsLabel: "Home",
+      semanticsLabel: "Settings",
     );
 
     BottomNavigationBarItem user = BottomNavigationBarItem(
@@ -173,6 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Container(
             padding: EdgeInsets.only(right: 90.0),
             child: CustomBottomNavigationBar(
+                key: Key('bottomNavBar'),
                 elevation: 0,
                 backgroundColor: Colors.transparent,
                 items: <BottomNavigationBarItem>[

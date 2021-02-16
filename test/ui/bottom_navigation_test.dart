@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:yonomi_flutter_demo/components/accounts.dart';
 import 'package:yonomi_flutter_demo/main.dart';
 
 void main() {
@@ -9,8 +9,8 @@ void main() {
     await tester.pumpWidget(MyApp());
 
     // Tap the 'Home' icon
-    await tester.tap(find.byIcon(Icons.home));
-    await tester.pump();
+    await tester.tap(find.text("Home"));
+    await tester.pumpAndSettle();
 
     // Verify that we are in the 'Home' screen
     expect(find.text("Home"), findsNWidgets(2));
@@ -22,11 +22,11 @@ void main() {
     await tester.pumpWidget(MyApp());
 
     // Tap the 'Routines' icon
-    await tester.tap(find.byIcon(Icons.handyman));
-    await tester.pump();
+    await tester.tap(find.bySemanticsLabel("Routines"));
+    await tester.pumpAndSettle();
 
     // Verify that we are in the 'Routines' screen
-    expect(find.text("Routines"), findsOneWidget);
+    expect(find.text("Devices"), findsOneWidget);
   });
 
   testWidgets('Tapping on Settings Icon takes you to Settings screen',
@@ -35,10 +35,10 @@ void main() {
     await tester.pumpWidget(MyApp());
 
     // Tap the 'Settings' icon
-    await tester.tap(find.byIcon(Icons.admin_panel_settings));
-    await tester.pump();
+    await tester.tap(find.text("Settings"));
+    await tester.pumpAndSettle();
 
     // Verify that we are in the 'Settings' screen
-    expect(find.text("Settings"), findsNWidgets(2));
+    expect(find.byType(SettingsWidget), findsOneWidget);
   });
 }
