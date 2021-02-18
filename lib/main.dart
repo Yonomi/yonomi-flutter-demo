@@ -134,7 +134,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     Widget homeSelectedWidget = Column(
-      children: [const Text("HOME"), dotIcon],
+      children: [
+        const Text("HOME"),
+        SizedBox(
+          height: 8.0,
+        ),
+        dotIcon
+      ],
     );
 
     Widget devicesUnselectedWidget = Column(
@@ -142,7 +148,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     Widget devicesSelectedWidget = Column(
-      children: [const Text("DEVICES"), dotIcon],
+      children: [
+        const Text("DEVICES"),
+        SizedBox(
+          height: 8.0,
+        ),
+        dotIcon
+      ],
     );
 
     Widget settingsUnselectedWidget = Column(
@@ -150,25 +162,31 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     Widget settingsSelectedWidget = Column(
-      children: [const Text("SETTINGS"), dotIcon],
+      children: [
+        const Text("SETTINGS"),
+        SizedBox(
+          height: 8.0,
+        ),
+        dotIcon
+      ],
     );
 
     BottomNavigationBarItem userItem = BottomNavigationBarItem(
       icon: homeUnselectedWidget,
       activeIcon: homeSelectedWidget,
-      title: SizedBox.shrink(),
+      label: "User",
     );
 
     BottomNavigationBarItem devicesItem = BottomNavigationBarItem(
       icon: devicesUnselectedWidget,
       activeIcon: devicesSelectedWidget,
-      title: SizedBox.shrink(),
+      label: "Devices",
     );
 
     BottomNavigationBarItem accountsItem = BottomNavigationBarItem(
       icon: settingsUnselectedWidget,
       activeIcon: settingsSelectedWidget,
-      title: SizedBox.shrink(),
+      label: "Settings",
     );
 
     return Scaffold(
@@ -200,6 +218,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 key: Key('bottomNavBar'),
                 elevation: 0,
                 backgroundColor: Colors.transparent,
+                showSelectedLabels: false,
+                showUnselectedLabels: false,
                 items: <BottomNavigationBarItem>[
                   userItem,
                   devicesItem,
