@@ -8,36 +8,31 @@ class HomeWidget extends StatelessWidget {
   static final String title = "Home";
 
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      child: Consumer<DevicesProvider>(
-        builder: (context, data, child) {
-          return Expanded(
-            child: GridView.count(
-              primary: false,
-              padding: const EdgeInsets.all(20),
-              shrinkWrap: true,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 10,
-              crossAxisCount: 2,
-              physics: ClampingScrollPhysics(),
-              children: data?.devices?.map((device) {
-                return DeviceItemWidget(
-                  icon: DeviceItemIcon.getIcon(device.traits),
-                  location: 'entryway',
-                  name: device.displayName,
-                  onPressed: () =>
-                      data.performAction(device.traits[0], device.id),
-                );
-              })?.toList(),
-            ),
-          );
-        },
-      ),
-      create: (context) => DevicesProvider(),
+    // DevicesProvider devicesProvier = Provider.of<DevicesProvider>(context);
+    // devicesProvier.fetchDevices();
+    return Consumer<DevicesProvider>(
+      builder: (context, data, child) {
+        return Expanded(
+          child: GridView.count(
+            primary: false,
+            padding: const EdgeInsets.all(20),
+            shrinkWrap: true,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            crossAxisCount: 2,
+            physics: ClampingScrollPhysics(),
+            children: data?.devices?.map((device) {
+              return DeviceItemWidget(
+                icon: DeviceItemIcon.getIcon(device.traits),
+                location: 'entryway',
+                name: device.displayName,
+                onPressed: () =>
+                    data.performAction(device.traits[0], device.id),
+              );
+            })?.toList(),
+          ),
+        );
+      },
     );
   }
-
-  // Widget getDeviceWidget() {
-
-  // }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/models/account_model.dart';
+import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
@@ -12,7 +13,12 @@ import 'components/profile.dart';
 import 'themes/string_constants.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<DevicesProvider>.value(
+      value: YoSDKDevicesProvider(),
+    ),
+    ChangeNotifierProvider(create: (context) => UserInfoProvider()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -24,14 +30,7 @@ class MyApp extends StatelessWidget {
       theme: AppThemes.getMainTheme(context),
       home: MyHomePage(title: 'Yonomi Demo App'),
     );
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => UserInfoProvider(),
-        )
-      ],
-      child: app,
-    );
+    return app;
   }
 }
 
@@ -47,29 +46,25 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  var _titles = [
-    ProfileWidget.title,
-    DevicesWidget.title,
-    SettingsWidget.title
-  ];
+  var _titles = [ProfileWidget.title, SettingsWidget.title];
 
-  void _navigateTo(int index) {
-    if (index < _titles.length) {
-      setState(() {
-        _selectedIndex = index;
-        widget.title = _titles[index];
-      });
-    }
+  Function _navigateTo(BuildContext context) {
+    return (int index) async {
+      DevicesProvider provider =
+          Provider.of<DevicesProvider>(context, listen: false);
+      await provider.fetchDevices();
+      if (index < _titles.length) {
+        setState(() {
+          _selectedIndex = index;
+          widget.title = _titles[index];
+        });
+      }
+    };
   }
 
   final Column homeWidget = Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[HomeWidget()],
-  );
-
-  final Column devicesWidget = Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: <Widget>[DevicesWidget()],
   );
 
   final Center integrationWidget = Center(
@@ -88,10 +83,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     const BottomNavigationBarItem user = BottomNavigationBarItem(
         icon: Icon(Icons.home), label: 'Home', activeIcon: Icon(Icons.circle));
-    const BottomNavigationBarItem devices = BottomNavigationBarItem(
-      icon: Icon(Icons.handyman),
-      label: 'Devices',
-    );
     const BottomNavigationBarItem accounts = BottomNavigationBarItem(
       icon: Icon(Icons.admin_panel_settings),
       label: 'Settings',
@@ -112,7 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: [
         homeWidget,
-        devicesWidget,
         settingsWidget,
       ][_selectedIndex],
       bottomNavigationBar: BottomAppBar(
@@ -127,13 +117,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 backgroundColor: Colors.transparent,
                 items: const <BottomNavigationBarItem>[
                   user,
-                  devices,
                   accounts,
                 ],
                 currentIndex: _selectedIndex,
                 unselectedItemColor: AppThemes.bottomAppBarUnselectedItemColor,
                 selectedItemColor: AppThemes.bottomAppBarSelectedItemColor,
-                onTap: _navigateTo),
+                onTap: _navigateTo(context)),
           )),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
       floatingActionButton: FloatingActionButton(

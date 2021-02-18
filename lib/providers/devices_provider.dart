@@ -8,12 +8,9 @@ import 'package:yonomi_platform_sdk/traits/trait.dart';
 import 'package:yonomi_platform_sdk/traits/traitLockUnlock/traitLockUnlockActionQuery.dart';
 import 'package:yonomi_platform_sdk/user.dart';
 
-class DevicesProvider extends ChangeNotifier {
+class YoSDKDevicesProvider extends DevicesProvider {
   List<DeviceModel> _devices = [];
 
-  DevicesProvider() {
-    fetchDevices();
-  }
   Request request = YoRequestFactory.request();
   Future<void> fetchDevices() async {
     _devices = (await (Devices.all()..withTraits()).get(request))
@@ -37,6 +34,12 @@ class DevicesProvider extends ChangeNotifier {
   }
 
   List<DeviceModel> get devices => _devices;
+}
+
+abstract class DevicesProvider extends ChangeNotifier {
+  Future<void> fetchDevices();
+  Future<void> performAction(Trait trait, String deviceId);
+  List<DeviceModel> get devices;
 }
 
 class DeviceModel {
