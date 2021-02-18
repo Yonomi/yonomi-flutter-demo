@@ -10,7 +10,6 @@ import 'components/accounts.dart';
 import 'components/devices.dart';
 import 'components/integrations.dart';
 import 'components/profile.dart';
-import 'themes/custom_bottom_nav_bar.dart';
 import 'themes/string_constants.dart';
 
 void main() {
@@ -109,42 +108,67 @@ class _MyHomePageState extends State<MyHomePage> {
     const Widget dotIcon = Icon(
       Icons.circle,
       size: 10,
+      color: AppThemes.bottomAppBarUnselectedItemColor,
     );
 
     Widget homeIcon = SvgPicture.asset(
       'assets/icons/ic_home_unselected.svg',
-      color: Colors.grey,
+      color: AppThemes.bottomAppBarUnselectedItemColor,
       semanticsLabel: "home",
     );
 
-    Widget routinesIcon = SvgPicture.asset(
+    Widget devicesIcon = SvgPicture.asset(
       'assets/icons/ic_routines_unselected.svg',
-      color: Colors.grey,
-      semanticsLabel: "routines",
+      color: AppThemes.bottomAppBarUnselectedItemColor,
+      semanticsLabel: "devices",
     );
 
     Widget settingsIcon = SvgPicture.asset(
       'assets/icons/ic_settings_unselected.svg',
-      color: Colors.grey,
+      color: AppThemes.bottomAppBarUnselectedItemColor,
       semanticsLabel: "settings",
     );
 
-    BottomNavigationBarItem user = BottomNavigationBarItem(
-      icon: homeIcon,
-      activeIcon: dotIcon,
-      label: 'HOME',
+    Widget homeUnselectedWidget = Column(
+      children: [homeIcon, const Text("HOME")],
     );
 
-    BottomNavigationBarItem devices = BottomNavigationBarItem(
-      icon: routinesIcon,
-      activeIcon: dotIcon,
-      label: 'DEVICES',
+    Widget homeSelectedWidget = Column(
+      children: [const Text("HOME"), dotIcon],
     );
 
-    BottomNavigationBarItem accounts = BottomNavigationBarItem(
-      icon: settingsIcon,
-      activeIcon: dotIcon,
-      label: 'SETTINGS',
+    Widget devicesUnselectedWidget = Column(
+      children: [devicesIcon, const Text("DEVICES")],
+    );
+
+    Widget devicesSelectedWidget = Column(
+      children: [const Text("DEVICES"), dotIcon],
+    );
+
+    Widget settingsUnselectedWidget = Column(
+      children: [settingsIcon, const Text("SETTINGS")],
+    );
+
+    Widget settingsSelectedWidget = Column(
+      children: [const Text("SETTINGS"), dotIcon],
+    );
+
+    BottomNavigationBarItem userItem = BottomNavigationBarItem(
+      icon: homeUnselectedWidget,
+      activeIcon: homeSelectedWidget,
+      label: "",
+    );
+
+    BottomNavigationBarItem devicesItem = BottomNavigationBarItem(
+      icon: devicesUnselectedWidget,
+      activeIcon: devicesSelectedWidget,
+      label: "",
+    );
+
+    BottomNavigationBarItem accountsItem = BottomNavigationBarItem(
+      icon: settingsUnselectedWidget,
+      activeIcon: settingsSelectedWidget,
+      label: "",
     );
 
     return Scaffold(
@@ -172,14 +196,14 @@ class _MyHomePageState extends State<MyHomePage> {
           notchMargin: 10.0,
           child: Container(
             padding: EdgeInsets.only(right: 90.0),
-            child: CustomBottomNavigationBar(
+            child: BottomNavigationBar(
                 key: Key('bottomNavBar'),
                 elevation: 0,
                 backgroundColor: Colors.transparent,
                 items: <BottomNavigationBarItem>[
-                  user,
-                  devices,
-                  accounts,
+                  userItem,
+                  devicesItem,
+                  accountsItem,
                 ],
                 currentIndex: _selectedIndex,
                 unselectedItemColor: AppThemes.bottomAppBarUnselectedItemColor,
