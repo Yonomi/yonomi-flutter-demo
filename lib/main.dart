@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/models/account_model.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
@@ -10,6 +9,7 @@ import 'components/accounts.dart';
 import 'components/devices.dart';
 import 'components/integrations.dart';
 import 'components/profile.dart';
+import 'components/yonomi_bottom_app_bar.dart';
 import 'themes/string_constants.dart';
 
 void main() {
@@ -105,90 +105,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    const Widget dotIcon = Icon(
-      Icons.circle,
-      size: 10,
-      color: AppThemes.bottomAppBarUnselectedItemColor,
-    );
-
-    Widget homeIcon = SvgPicture.asset(
-      'assets/icons/ic_home_unselected.svg',
-      color: AppThemes.bottomAppBarUnselectedItemColor,
-      semanticsLabel: "home",
-    );
-
-    Widget devicesIcon = SvgPicture.asset(
-      'assets/icons/ic_routines_unselected.svg',
-      color: AppThemes.bottomAppBarUnselectedItemColor,
-      semanticsLabel: "devices",
-    );
-
-    Widget settingsIcon = SvgPicture.asset(
-      'assets/icons/ic_settings_unselected.svg',
-      color: AppThemes.bottomAppBarUnselectedItemColor,
-      semanticsLabel: "settings",
-    );
-
-    Widget homeUnselectedWidget = Column(
-      children: [homeIcon, const Text("HOME")],
-    );
-
-    Widget homeSelectedWidget = Column(
-      children: [
-        const Text("HOME"),
-        SizedBox(
-          height: 8.0,
-        ),
-        dotIcon
-      ],
-    );
-
-    Widget devicesUnselectedWidget = Column(
-      children: [devicesIcon, const Text("DEVICES")],
-    );
-
-    Widget devicesSelectedWidget = Column(
-      children: [
-        const Text("DEVICES"),
-        SizedBox(
-          height: 8.0,
-        ),
-        dotIcon
-      ],
-    );
-
-    Widget settingsUnselectedWidget = Column(
-      children: [settingsIcon, const Text("SETTINGS")],
-    );
-
-    Widget settingsSelectedWidget = Column(
-      children: [
-        const Text("SETTINGS"),
-        SizedBox(
-          height: 8.0,
-        ),
-        dotIcon
-      ],
-    );
-
-    BottomNavigationBarItem userItem = BottomNavigationBarItem(
-      icon: homeUnselectedWidget,
-      activeIcon: homeSelectedWidget,
-      label: "User",
-    );
-
-    BottomNavigationBarItem devicesItem = BottomNavigationBarItem(
-      icon: devicesUnselectedWidget,
-      activeIcon: devicesSelectedWidget,
-      label: "Devices",
-    );
-
-    BottomNavigationBarItem accountsItem = BottomNavigationBarItem(
-      icon: settingsUnselectedWidget,
-      activeIcon: settingsSelectedWidget,
-      label: "Settings",
-    );
-
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
@@ -207,30 +123,11 @@ class _MyHomePageState extends State<MyHomePage> {
         devicesWidget,
         settingsWidget,
       ][_selectedIndex],
-      bottomNavigationBar: BottomAppBar(
-          color: AppThemes.bottomAppBarBgColor,
-          shape: AutomaticNotchedShape(
-              RoundedRectangleBorder(), StadiumBorder(side: BorderSide())),
-          notchMargin: 10.0,
-          child: Container(
-            padding: EdgeInsets.only(right: 90.0),
-            child: BottomNavigationBar(
-                key: Key('bottomNavBar'),
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                showSelectedLabels: false,
-                showUnselectedLabels: false,
-                items: <BottomNavigationBarItem>[
-                  userItem,
-                  devicesItem,
-                  accountsItem,
-                ],
-                currentIndex: _selectedIndex,
-                unselectedItemColor: AppThemes.bottomAppBarUnselectedItemColor,
-                selectedItemColor: AppThemes.bottomAppBarSelectedItemColor,
-                onTap: _navigateTo),
-          )),
-      floatingActionButtonLocation: const offsetFromEndDockedFabLocation(),
+      bottomNavigationBar: YonomiBottomAppBar(
+        selectedIndex: _selectedIndex,
+        onTap: _navigateTo,
+      ),
+      floatingActionButtonLocation: const OffsetFromEndDockedFabLocation(),
       floatingActionButton: Container(
           height: 65.0,
           width: 65.0,
@@ -248,9 +145,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class offsetFromEndDockedFabLocation extends StandardFabLocation
+class OffsetFromEndDockedFabLocation extends StandardFabLocation
     with FabEndOffsetX, FabDockedOffsetY {
-  const offsetFromEndDockedFabLocation();
+  const OffsetFromEndDockedFabLocation();
 
   @override
   String toString() => 'FloatingActionButtonLocation.endDocked';
