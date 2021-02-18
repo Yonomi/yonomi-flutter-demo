@@ -156,19 +156,19 @@ class _MyHomePageState extends State<MyHomePage> {
     BottomNavigationBarItem userItem = BottomNavigationBarItem(
       icon: homeUnselectedWidget,
       activeIcon: homeSelectedWidget,
-      label: "",
+      title: SizedBox.shrink(),
     );
 
     BottomNavigationBarItem devicesItem = BottomNavigationBarItem(
       icon: devicesUnselectedWidget,
       activeIcon: devicesSelectedWidget,
-      label: "",
+      title: SizedBox.shrink(),
     );
 
     BottomNavigationBarItem accountsItem = BottomNavigationBarItem(
       icon: settingsUnselectedWidget,
       activeIcon: settingsSelectedWidget,
-      label: "",
+      title: SizedBox.shrink(),
     );
 
     return Scaffold(
