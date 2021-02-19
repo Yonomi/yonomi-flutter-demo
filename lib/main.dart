@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yonomi_flutter_demo/models/account_model.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
 import 'components/Home.dart';
 import 'components/accounts.dart';
-import 'components/devices.dart';
 import 'components/integrations.dart';
 import 'components/profile.dart';
 import 'components/yonomi_bottom_app_bar.dart';
@@ -47,13 +45,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _selectedIndex = 0;
 
-  var _titles = [ProfileWidget.title, SettingsWidget.title];
+  var _titles = [
+    ProfileWidget.title,
+    SettingsWidget.title,
+    SettingsWidget.title
+  ];
 
   Function _navigateTo(BuildContext context) {
     return (int index) async {
       DevicesProvider provider =
           Provider.of<DevicesProvider>(context, listen: false);
-      await provider.fetchDevices();
+      await provider.hydrateDevices();
       if (index < _titles.length) {
         setState(() {
           _selectedIndex = index;
@@ -95,10 +97,7 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      body: [
-        homeWidget,
-        settingsWidget,
-      ][_selectedIndex],
+      body: [homeWidget, settingsWidget, settingsWidget][_selectedIndex],
       bottomNavigationBar: YonomiBottomAppBar(
         selectedIndex: _selectedIndex,
         onTap: _navigateTo(context),

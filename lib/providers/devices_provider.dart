@@ -12,7 +12,7 @@ class YoSDKDevicesProvider extends DevicesProvider {
   List<DeviceModel> _devices = [];
 
   Request request = YoRequestFactory.request();
-  Future<void> fetchDevices() async {
+  Future<void> hydrateDevices() async {
     _devices = (await (Devices.all()..withTraits()).get(request))
         .devices
         .map((device) =>
@@ -37,7 +37,7 @@ class YoSDKDevicesProvider extends DevicesProvider {
 }
 
 abstract class DevicesProvider extends ChangeNotifier {
-  Future<void> fetchDevices();
+  Future<void> hydrateDevices();
   Future<void> performAction(Trait trait, String deviceId);
   List<DeviceModel> get devices;
 }

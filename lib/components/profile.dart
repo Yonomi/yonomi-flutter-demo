@@ -10,20 +10,10 @@ class ProfileWidget extends StatelessWidget {
 
   Widget build(BuildContext context) {
     final Widget user = getUserWidget();
-    final Widget device = getDeviceWidget();
     // userInfoProvider.fetchUserDetails();
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        SizedBox(height: 25),
-        user,
-        SizedBox(height: 25),
-        device,
-        // Expanded(
-        //     child: Container(
-        //   width: 100,
-        // ))
-      ],
+      children: <Widget>[SizedBox(height: 25), user],
     );
   }
 
@@ -62,28 +52,4 @@ class ProfileWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-Widget getDeviceWidget() {
-  final DevicesWidget devicesWidget = DevicesWidget();
-
-  return Card(
-    clipBehavior: Clip.antiAlias,
-    child: Column(
-      children: [
-        ListTile(
-          tileColor: Colors.yellow,
-          title: Text("Devices",
-              style: const TextStyle(
-                color: AppThemes.listViewTextColor,
-                fontWeight: FontWeight.w500,
-                fontSize: 20.0,
-              )),
-        ),
-        SizedBox(height: 20),
-        devicesWidget,
-        SizedBox(height: 20)
-      ],
-    ),
-  );
 }
