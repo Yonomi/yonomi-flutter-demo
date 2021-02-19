@@ -8,7 +8,7 @@ class HomeWidget extends StatelessWidget {
   static final String title = "Home";
 
   Widget build(BuildContext context) {
-    // DevicesProvider devicesProvier = Provider.of<DevicesProvider>(context);
+    DevicesProvider devicesProvier = Provider.of<DevicesProvider>(context);
     // devicesProvier.fetchDevices();
     return Consumer<DevicesProvider>(
       builder: (context, data, child) {
