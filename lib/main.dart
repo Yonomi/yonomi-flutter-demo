@@ -10,6 +10,7 @@ import 'components/accounts.dart';
 import 'components/devices.dart';
 import 'components/integrations.dart';
 import 'components/profile.dart';
+import 'components/yonomi_bottom_app_bar.dart';
 import 'themes/string_constants.dart';
 
 void main() {
@@ -81,13 +82,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    const BottomNavigationBarItem user = BottomNavigationBarItem(
-        icon: Icon(Icons.home), label: 'Home', activeIcon: Icon(Icons.circle));
-    const BottomNavigationBarItem accounts = BottomNavigationBarItem(
-      icon: Icon(Icons.admin_panel_settings),
-      label: 'Settings',
-    );
-
     return Scaffold(
       extendBodyBehindAppBar: false,
       appBar: AppBar(
@@ -105,32 +99,41 @@ class _MyHomePageState extends State<MyHomePage> {
         homeWidget,
         settingsWidget,
       ][_selectedIndex],
-      bottomNavigationBar: BottomAppBar(
-          color: AppThemes.bottomAppBarBgColor,
-          shape: AutomaticNotchedShape(
-              RoundedRectangleBorder(), StadiumBorder(side: BorderSide())),
-          notchMargin: 8.0,
-          child: Container(
-            padding: EdgeInsets.only(right: 90.0),
-            child: BottomNavigationBar(
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                items: const <BottomNavigationBarItem>[
-                  user,
-                  accounts,
-                ],
-                currentIndex: _selectedIndex,
-                unselectedItemColor: AppThemes.bottomAppBarUnselectedItemColor,
-                selectedItemColor: AppThemes.bottomAppBarSelectedItemColor,
-                onTap: _navigateTo(context)),
-          )),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: AppThemes.floatingActionButtonColor,
-        elevation: 2.0,
-        tooltip: StringConstants.add_account,
-        child: Icon(Icons.add),
+      bottomNavigationBar: YonomiBottomAppBar(
+        selectedIndex: _selectedIndex,
+        onTap: _navigateTo(context),
       ),
+      floatingActionButtonLocation: const OffsetFromEndDockedFabLocation(),
+      floatingActionButton: Container(
+          height: 65.0,
+          width: 65.0,
+          child: FittedBox(
+              child: FloatingActionButton(
+            backgroundColor: AppThemes.floatingActionButtonColor,
+            elevation: 2.0,
+            tooltip: StringConstants.add_account,
+            child: Icon(
+              Icons.add,
+              size: 45,
+            ),
+          ))),
     );
+  }
+}
+
+class OffsetFromEndDockedFabLocation extends StandardFabLocation
+    with FabEndOffsetX, FabDockedOffsetY {
+  const OffsetFromEndDockedFabLocation();
+
+  @override
+  String toString() => 'FloatingActionButtonLocation.endDocked';
+
+  @override
+  double getOffsetX(
+      ScaffoldPrelayoutGeometry scaffoldGeometry, double adjustment) {
+    final double directionalAdjustment =
+        scaffoldGeometry.textDirection == TextDirection.ltr ? -13.0 : 13.0;
+    return super.getOffsetX(scaffoldGeometry, adjustment) +
+        directionalAdjustment;
   }
 }

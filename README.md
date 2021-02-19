@@ -1,18 +1,22 @@
+[![Yonomi Flutter Demo][demo-shield]][yonomi]
 [![CircleCI][circle-shield]][circle-pipeline]
 
-# yonomi_flutter_demo
+# Yonomi Flutter Demo
 
- Demo Application built in flutter leveraging the Yonomi Platform
+This demo application is built using Flutter and Yonomi's latest IoT API.
+
+## For Developers
+
+This demo can be used to get aquainted with Yonomi's developer tools, as well as some opinions on best practices for building application with Yonomi. You can fork this application as a starting point for your own IoT mobile and web applications and use it as a head start on development.
+
+## For Non-Technical Customers
+
+This demo is a great place to start understanding the kind of applications you can build using Yonomi. You may use the instructions below to get an instance of this demo running on your local machine, or you can work with members of Yonomi's sales team to see this demo in action.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[yonomi]: https://www.yonomi.co/
+[demo-shield]: https://img.shields.io/badge/Yonomi-Flutter_Demo-lightgrey.svg?colorA=ffd500&colorB=5c5c5c
+[circle-shield]: https://circleci.com/gh/Yonomi/yonomi-flutter-demo/tree/main.svg?style=shield&circle-token=a80bb5eb3849cd3201f9f8c612aceaa09a4ded09
+[circle-pipeline]: https://app.circleci.com/pipelines/github/Yonomi/yonomi-flutter-demo
