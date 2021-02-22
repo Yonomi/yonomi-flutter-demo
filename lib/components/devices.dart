@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:yonomi_flutter_demo/models/device_model.dart';
+import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
 class DevicesWidget extends StatelessWidget {
   static String title = "Routines";
 
   Widget build(BuildContext context) {
-    List<DeviceModel> devices = [DeviceModel('deviceId')];
+    List<DeviceModel> devices = [];
     return ListView(
       children: devices.map((device) {
         final innerText = (device.id);

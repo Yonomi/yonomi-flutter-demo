@@ -1,56 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yonomi_flutter_demo/models/account_model.dart';
+import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
 import 'components/Home.dart';
 import 'components/accounts.dart';
-import 'components/devices.dart';
 import 'components/integrations.dart';
 import 'components/profile.dart';
 import 'components/yonomi_bottom_app_bar.dart';
 import 'themes/string_constants.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<DevicesProvider>.value(
+      value: YoSDKDevicesProvider(),
+    ),
+    ChangeNotifierProvider(create: (context) => UserInfoProvider()),
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    // final HttpLink httpLink = HttpLink(
-    //   uri: 'https://dhapuogzxl.execute-api.us-east-1.amazonaws.com/stg/graphql',
-    // );
-
-    // final String token =
-    //     'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI4OWI3NTYyYi1hMDNmLTQ1YmEtODc5My03NGM5MTg4OTFlYTUiLCJpc3MiOiIwM2U3MTBjYy1kN2RjLTQ2YmMtYmUyMi1hYzYxNjE0YTVjMTIiLCJpYXQiOjE2MTI5NTc1MzYsImV4cCI6MTYxMzA0MzkzNn0.lPrkNHutuISp01vujaRHFGFXlyYIcCLYhRhIOhLjMUssn95rb6KMP4Jd-Y3u1yloxkZkFRapnofAVp6HSdGodwqLDBbeoklEc-PMaNiU7auV2OmIzC825kt8HT_8_SU7ErGT4zSRPdJ8i927xl7lQuXi4FpzoDKKwmLr8dJe5joIu0qg2qKshknnUI7qgZ6IZdofFeX3I-MBkxoabbexqhF_OS-oT2wHJqOYK-7sTZ3iW2g165_ol9ud4j-uUCdbii4SvA3zpgB50YrafRYbZjktC9g5d09XBQs0YjmllZfGF1RbImZVzTWSFMDx7-RmNq61h3TYyHQrEFBcXR1-0Q';
-    // final AuthLink authLink = AuthLink(
-    //   getToken: () async => 'Bearer ' + token,
-    // );
-
-    // final Link link = authLink.concat(httpLink);
-    // final GraphQLClient gqlClient = GraphQLClient(
-    //   cache: InMemoryCache(),
-    //   link: link,
-    // );
-
-    // ValueNotifier<GraphQLClient> client = ValueNotifier(gqlClient);
-
     final MaterialApp app = MaterialApp(
       title: 'Yonomi Flutter Demo',
       theme: AppThemes.getMainTheme(context),
       home: MyHomePage(title: 'Yonomi Demo App'),
     );
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => UserInfoProvider(),
-        )
-      ],
-      child: app,
-    );
+    return app;
   }
 }
 
@@ -68,27 +47,27 @@ class _MyHomePageState extends State<MyHomePage> {
 
   var _titles = [
     ProfileWidget.title,
-    DevicesWidget.title,
+    SettingsWidget.title,
     SettingsWidget.title
   ];
 
-  void _navigateTo(int index) {
-    if (index < _titles.length) {
-      setState(() {
-        _selectedIndex = index;
-        widget.title = _titles[index];
-      });
-    }
+  Function _navigateTo(BuildContext context) {
+    return (int index) async {
+      DevicesProvider provider =
+          Provider.of<DevicesProvider>(context, listen: false);
+      await provider.hydrateDevices();
+      if (index < _titles.length) {
+        setState(() {
+          _selectedIndex = index;
+          widget.title = _titles[index];
+        });
+      }
+    };
   }
 
   final Column homeWidget = Column(
     mainAxisAlignment: MainAxisAlignment.start,
     children: <Widget>[HomeWidget()],
-  );
-
-  final Column devicesWidget = Column(
-    mainAxisAlignment: MainAxisAlignment.start,
-    children: <Widget>[DevicesWidget()],
   );
 
   final Center integrationWidget = Center(
@@ -100,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final Column settingsWidget = Column(
     mainAxisAlignment: MainAxisAlignment.center,
-    children: <Widget>[SettingsWidget()],
+    children: <Widget>[ProfileWidget()],
   );
 
   @override
@@ -118,14 +97,10 @@ class _MyHomePageState extends State<MyHomePage> {
           )
         ],
       ),
-      body: [
-        homeWidget,
-        devicesWidget,
-        settingsWidget,
-      ][_selectedIndex],
+      body: [homeWidget, settingsWidget, settingsWidget][_selectedIndex],
       bottomNavigationBar: YonomiBottomAppBar(
         selectedIndex: _selectedIndex,
-        onTap: _navigateTo,
+        onTap: _navigateTo(context),
       ),
       floatingActionButtonLocation: const OffsetFromEndDockedFabLocation(),
       floatingActionButton: Container(

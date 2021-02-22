@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
+import 'package:mockito/mockito.dart';
 
 Widget createDeviceItemWidget(
     {String state,
@@ -81,9 +82,9 @@ void main() {
       await tester.pumpWidget(
           createDeviceItemWidget(name: "testWidget", onPressed: onPressed));
 
-      await tester.tap(find.text("testWidget"));
+      await tester.tap(find.widgetWithText(DeviceItemWidget, "testWidget"));
 
-      expect(log.length, 0);
+      expect(log.length, 1);
     });
   });
 }
