@@ -17,32 +17,32 @@ void main() {
       value: YoSDKDevicesProvider(),
     ),
     ChangeNotifierProvider(create: (context) => UserInfoProvider()),
-  ], child: MyApp()));
+  ], child: YoApp()));
 }
 
-class MyApp extends StatelessWidget {
+class YoApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final MaterialApp app = MaterialApp(
       title: 'Yonomi Flutter Demo',
       theme: AppThemes.getMainTheme(context),
-      home: MyHomePage(title: 'Yonomi Demo App'),
+      home: YonomiHomePage(title: 'Yonomi Demo App'),
     );
     return app;
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class YonomiHomePage extends StatefulWidget {
+  YonomiHomePage({Key key, this.title}) : super(key: key);
 
   String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _YonomiHomePageState createState() => _YonomiHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _YonomiHomePageState extends State<YonomiHomePage> {
   int _selectedIndex = 0;
 
   var _titles = [
