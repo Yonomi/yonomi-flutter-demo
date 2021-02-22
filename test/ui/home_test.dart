@@ -7,7 +7,6 @@ import 'package:mockito/mockito.dart';
 import 'package:yonomi_flutter_demo/components/home.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
 import 'package:yonomi_platform_sdk/traits/trait.dart';
-import 'package:yonomi_platform_sdk/traits/trait.dart';
 
 class MockDevicesProvider extends Mock implements DevicesProvider {}
 

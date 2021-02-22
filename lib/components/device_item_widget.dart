@@ -31,7 +31,6 @@ class DeviceItemWidget extends StatelessWidget {
         child: GestureDetector(
           child: Container(
               padding: const EdgeInsets.all(16.0),
-              margin: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(16.0)),
                 color: AppThemes.deviceItemBackgroundColor,
