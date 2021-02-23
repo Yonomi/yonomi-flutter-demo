@@ -10,7 +10,7 @@ aliases:
 
 commands:
   fetch-staging-token:
-    description: "Staging token"
+    description: "Fetch access token from staging playground"
     steps:
       - run:
           name: Parse
@@ -32,6 +32,7 @@ commands:
       shell:
         type: string
         default: "/bin/bash --login -eo pipefail"
+        description: "End script immediately if any command exists with a non-zero status or if any pipe exits with a non-zero status."
       pub-cache:
         type: string
         default: "~/.pub-cache"
@@ -48,7 +49,7 @@ commands:
       - run:
           name: Get junitreporter
           shell: << parameters.shell >>
-          command: flutter pub global activate junitreport
+          command: pub global activate junitreport
       - save_cache:
           key: v1.4-dependencies-{{ arch }}-{{ checksum "pubspec.lock" }}
           paths:
