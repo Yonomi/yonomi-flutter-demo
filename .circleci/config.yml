@@ -10,7 +10,7 @@ aliases:
 
 commands:
   fetch-staging-token:
-    descriptiopn: "Staging token"
+    description: "Staging token"
     steps:
       - run:
           name: Parse
