@@ -25,7 +25,7 @@ commands:
     steps:
       - run:
           name: command to run flutter tests
-          command: flutter test --reporter json | tojunit --output test-results/flutter-demo-app-tests/flutter_demo_app_all_tests-report.xml
+          command: flutter test --machine | tojunit --output test-results/flutter-demo-app-tests/flutter_demo_app_all_tests-report.xml
   dependencies:
     description: "Download dependencies and setup global packages"
     parameters:
