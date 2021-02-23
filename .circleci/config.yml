@@ -9,18 +9,23 @@ aliases:
   - &project_dir "~/project"
 
 commands:
+  fetch-staging-token:
+    descriptiopn: "Staging token"
+    steps:
+      - run:
+          name: Parse
+          command: |
+            instance="staging"
+            stagingPlayground="https://zsks8yvbv1.execute-api.us-east-1.amazonaws.com/stg?session=dartSdk"
+            token=$( curl $stagingPlayground | awk 'sub(/.*Bearer */,""){f=1} f{if ( sub(/ *\\\".*/,"") ) f=0; print}' )
+            echo "export AUTH_TOKEN=\"$token\"" >> $BASH_ENV
+            echo "export INSTANCE=\"$instance\"" >> $BASH_ENV
   flutter-test:
     description: "Run flutter tests"
     steps:
       - run:
           name: command to run flutter tests
-          command: flutter test
-  all-tests:
-    description: "Run all tests"
-    steps:
-      - run:
-          name: command to run all tests
-          command: pub run test test --reporter json | tojunit --output test-results/dart-tests/dart_sdk_all_tests-report.xml
+          command: flutter test --reporter json | tojunit --output test-results/flutter-demo-app-tests/flutter_demo_app_all_tests-report.xml
   dependencies:
     description: "Download dependencies and setup global packages"
     parameters:
@@ -38,16 +43,17 @@ commands:
             - v1.4-dependencies-{{ arch }}-
       - run:
           name: Download deps
+          shell: << parameters.shell >>
           command: flutter pub get
-#      - run:
-#          name: Get junitreporter
-#          shell: << parameters.shell >>
-#          command: pub global activate junitreport
-#      - save_cache:
-#          key: v1.4-dependencies-{{ arch }}-{{ checksum "pubspec.lock" }}
-#          paths:
-#            - .dart_tool
-#            - << parameters.pub-cache >>
+      - run:
+          name: Get junitreporter
+          shell: << parameters.shell >>
+          command: flutter pub global activate junitreport
+      - save_cache:
+          key: v1.4-dependencies-{{ arch }}-{{ checksum "pubspec.lock" }}
+          paths:
+            - .dart_tool
+            - << parameters.pub-cache >>
 
 
 workflows:
@@ -62,16 +68,8 @@ jobs:
       - dependencies:
           shell: "/bin/bash -eo pipefail"
       - run:
-          name: Parse an access Token from the Playground
-          command: |
-            instance="staging"
-            stagingPlayground="https://zsks8yvbv1.execute-api.us-east-1.amazonaws.com/stg?session=dartSdk"
-            token=$( curl $stagingPlayground | awk 'sub(/.*Bearer */,""){f=1} f{if ( sub(/ *\\\".*/,"") ) f=0; print}' )
-            echo "export AUTH_TOKEN=\"$token\"" >> $BASH_ENV
-            echo "export INSTANCE=\"$instance\"" >> $BASH_ENV
-      - run:
           name: Make folder for test results
-          command: mkdir -p test-results/dart-tests
+          command: mkdir -p test-results/flutter-demo-app-tests
       - flutter-test
       - store_test_results:
           path: test-results
