@@ -60,9 +60,6 @@ class HomeWidget extends StatelessWidget {
                             name: device.displayName,
                             onPressed: () {
                               data.performAction(device.traits[0], device.id);
-                              Timer(Duration(milliseconds: 1000), () async {
-                                data.hydrateDevices();
-                              });
                             });
                       })?.toList()
                     ],
