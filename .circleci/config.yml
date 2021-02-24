@@ -20,12 +20,14 @@ commands:
             token=$( curl $stagingPlayground | awk 'sub(/.*Bearer */,""){f=1} f{if ( sub(/ *\\\".*/,"") ) f=0; print}' )
             echo "export AUTH_TOKEN=\"$token\"" >> $BASH_ENV
             echo "export INSTANCE=\"$instance\"" >> $BASH_ENV
-  flutter-test:
+  flutter-tests:
     description: "Run flutter tests"
     steps:
       - run:
           name: command to run flutter tests
-          command: flutter test --machine | tojunit --output test-results/flutter-demo-app-tests/flutter_demo_app_all_tests-report.xml
+          command: |
+            flutter test --machine > test-results/flutter-demo-app-tests/flutter_demo_app_all_tests-report.json
+            $HOME/.pub-cache/bin/tojunit --input test-results/flutter-demo-app-tests/flutter_demo_app_all_tests-report.json --output test-results/flutter-demo-app-tests/flutter_demo_app_all_tests-report.xml
   dependencies:
     description: "Download dependencies and setup global packages"
     parameters:
@@ -50,14 +52,13 @@ commands:
           name: Get junitreporter
           shell: << parameters.shell >>
           command: |
-            flutter pub global activate junitreport
+            pub global activate junitreport
             export PATH="$PATH":"$HOME/.pub-cache/bin"
       - save_cache:
           key: v1.4-dependencies-{{ arch }}-{{ checksum "pubspec.lock" }}
           paths:
             - .dart_tool
             - << parameters.pub-cache >>
-
 
 workflows:
   test-and-build:
@@ -73,6 +74,6 @@ jobs:
       - run:
           name: Make folder for test results
           command: mkdir -p test-results/flutter-demo-app-tests
-      - flutter-test
+      - flutter-tests
       - store_test_results:
           path: test-results
