@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
@@ -11,6 +12,7 @@ import 'components/profile.dart';
 import 'components/yonomi_bottom_app_bar.dart';
 import 'themes/string_constants.dart';
 
+const integrationId = 'f0885113-68bb-4bb5-af50-0cbd51025ea9';
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<DevicesProvider>.value(
@@ -111,12 +113,25 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
             backgroundColor: AppThemes.floatingActionButtonColor,
             elevation: 2.0,
             tooltip: StringConstants.add_account,
+            onPressed: () async {
+              var userInfoProvider =
+                  Provider.of<UserInfoProvider>(context, listen: false);
+              _launchURL(await userInfoProvider.fetchUrl(integrationId));
+            },
             child: Icon(
               Icons.add,
               size: 45,
             ),
           ))),
     );
+  }
+}
+
+_launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
   }
 }
 
