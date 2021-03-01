@@ -13,8 +13,14 @@ class YoSDKDevicesProvider extends DevicesProvider {
 
   Request request = YoRequestFactory.request();
   Future<void> hydrateDevices() async {
-    _devices = (await (Devices.all()..withTraits()).get(request))
-        .devices
+    var devicesFromGraph = (await (Devices.all()..withTraits()).get(request));
+    if (devicesFromGraph == null || devicesFromGraph.devices == null) {
+      _devices = [];
+      notifyListeners();
+      return;
+    }
+
+    _devices = devicesFromGraph.devices
         .map((device) =>
             DeviceModel(device.id, device.displayName, device.traits))
         .toList();
