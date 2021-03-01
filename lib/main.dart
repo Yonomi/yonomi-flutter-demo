@@ -9,6 +9,7 @@ import 'components/accounts.dart';
 import 'components/integrations.dart';
 import 'components/profile.dart';
 import 'components/yonomi_bottom_app_bar.dart';
+import 'themes/color_constants.dart';
 import 'themes/string_constants.dart';
 
 void main() {
@@ -87,17 +88,7 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: false,
-      appBar: AppBar(
-        title: Text(widget.title),
-        centerTitle: false,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.notifications,
-                color: AppThemes.appBarAlertIconColor),
-            onPressed: () {},
-          )
-        ],
-      ),
+      appBar: buildAppBar(widget.title),
       body: [homeWidget, settingsWidget, settingsWidget][_selectedIndex],
       bottomNavigationBar: YonomiBottomAppBar(
         selectedIndex: _selectedIndex,
@@ -117,6 +108,42 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
               size: 45,
             ),
           ))),
+    );
+  }
+
+  PreferredSizeWidget buildAppBar(String title, {bool notification = true}) {
+    return AppBar(
+      title: Text(title),
+      centerTitle: false,
+      actions: <Widget>[
+        Container(
+          padding: const EdgeInsets.all(0),
+          margin: const EdgeInsets.only(right: 16),
+          width: 45.0, // you can adjust the width as you need
+          child: Stack(
+            children: [
+              Positioned.fill(
+                child: IconButton(
+                  iconSize: 34,
+                  color: AppThemes.appBarAlertIconColor,
+                  icon: Icon(Icons.notifications),
+                  onPressed: () {},
+                ),
+              ),
+              if (notification)
+                Positioned(
+                  bottom: 12,
+                  left: 30,
+                  child: Icon(
+                    Icons.circle,
+                    color: ColorConstants.redAlert,
+                    size: 15,
+                  ),
+                ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
