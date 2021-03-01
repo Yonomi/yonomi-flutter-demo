@@ -27,6 +27,7 @@ class YoApp extends StatelessWidget {
     final MaterialApp app = MaterialApp(
       title: 'Yonomi Flutter Demo',
       theme: AppThemes.getMainTheme(context),
+      debugShowCheckedModeBanner: false,
       home: YonomiHomePage(title: 'Yonomi Demo App'),
     );
     return app;
