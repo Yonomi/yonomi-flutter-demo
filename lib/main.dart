@@ -111,7 +111,7 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
     );
   }
 
-  PreferredSizeWidget buildAppBar(String title, {bool notification = true}) {
+  PreferredSizeWidget buildAppBar(String title, {bool notification = false}) {
     return AppBar(
       title: Text(title),
       centerTitle: false,
@@ -119,7 +119,7 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
         Container(
           padding: const EdgeInsets.all(0),
           margin: const EdgeInsets.only(right: 16),
-          width: 45.0, // you can adjust the width as you need
+          width: 45.0,
           child: Stack(
             children: [
               Positioned.fill(
