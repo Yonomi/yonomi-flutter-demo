@@ -88,7 +88,10 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: false,
-      appBar: buildAppBar(widget.title),
+      appBar: buildAppBar(
+        widget.title,
+        onPressed: () {},
+      ),
       body: [homeWidget, settingsWidget, settingsWidget][_selectedIndex],
       bottomNavigationBar: YonomiBottomAppBar(
         selectedIndex: _selectedIndex,
@@ -111,7 +114,8 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
     );
   }
 
-  PreferredSizeWidget buildAppBar(String title, {bool notification = false}) {
+  PreferredSizeWidget buildAppBar(String title,
+      {bool notification = false, Function() onPressed}) {
     return AppBar(
       title: Text(title),
       centerTitle: false,
@@ -127,7 +131,7 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
                   iconSize: 34,
                   color: AppThemes.appBarAlertIconColor,
                   icon: Icon(Icons.notifications),
-                  onPressed: () {},
+                  onPressed: onPressed,
                 ),
               ),
               if (notification)
