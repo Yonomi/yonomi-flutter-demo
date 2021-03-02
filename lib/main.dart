@@ -8,6 +8,7 @@ import 'components/Home.dart';
 import 'components/accounts.dart';
 import 'components/integrations.dart';
 import 'components/profile.dart';
+import 'components/yonomi_app_bar.dart';
 import 'components/yonomi_bottom_app_bar.dart';
 import 'themes/color_constants.dart';
 import 'themes/string_constants.dart';
@@ -88,7 +89,7 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: false,
-      appBar: buildAppBar(
+      appBar: YonomiAppBar(
         widget.title,
         onPressed: () {},
       ),
