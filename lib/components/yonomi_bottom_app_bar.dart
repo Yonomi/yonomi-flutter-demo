@@ -105,6 +105,7 @@ class YonomiBottomAppBar extends StatelessWidget {
           child: BottomNavigationBar(
               key: Key('bottomNavBar'),
               elevation: 0,
+              selectedFontSize: 0,
               backgroundColor: Colors.transparent,
               showSelectedLabels: false,
               showUnselectedLabels: false,

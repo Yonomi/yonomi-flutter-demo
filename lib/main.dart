@@ -9,6 +9,7 @@ import 'components/Home.dart';
 import 'components/accounts.dart';
 import 'components/integrations.dart';
 import 'components/profile.dart';
+import 'components/yonomi_app_bar.dart';
 import 'components/yonomi_bottom_app_bar.dart';
 import 'themes/string_constants.dart';
 
@@ -29,6 +30,7 @@ class YoApp extends StatelessWidget {
     final MaterialApp app = MaterialApp(
       title: 'Yonomi Flutter Demo',
       theme: AppThemes.getMainTheme(context),
+      debugShowCheckedModeBanner: false,
       home: YonomiHomePage(title: 'Yonomi Demo App'),
     );
     return app;
@@ -88,16 +90,9 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: false,
-      appBar: AppBar(
-        title: Text(widget.title),
-        centerTitle: false,
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.notifications,
-                color: AppThemes.appBarAlertIconColor),
-            onPressed: () {},
-          )
-        ],
+      appBar: YonomiAppBar(
+        widget.title,
+        onPressed: () {},
       ),
       body: [homeWidget, settingsWidget, settingsWidget][_selectedIndex],
       bottomNavigationBar: YonomiBottomAppBar(
