@@ -23,7 +23,7 @@ class YoSDKDevicesProvider extends DevicesProvider {
   }
 
   Future<void> performAction(Trait trait, String deviceId) async {
-    if (trait.name == 'LOCK_UNLOCK') {
+    if (trait.name == 'lockUnlock') {
       Device device =
           await DevicesRepository.getDeviceDetails(request, deviceId);
 

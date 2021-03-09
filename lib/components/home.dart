@@ -19,6 +19,7 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<DevicesProvider>(
       builder: (context, data, child) {
+        data.hydrateDevices();
         return Expanded(
           child: Padding(
             padding: const EdgeInsets.only(left: 30, right: 30),
