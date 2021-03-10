@@ -6,7 +6,7 @@ import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yonomi_flutter_demo/components/home.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
-import 'package:yonomi_platform_sdk/traits/trait.dart';
+import 'package:yonomi_platform_sdk/repository/devices_repository.dart';
 
 class MockDevicesProvider extends Mock implements DevicesProvider {}
 
@@ -27,7 +27,7 @@ Widget createHomeWidget() {
 
 void main() {
   testWidgets('deviceItem should be rendered', (WidgetTester tester) async {
-    Trait lockTrait = Trait('LOCK_UNLOCK', IsLocked(ReportedIsLocked(true)));
+    Trait lockTrait = LockUnlockTrait('lockUnlock', IsLocked(true));
     when(mockProvider.devices).thenReturn([
       DeviceModel('id', 'Test Device', [lockTrait])
     ]);
@@ -39,7 +39,7 @@ void main() {
 
   testWidgets('deviceItem should call provider action when tapped',
       (WidgetTester tester) async {
-    Trait lockTrait = Trait('LOCK_UNLOCK', IsLocked(ReportedIsLocked(true)));
+    Trait lockTrait = LockUnlockTrait('lockUnlock', IsLocked(true));
     when(mockProvider.devices).thenReturn([
       DeviceModel('id', 'Test Device', [lockTrait])
     ]);

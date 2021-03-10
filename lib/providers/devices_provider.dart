@@ -1,26 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:yonomi_flutter_demo/models/account_model.dart';
 import 'package:yonomi_flutter_demo/providers/request.dart';
-import 'package:yonomi_platform_sdk/device.dart';
-import 'package:yonomi_platform_sdk/devices.dart';
+import 'package:yonomi_platform_sdk/repository/devices_repository.dart';
 import 'package:yonomi_platform_sdk/request/request.dart';
-import 'package:yonomi_platform_sdk/traits/trait.dart';
-import 'package:yonomi_platform_sdk/traits/traitLockUnlock/traitLockUnlockActionQuery.dart';
-import 'package:yonomi_platform_sdk/user.dart';
 
 class YoSDKDevicesProvider extends DevicesProvider {
   List<DeviceModel> _devices = [];
 
   Request request = YoRequestFactory.request();
   Future<void> hydrateDevices() async {
-    var devicesFromGraph = (await (Devices.all()..withTraits()).get(request));
-    if (devicesFromGraph == null || devicesFromGraph.devices == null) {
+    var devicesFromGraph = (await (DevicesRepository.getDevices(request)));
+    if (devicesFromGraph == null) {
       _devices = [];
       notifyListeners();
       return;
     }
 
-    _devices = devicesFromGraph.devices
+    _devices = devicesFromGraph
         .map((device) =>
             DeviceModel(device.id, device.displayName, device.traits))
         .toList();
@@ -28,14 +23,12 @@ class YoSDKDevicesProvider extends DevicesProvider {
   }
 
   Future<void> performAction(Trait trait, String deviceId) async {
-    if (trait.name == 'LOCK_UNLOCK') {
-      Device device = await Device.findById(deviceId).get(request);
-      bool currentDeviceState =
-          (trait.state as IsLocked).reportedIsLocked.value;
-      await (device
-            ..action(
-                TraitLockUnlockActionQuery.lockUnlock(!currentDeviceState)))
-          .execute(request);
+    if (trait.name == 'lockUnlock') {
+      Device device =
+          await DevicesRepository.getDeviceDetails(request, deviceId);
+
+      await DevicesRepository.sendLockUnlockAction(
+          request, deviceId, !device.traits[0].state.value);
     }
   }
 

@@ -6,7 +6,6 @@ import 'package:yonomi_flutter_demo/assets/traits/name_icon_mapper.dart';
 import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
-import 'package:yonomi_platform_sdk/traits/trait.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -20,6 +19,7 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<DevicesProvider>(
       builder: (context, data, child) {
+        data.hydrateDevices();
         return Expanded(
           child: Padding(
             padding: const EdgeInsets.only(left: 30, right: 30),
