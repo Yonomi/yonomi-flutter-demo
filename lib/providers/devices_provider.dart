@@ -9,7 +9,7 @@ class YoSDKDevicesProvider extends DevicesProvider {
   Request request = YoRequestFactory.request();
   Future<void> hydrateDevices() async {
     var devicesFromGraph = (await (DevicesRepository.getDevices(request)));
-    if (devicesFromGraph == null || devicesFromGraph == null) {
+    if (devicesFromGraph == null) {
       _devices = [];
       notifyListeners();
       return;
