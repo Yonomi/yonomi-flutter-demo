@@ -18,19 +18,19 @@ class SliderComponent extends StatefulWidget {
   /// The [mode], [width] and [height] arguments must not be null.
   ///
   /// Optionally, you can pass a [centerWidget] that will be rendered
-  /// in the middle of the slider component.
+  /// in the middle of the slider component and a [footerWidget] that will be
+  /// rendered at the bottom of the widget.
   ///
 
   final SliderMode mode;
   final int width, height;
   final Widget centerWidget, footerWidget;
-  final Color baseArcColor;
+
+  final Color arcColorStart, arcColorEnd;
 
   final double strokeWidth;
 
   final double minimumRange, maximumRange, initialValue;
-
-  final Color selectedArcColor;
 
   final ValueChanged<int> onValueChanged;
 
@@ -39,12 +39,12 @@ class SliderComponent extends StatefulWidget {
       @required this.mode,
       @required this.width,
       @required this.height,
-      @required this.onValueChanged,
+      this.onValueChanged,
       this.minimumRange,
       this.maximumRange,
       this.initialValue,
-      this.baseArcColor,
-      this.selectedArcColor,
+      this.arcColorStart,
+      this.arcColorEnd,
       this.strokeWidth = DEFAULT_STROKE_WIDTH,
       this.centerWidget,
       this.footerWidget})
@@ -81,11 +81,12 @@ class _SliderComponent extends State<SliderComponent> {
               child: CustomPaint(
                 size: Size.infinite,
                 painter: BaseArcPainter(
-                    arcColor: widget.baseArcColor,
+                    arcColorStart: widget.arcColorStart,
+                    arcColorEnd: widget.arcColorEnd,
                     strokeWidth: widget.strokeWidth),
                 foregroundPainter: SelectorArcPainter(
                     mode: widget.mode,
-                    arcColor: widget.baseArcColor,
+                    arcColor: widget.arcColorStart,
                     startAngle: 0,
                     endAngle: 0,
                     sweepAngle: 0,

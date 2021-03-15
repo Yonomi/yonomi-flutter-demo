@@ -35,8 +35,10 @@ class ThermostatWidget extends StatelessWidget {
               minimumRange: 0.0,
               maximumRange: 100.0,
               initialValue: 50,
-              baseArcColor: ColorConstants.yonomiYellow,
-              selectedArcColor: ColorConstants.redAlert,
+              arcColorStart: ColorConstants.yonomiYellow,
+              arcColorEnd: ColorConstants.redAlert,
+              centerWidget: Text("Center"),
+              footerWidget: Text("Footer"),
             ),
           )
         ],
