@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:yonomi_flutter_demo/components/home.dart';
 import 'package:yonomi_flutter_demo/components/yonomi_app_bar.dart';
+import 'package:yonomi_flutter_demo/themes/color_constants.dart';
+
+import 'components/slider_component.dart';
 
 class ThermostatWidget extends StatelessWidget {
   @override
@@ -12,7 +14,7 @@ class ThermostatWidget extends StatelessWidget {
         onPressed: () {},
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
             children: <Widget>[
@@ -23,8 +25,16 @@ class ThermostatWidget extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 15,
+            height: 2,
           ),
+          Center(
+            child: SliderComponent(
+              mode: SliderMode.singleSelection,
+              width: 200,
+              height: 200,
+              arcColor: ColorConstants.yonomiYellow,
+            ),
+          )
         ],
       ),
     );
