@@ -32,7 +32,11 @@ class ThermostatWidget extends StatelessWidget {
               mode: SliderMode.singleSelection,
               width: 200,
               height: 200,
-              arcColor: ColorConstants.yonomiYellow,
+              minimumRange: 0.0,
+              maximumRange: 100.0,
+              initialValue: 50,
+              baseArcColor: ColorConstants.yonomiYellow,
+              selectedArcColor: ColorConstants.redAlert,
             ),
           )
         ],

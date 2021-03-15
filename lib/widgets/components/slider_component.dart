@@ -2,6 +2,8 @@ import 'dart:math';
 
 import 'package:flutter/widgets.dart';
 
+import 'base_arc_painter.dart';
+
 enum SliderMode { singleSelection, doubleSelection }
 
 const double DEFAULT_STROKE_WIDTH = 8;
@@ -19,19 +21,29 @@ class SliderComponent extends StatefulWidget {
   final SliderMode mode;
   final int width, height;
   final Widget centerWidget;
-  final Color arcColor;
+  final Color baseArcColor;
 
   final double strokeWidth;
+
+  final double minimumRange, maximumRange, initialValue;
+
+  final Color selectedArcColor;
 
   const SliderComponent(
       {Key key,
       @required this.mode,
       @required this.width,
       @required this.height,
-      this.arcColor,
+      this.minimumRange,
+      this.maximumRange,
+      this.initialValue,
+      this.baseArcColor,
+      this.selectedArcColor,
       this.strokeWidth = DEFAULT_STROKE_WIDTH,
       this.centerWidget})
-      : super(key: key);
+      : assert(maximumRange > minimumRange),
+        assert(initialValue >= minimumRange && initialValue <= maximumRange),
+        super(key: key);
 
   @override
   _SliderComponent createState() => _SliderComponent();
@@ -57,9 +69,11 @@ class _SliderComponent extends State<SliderComponent> {
           onTapDown: _handleTap(),
           onPanUpdate: _handleDrag(),
           child: CustomPaint(
-            painter: ArcPainter(
+            painter: BaseArcPainter(
+                arcColor: widget.baseArcColor, strokeWidth: widget.strokeWidth),
+            foregroundPainter: SelectorArcPainter(
                 mode: widget.mode,
-                arcColor: widget.arcColor,
+                arcColor: widget.baseArcColor,
                 strokeWidth: widget.strokeWidth),
             child: widget.centerWidget,
           )),
@@ -71,37 +85,39 @@ class _SliderComponent extends State<SliderComponent> {
   _handleDrag() {}
 }
 
-class ArcPainter extends CustomPainter {
+class SelectorArcPainter extends CustomPainter {
   SliderMode mode;
+
+  Paint arcPainter;
+
+  double startAngle;
+
+  double endAngle;
+
+  double sweepAngle;
 
   Color arcColor;
 
-  double sliderStrokeWidth;
-
-  Offset center;
-
-  double radius;
-
-  double startAngle = 0;
-  double sweepAngle = 0;
-
   double strokeWidth;
 
-  ArcPainter(
-      {@required this.mode,
-      @required this.arcColor,
-      @required this.strokeWidth});
+  SelectorArcPainter({
+    @required this.mode,
+    @required this.startAngle,
+    @required this.endAngle,
+    @required this.sweepAngle,
+    @required this.arcColor,
+    @required this.strokeWidth,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint painter = _getPaint(arcColor, PaintingStyle.stroke);
-
-    sliderStrokeWidth = this.strokeWidth;
-    center = Offset(size.width / 2, size.height / 2);
-    radius = min(size.width / 2, size.height / 2) - sliderStrokeWidth;
+    arcPainter = _getPaint(arcColor, PaintingStyle.stroke);
+    Offset center = Offset(size.width / 2, size.height / 2);
+    double radius =
+        min(size.width / 2, size.height / 2) - arcPainter.strokeWidth;
 
     canvas.drawArc(Rect.fromCircle(center: center, radius: radius),
-        pi / 2 + pi / 10, 2 * pi - pi / 5, false, painter);
+        -pi / 2 + startAngle, sweepAngle, false, arcPainter);
   }
 
   Paint _getPaint(@required color, PaintingStyle style) => Paint()
