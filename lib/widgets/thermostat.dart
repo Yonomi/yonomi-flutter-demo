@@ -25,20 +25,24 @@ class ThermostatWidget extends StatelessWidget {
             ],
           ),
           SizedBox(
-            height: 2,
+            height: 60,
           ),
           Center(
             child: SliderComponent(
               mode: SliderMode.singleSelection,
-              width: 200,
-              height: 200,
+              width: 300,
+              height: 300,
               minimumRange: 0.0,
               maximumRange: 100.0,
               initialValue: 50,
               arcColorStart: ColorConstants.yonomiYellow,
-              arcColorEnd: ColorConstants.redAlert,
-              centerWidget: Text("Center"),
-              footerWidget: Text("Footer"),
+              centerWidget: Text(
+                "68°",
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              footerWidget: Text(
+                "Switch",
+              ),
             ),
           )
         ],
