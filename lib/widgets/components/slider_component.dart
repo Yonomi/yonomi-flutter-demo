@@ -1,10 +1,13 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'base_arc_painter.dart';
 
 enum SliderMode { singleSelection, doubleSelection }
+
+typedef ValueChanged<T> = void Function(T a);
 
 const double DEFAULT_STROKE_WIDTH = 8;
 
@@ -20,7 +23,7 @@ class SliderComponent extends StatefulWidget {
 
   final SliderMode mode;
   final int width, height;
-  final Widget centerWidget;
+  final Widget centerWidget, footerWidget;
   final Color baseArcColor;
 
   final double strokeWidth;
@@ -29,18 +32,22 @@ class SliderComponent extends StatefulWidget {
 
   final Color selectedArcColor;
 
+  final ValueChanged<int> onValueChanged;
+
   const SliderComponent(
       {Key key,
       @required this.mode,
       @required this.width,
       @required this.height,
+      @required this.onValueChanged,
       this.minimumRange,
       this.maximumRange,
       this.initialValue,
       this.baseArcColor,
       this.selectedArcColor,
       this.strokeWidth = DEFAULT_STROKE_WIDTH,
-      this.centerWidget})
+      this.centerWidget,
+      this.footerWidget})
       : assert(maximumRange > minimumRange),
         assert(initialValue >= minimumRange && initialValue <= maximumRange),
         super(key: key);
@@ -60,23 +67,40 @@ class _SliderComponent extends State<SliderComponent> {
     super.didUpdateWidget(oldWidget);
   }
 
+  //child:
   @override
   Widget build(BuildContext context) {
     return Container(
       width: widget.width.toDouble(),
       height: widget.height.toDouble(),
-      child: GestureDetector(
-          onTapDown: _handleTap(),
-          onPanUpdate: _handleDrag(),
-          child: CustomPaint(
-            painter: BaseArcPainter(
-                arcColor: widget.baseArcColor, strokeWidth: widget.strokeWidth),
-            foregroundPainter: SelectorArcPainter(
-                mode: widget.mode,
-                arcColor: widget.baseArcColor,
-                strokeWidth: widget.strokeWidth),
+      child: Stack(
+        children: [
+          GestureDetector(
+              onTapDown: _handleTap(),
+              onPanUpdate: _handleDrag(),
+              child: CustomPaint(
+                size: Size.infinite,
+                painter: BaseArcPainter(
+                    arcColor: widget.baseArcColor,
+                    strokeWidth: widget.strokeWidth),
+                foregroundPainter: SelectorArcPainter(
+                    mode: widget.mode,
+                    arcColor: widget.baseArcColor,
+                    startAngle: 0,
+                    endAngle: 0,
+                    sweepAngle: 0,
+                    strokeWidth: widget.strokeWidth),
+              )),
+          Align(
+            alignment: Alignment.center,
             child: widget.centerWidget,
-          )),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: widget.footerWidget,
+          ),
+        ],
+      ),
     );
   }
 
