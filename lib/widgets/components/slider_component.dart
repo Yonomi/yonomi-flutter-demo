@@ -7,7 +7,7 @@ import 'base_arc_painter.dart';
 
 enum SliderMode { singleSelection, doubleSelection }
 
-typedef ValueChanged<T> = void Function(T a);
+typedef ValueChanged<T> = void Function(T value);
 
 const double DEFAULT_STROKE_WIDTH = 8;
 
@@ -76,8 +76,12 @@ class _SliderComponent extends State<SliderComponent> {
       child: Stack(
         children: [
           GestureDetector(
-              onTapDown: _handleTap(),
-              onPanUpdate: _handleDrag(),
+              onTapDown: (TapDownDetails details) {
+                _handleTap(details);
+              },
+              onPanDown: (DragDownDetails dragDownDetails) {
+                _handleDrag(dragDownDetails);
+              },
               child: CustomPaint(
                 size: Size.infinite,
                 painter: BaseArcPainter(
@@ -105,9 +109,22 @@ class _SliderComponent extends State<SliderComponent> {
     );
   }
 
-  _handleTap() {}
+  _handleTap(TapDownDetails detail) {
+    calculateNewValue(detail.localPosition.dx, detail.localPosition.dy);
+  }
 
-  _handleDrag() {}
+  _handleDrag(DragDownDetails detail) {
+    calculateNewValue(detail.localPosition.dx, detail.localPosition.dy);
+  }
+
+  // Calculate the new value given the position selected and the
+  // given [minimumRange] and [maximumRange] values.
+  void calculateNewValue(double dx, double dy) {
+    int newValue = 0;
+    if (widget.onValueChanged != null) {
+      widget.onValueChanged(newValue);
+    }
+  }
 }
 
 class SelectorArcPainter extends CustomPainter {
