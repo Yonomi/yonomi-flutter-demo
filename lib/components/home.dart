@@ -7,6 +7,7 @@ import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:yonomi_flutter_demo/widgets/thermostat.dart';
 
 class HomeWidget extends StatelessWidget {
   static final String title = "Home";
@@ -54,6 +55,24 @@ class HomeWidget extends StatelessWidget {
                     physics: ClampingScrollPhysics(),
                     children: [
                       ...data?.devices?.map((device) {
+                        if (device.description
+                            .toLowerCase()
+                            .contains('thermostat')) {
+                          return DeviceItemWidget(
+                            location: 'home',
+                            name: device.displayName,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return ThermostatWidget();
+                                }),
+                              );
+                              ;
+                              // Navigate to thermostat
+                            },
+                          );
+                        }
                         return DeviceItemWidget(
                             icon: DeviceItemIcon.getIcon(device.traits),
                             location: 'entryway',
