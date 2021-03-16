@@ -19,14 +19,11 @@ class ThermostatProvider extends ChangeNotifier {
   Future<Device> getDeviceDetail(String deviceId) async {
     _deviceDetail =
         await DevicesRepository.getThermostatDetails(request, deviceId);
-    print('Reached deviceDetails');
-    print(_deviceDetail.traits.first.state.value);
     notifyListeners();
   }
 
-  double getThermostatSetPoint() {
-    return _deviceDetail?.traits?.first?.state?.value ?? 0;
-  }
-
   Device get deviceDetail => _deviceDetail;
+
+  double get thermostatTargetTemperature =>
+      _deviceDetail?.traits?.first?.state?.value ?? 0;
 }
