@@ -30,11 +30,12 @@ class SliderComponent extends StatefulWidget {
 
   final double strokeWidth;
 
-  final double minimumRange, maximumRange, initialValue;
+  final double minimumRange, maximumRange;
+  double currentValue;
 
-  final ValueChanged<int> onValueChanged;
+  final ValueChanged<double> onValueChanged;
 
-  const SliderComponent(
+  SliderComponent(
       {Key key,
       @required this.mode,
       @required this.width,
@@ -42,14 +43,14 @@ class SliderComponent extends StatefulWidget {
       this.onValueChanged,
       this.minimumRange,
       this.maximumRange,
-      this.initialValue,
+      this.currentValue,
       this.arcColorStart,
       this.arcColorEnd,
       this.strokeWidth = DEFAULT_STROKE_WIDTH,
       this.centerWidget,
       this.footerWidget})
       : assert(maximumRange > minimumRange),
-        assert(initialValue >= minimumRange && initialValue <= maximumRange),
+        assert(currentValue >= minimumRange && currentValue <= maximumRange),
         super(key: key);
 
   @override
@@ -70,6 +71,16 @@ class _SliderComponent extends State<SliderComponent> {
   //child:
   @override
   Widget build(BuildContext context) {
+    final footer = Slider(
+        value: widget.currentValue,
+        min: widget.minimumRange,
+        max: widget.maximumRange,
+        onChanged: (double value) {
+          setState(() {
+            widget.currentValue = value;
+          });
+        },
+        onChangeEnd: widget.onValueChanged);
     return Container(
       width: widget.width.toDouble(),
       height: widget.height.toDouble(),
@@ -102,7 +113,7 @@ class _SliderComponent extends State<SliderComponent> {
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: widget.footerWidget,
+            child: widget.footerWidget ?? footer,
           ),
         ],
       ),
@@ -122,7 +133,7 @@ class _SliderComponent extends State<SliderComponent> {
   void calculateNewValue(double dx, double dy) {
     int newValue = 0;
     if (widget.onValueChanged != null) {
-      widget.onValueChanged(newValue);
+      widget.onValueChanged(newValue.toDouble());
     }
   }
 }

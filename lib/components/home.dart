@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/assets/traits/name_icon_mapper.dart';
 import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
+import 'package:yonomi_flutter_demo/providers/thermostat_provider.dart';
 import 'package:yonomi_flutter_demo/widgets/thermostat.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -62,7 +63,12 @@ class HomeWidget extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) {
-                                  return ThermostatWidget();
+                                  return ChangeNotifierProvider(
+                                    create: (_) =>
+                                        ThermostatProvider(device.id),
+                                    child:
+                                        ThermostatWidget(deviceId: device.id),
+                                  );
                                 }),
                               );
                               ;
