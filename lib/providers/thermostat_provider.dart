@@ -20,6 +20,7 @@ class ThermostatProvider extends ChangeNotifier {
     _deviceDetail =
         await DevicesRepository.getThermostatDetails(request, deviceId);
     print('Reached deviceDetails');
+    print(_deviceDetail.traits.first.state.value);
     notifyListeners();
   }
 
