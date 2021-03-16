@@ -23,5 +23,9 @@ class ThermostatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  double getThermostatSetPoint() {
+    return _deviceDetail?.traits?.first?.state?.value ?? 0;
+  }
+
   Device get deviceDetail => _deviceDetail;
 }

@@ -45,13 +45,10 @@ class ThermostatWidget extends StatelessWidget {
                   onValueChanged: (double temperature) {
                     data.setPointAction(deviceId, temperature);
                   },
-                  currentValue:
-                      data?.deviceDetail?.traits?.first?.state?.value ?? 0,
+                  currentValue: data?.getThermostatSetPoint(),
                   arcColorStart: ColorConstants.yonomiYellow,
                   centerWidget: Text(
-                    data?.deviceDetail?.traits?.first?.state?.value
-                            ?.toString() ??
-                        '0',
+                    data?.getThermostatSetPoint().toString(),
                     style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
