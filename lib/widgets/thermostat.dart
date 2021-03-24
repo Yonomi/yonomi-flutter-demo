@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/components/yonomi_app_bar.dart';
 import 'package:yonomi_flutter_demo/providers/thermostat_provider.dart';
 import 'package:yonomi_flutter_demo/widgets/components/arc.dart';
+import 'package:yonomi_platform_sdk/graphql/devices/thermostat/thermostat_queries.dart';
 
 import 'components/modes_toolbar.dart';
 
@@ -35,19 +36,31 @@ class ThermostatWidget extends StatelessWidget {
             ModesToolbar(children: [
               ModeIconButton(
                 icon: Text("A"),
-                onPressed: () => print("Pressed"),
+                onPressed: () {
+                  thermostatProvider?.setThermostatMode(
+                      deviceId, ThermostatMode.auto);
+                },
               ),
               ModeIconButton(
                 icon: Icon(Icons.ac_unit),
-                onPressed: () => print("Pressed"),
+                onPressed: () {
+                  thermostatProvider?.setThermostatMode(
+                      deviceId, ThermostatMode.cool);
+                },
               ),
               ModeIconButton(
                 icon: Icon(Icons.whatshot),
-                onPressed: () => print("Pressed"),
+                onPressed: () {
+                  thermostatProvider?.setThermostatMode(
+                      deviceId, ThermostatMode.heat);
+                },
               ),
               ModeIconButton(
                 icon: Icon(Icons.eco),
-                onPressed: () => print("Pressed"),
+                onPressed: () {
+                  thermostatProvider?.setThermostatMode(
+                      deviceId, ThermostatMode.airflow);
+                },
               ),
             ]),
             SizedBox(

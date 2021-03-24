@@ -43,8 +43,7 @@ class ModeIconButton extends ElevatedButton {
   @override
   ButtonStyle defaultStyleOf(BuildContext context) {
     final EdgeInsetsGeometry scaledPadding = ButtonStyleButton.scaledPadding(
-      // const EdgeInsetsDirectional.fromSTEB(12, 0, 16, 0),
-      const EdgeInsetsDirectional.fromSTEB(30, 0, 32, 0),
+      const EdgeInsetsDirectional.fromSTEB(32, 0, 32, 0),
       const EdgeInsets.symmetric(horizontal: 8),
       const EdgeInsetsDirectional.fromSTEB(8, 0, 4, 0),
       MediaQuery.maybeOf(context)?.textScaleFactor ?? 1,
