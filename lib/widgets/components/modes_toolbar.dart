@@ -17,17 +17,8 @@ class ModesToolbar extends StatelessWidget {
   }
 }
 
-class ModeButton extends ElevatedButton {
-  ModeButton({
-    Key key,
-    @required VoidCallback onPressed,
-    VoidCallback onLongPress,
-    @required Widget child,
-  }) : super(key: key, child: child);
-}
-
-class ModeButtonWithIcon extends ElevatedButton {
-  ModeButtonWithIcon({
+class ModeIconButton extends ElevatedButton {
+  ModeIconButton({
     Key key,
     @required VoidCallback onPressed,
     VoidCallback onLongPress,

@@ -33,19 +33,19 @@ class ThermostatWidget extends StatelessWidget {
               ],
             ),
             ModesToolbar(children: [
-              ModeButtonWithIcon(
+              ModeIconButton(
                 icon: Text("A"),
                 onPressed: () => print("Pressed"),
               ),
-              ModeButtonWithIcon(
+              ModeIconButton(
                 icon: Icon(Icons.ac_unit),
                 onPressed: () => print("Pressed"),
               ),
-              ModeButtonWithIcon(
+              ModeIconButton(
                 icon: Icon(Icons.whatshot),
                 onPressed: () => print("Pressed"),
               ),
-              ModeButtonWithIcon(
+              ModeIconButton(
                 icon: Icon(Icons.eco),
                 onPressed: () => print("Pressed"),
               ),
