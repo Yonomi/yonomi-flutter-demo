@@ -13,7 +13,7 @@ class UserInfoProvider extends ChangeNotifier {
     fetchUserDetails();
   }
 
-  Request request = YoRequestFactory.request();
+  Request request = YoRequestCreator.request();
 
   Future<void> fetchUserDetails() async {
     final userFromGraph = await UserRepository.getUserDetails(request);

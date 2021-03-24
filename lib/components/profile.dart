@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yonomi_flutter_demo/components/devices.dart';
 import 'package:yonomi_flutter_demo/models/account_model.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';

@@ -6,7 +6,7 @@ import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
 import 'package:mockito/mockito.dart';
 import 'package:yonomi_flutter_demo/components/home.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
-import 'package:yonomi_platform_sdk/repository/devices_repository.dart';
+import 'package:yonomi_platform_sdk/repository/devices/devices_repository.dart';
 
 class MockDevicesProvider extends Mock implements DevicesProvider {}
 
@@ -29,7 +29,7 @@ void main() {
   testWidgets('deviceItem should be rendered', (WidgetTester tester) async {
     Trait lockTrait = LockUnlockTrait('lockUnlock', IsLocked(true));
     when(mockProvider.devices).thenReturn([
-      DeviceModel('id', 'Test Device', [lockTrait])
+      DeviceModel('id', 'Test Device', [lockTrait], 'description')
     ]);
     await tester.pumpWidget(createHomeWidget());
 
@@ -41,7 +41,7 @@ void main() {
       (WidgetTester tester) async {
     Trait lockTrait = LockUnlockTrait('lockUnlock', IsLocked(true));
     when(mockProvider.devices).thenReturn([
-      DeviceModel('id', 'Test Device', [lockTrait])
+      DeviceModel('id', 'Test Device', [lockTrait], 'description')
     ]);
     // when(mockProvider.)
     await tester.pumpWidget(createHomeWidget());
