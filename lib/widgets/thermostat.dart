@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/components/yonomi_app_bar.dart';
 import 'package:yonomi_flutter_demo/providers/thermostat_provider.dart';
-import 'package:yonomi_flutter_demo/themes/color_constants.dart';
 import 'package:yonomi_flutter_demo/widgets/components/arc.dart';
+
+import 'components/modes_toolbar.dart';
 
 class ThermostatWidget extends StatelessWidget {
   final String deviceId;
@@ -31,6 +32,24 @@ class ThermostatWidget extends StatelessWidget {
                 ),
               ],
             ),
+            ModesToolbar(children: [
+              ModeButtonWithIcon(
+                icon: Text("A"),
+                onPressed: () => print("Pressed"),
+              ),
+              ModeButtonWithIcon(
+                icon: Icon(Icons.ac_unit),
+                onPressed: () => print("Pressed"),
+              ),
+              ModeButtonWithIcon(
+                icon: Icon(Icons.whatshot),
+                onPressed: () => print("Pressed"),
+              ),
+              ModeButtonWithIcon(
+                icon: Icon(Icons.eco),
+                onPressed: () => print("Pressed"),
+              ),
+            ]),
             SizedBox(
               height: 60,
             ),
