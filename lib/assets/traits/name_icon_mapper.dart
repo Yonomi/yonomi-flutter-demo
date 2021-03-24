@@ -7,6 +7,9 @@ class DeviceItemIcon {
     if (traits[0] is LockUnlockTrait) {
       return (traits[0].state.value) ? Icons.lock : Icons.lock_open;
     }
+    if (traits[0] is ThermostatTrait) {
+      return Icons.thermostat_outlined;
+    }
     return Icons.device_unknown;
   }
 }
