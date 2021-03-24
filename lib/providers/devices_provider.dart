@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yonomi_flutter_demo/providers/request.dart';
-import 'package:yonomi_platform_sdk/repository/devices_repository.dart';
+import 'package:yonomi_platform_sdk/repository/devices/devices_repository.dart';
+import 'package:yonomi_platform_sdk/repository/devices/lock_repository.dart';
 import 'package:yonomi_platform_sdk/request/request.dart';
 
 class YoSDKDevicesProvider extends DevicesProvider {
@@ -27,7 +28,7 @@ class YoSDKDevicesProvider extends DevicesProvider {
       Device device =
           await DevicesRepository.getDeviceDetails(request, deviceId);
 
-      await DevicesRepository.sendLockUnlockAction(
+      await LockRepository.sendLockUnlockAction(
           request, deviceId, !device.traits[0].state.value);
     }
   }

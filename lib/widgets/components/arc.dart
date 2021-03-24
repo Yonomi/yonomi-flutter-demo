@@ -3,23 +3,22 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Arc extends StatefulWidget {
-  final Widget centerWidget;
+  final Widget centerWidget, footerWidget;
   final Color color;
-  final void Function(double) onFinalSetPoint;
+  final ValueChanged<double> onFinalSetPoint;
   final double maxValue;
 
-  double value;
+  final double initialValue;
 
   Arc(
       {Key key,
       @required this.centerWidget,
+      @required this.footerWidget,
       this.color,
-      @required initialValue,
+      @required this.initialValue,
       @required this.onFinalSetPoint,
       @required this.maxValue})
-      : super(key: key) {
-    value = initialValue;
-  }
+      : super(key: key);
 
   @override
   _ArcState createState() => _ArcState();
@@ -28,31 +27,61 @@ class Arc extends StatefulWidget {
 class _ArcState extends State<Arc> {
   double _thumbx = 0;
   double _thumby = 0;
+  double value = 0;
 
   @override
   void initState() {
     super.initState();
-    print(widget.value);
-    _thumbx = (150 *
-            cos(pi / 2 +
-                pi / 10 +
-                (2 * pi - pi / 5) / widget.maxValue * widget.value)) +
-        150 -
-        5;
-    _thumby = (150 *
-            sin(pi / 2 +
-                pi / 10 +
-                (2 * pi - pi / 5) / widget.maxValue * widget.value)) +
-        150 -
-        5;
+    calculateThumbxThumby();
   }
 
-  double calculateValue() {
-    final atanResult = atan2(_thumby - 145, _thumbx - 145) - 3 * pi / 5;
+  void calculateThumbxThumby() {
+    final xy = calculateXYFromMagnitude(widget.initialValue);
+    _thumbx = xy['x'];
+    _thumby = xy['y'];
+    value = widget.initialValue;
+  }
+
+  Map calculateXYFromMagnitude(double magnitude) {
+    final x = (150 *
+            cos(pi / 2 +
+                pi / 10 +
+                (2 * pi - pi / 5) / widget.maxValue * widget.initialValue)) +
+        150 -
+        5;
+    final y = (150 *
+            sin(pi / 2 +
+                pi / 10 +
+                (2 * pi - pi / 5) / widget.maxValue * widget.initialValue)) +
+        150 -
+        5;
+    return {'x': x, 'y': y};
+  }
+
+  double calculateMagnitude() {
+    return calculateMagnitudeFromXY(_thumbx, _thumby);
+  }
+
+  double calculateMagnitudeFromXY(double x, double y) {
+    final atanResult = atan2(y - 145, x - 145) - 3 * pi / 5;
     final atanFrom0to2pi =
         (atanResult <= 0) ? (2 * pi + atanResult) : atanResult;
-    // final atanFrom0to2pi = atanResult.abs();
     return (5 * widget.maxValue * (atanFrom0to2pi) / (9 * pi));
+  }
+
+  void updateXYAndSetValue(double x, double y, double width) {
+    final xy = compensatedXY(x, y, width);
+
+    if (xy != null) {
+      final _value = calculateMagnitudeFromXY(xy['x'], xy['y']);
+      if (_value < widget.maxValue + 1) {
+        setState(() {
+          value = _value;
+          _thumbx = xy['x'];
+          _thumby = xy['y'];
+        });
+      }
+    }
   }
 
   @override
@@ -67,24 +96,28 @@ class _ArcState extends State<Arc> {
           height: height,
           child: GestureDetector(
             onTapDown: (TapDownDetails details) {
-              setState(() {
-                final dx = details.localPosition.dx;
-                final dy = details.localPosition.dy;
-                compensateDragCoordinates(dx, dy, width);
-              });
+              final x = details.localPosition.dx;
+              final y = details.localPosition.dy;
+              updateXYAndSetValue(x, y, width);
             },
             onPanEnd: (DragEndDetails details) {
-              widget.onFinalSetPoint(calculateValue());
+              final _value = calculateMagnitude();
+              setState(() {
+                value = _value;
+              });
+              widget.onFinalSetPoint(value);
             },
             onPanUpdate: (DragUpdateDetails details) {
-              setState(() {
-                final dx = details.localPosition.dx;
-                final dy = details.localPosition.dy;
-                compensateDragCoordinates(dx, dy, width);
-              });
+              final x = details.localPosition.dx;
+              final y = details.localPosition.dy;
+              updateXYAndSetValue(x, y, width);
             },
             onTapUp: (TapUpDetails details) {
-              widget.onFinalSetPoint(calculateValue());
+              final _value = calculateMagnitude();
+              setState(() {
+                value = _value;
+              });
+              widget.onFinalSetPoint(value);
             },
             child: CustomPaint(
               painter:
@@ -92,34 +125,33 @@ class _ArcState extends State<Arc> {
             ),
           ),
         ),
-        LayoutBuilder(
-            builder: (_, constraints) => Container(
+        Align(
+            alignment: Alignment.center,
+            child: Column(
+              children: [
+                Container(
                   width: width,
                   height: height,
                   child: Center(child: widget.centerWidget),
-                )),
+                ),
+                Container(
+                  child: Center(child: Text(value.toInt().toString())),
+                )
+              ],
+            )),
       ],
     );
   }
 
-  void compensateDragCoordinates(double dx, double dy, double width) {
-    if (dx > 0 && dy > 0 && dx < 300 && dy < 300) {
-      final angle = atan(dy / dx);
-      final A = width / 2 * (sin(angle) + cos(angle));
-      final B = width / 2 * sqrt(2 * sin(angle) * cos(angle));
-      final R1 = A + B;
-      final R2 = A - B;
-      final R = sqrt(dx * dx + dy * dy);
-      final dr1 = (R - R1).abs();
-      final dr2 = (R - R2).abs();
-      if (dr1 < dr2) {
-        _thumbx = R1 * cos(angle) - 5;
-        _thumby = R1 * sin(angle) - 5;
-      } else {
-        _thumbx = R2 * cos(angle) - 5;
-        _thumby = R2 * sin(angle) - 5;
-      }
+  Map compensatedXY(double dx, double dy, double width) {
+    if (dx > 0 && dy > 0 && dx < width && dy < width) {
+      final angle = atan2(dy - width / 2, dx - width / 2);
+      final x = width / 2 * cos(angle) - 5 + width / 2;
+      final y = width / 2 * sin(angle) - 5 + width / 2;
+
+      return {'x': x, 'y': y};
     }
+    return null;
   }
 }
 
@@ -135,6 +167,7 @@ class OpenPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     var paint1 = Paint()
       ..color = color ?? Color(0xff63aa65)
+      ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = 8;
     var paint2 = Paint()

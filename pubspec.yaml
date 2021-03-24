@@ -37,7 +37,6 @@ dependencies:
   yonomi_platform_sdk:
     git:
       url: https://github.com/Yonomi/yonomi-dart-sdk.git
-      ref: DX-106
   
 
 dev_dependencies:

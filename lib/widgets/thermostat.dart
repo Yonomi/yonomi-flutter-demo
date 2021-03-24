@@ -36,20 +36,23 @@ class ThermostatWidget extends StatelessWidget {
             ),
             Center(
                 child: Arc(
-                    centerWidget: Text(
-                      thermostatProvider.thermostatTargetTemperature
-                              ?.toInt()
-                              ?.toString() ??
-                          '0',
-                      style: Theme.of(context).textTheme.headline2,
-                    ),
-                    initialValue: 20.0,
-                    onFinalSetPoint: (double temperature) {
-                      print('Printing temperature');
-                      print(temperature);
-                      // data.setPointAction(deviceId, temperature);
-                    },
-                    maxValue: 50))
+              centerWidget: Text(
+                thermostatProvider.thermostatTargetTemperature
+                        ?.toInt()
+                        ?.toString() ??
+                    '0',
+                style: Theme.of(context).textTheme.headline2,
+              ),
+              initialValue: 20.0,
+              onFinalSetPoint: (double temperature) {
+                print('Printing temperature');
+                // thermostatProvider.setPointAction(deviceId, temperature);
+                // data.setPointAction(deviceId, temperature);
+              },
+              maxValue: 50,
+              footerWidget: Text('Some value',
+                  style: Theme.of(context).textTheme.headline6),
+            ))
           ],
         ));
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:yonomi_platform_sdk/repository/devices_repository.dart';
+import 'package:yonomi_platform_sdk/repository/devices/devices_repository.dart';
 
 class DeviceItemIcon {
   static IconData getIcon(List<Trait> traits) {
