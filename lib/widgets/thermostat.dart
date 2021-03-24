@@ -33,36 +33,39 @@ class ThermostatWidget extends StatelessWidget {
                 ),
               ],
             ),
-            ModesToolbar(children: [
-              ModeIconButton(
-                icon: Text("A"),
-                onPressed: () {
-                  thermostatProvider?.setThermostatMode(
-                      deviceId, ThermostatMode.auto);
-                },
-              ),
-              ModeIconButton(
-                icon: Icon(Icons.ac_unit),
-                onPressed: () {
-                  thermostatProvider?.setThermostatMode(
-                      deviceId, ThermostatMode.cool);
-                },
-              ),
-              ModeIconButton(
-                icon: Icon(Icons.whatshot),
-                onPressed: () {
-                  thermostatProvider?.setThermostatMode(
-                      deviceId, ThermostatMode.heat);
-                },
-              ),
-              ModeIconButton(
-                icon: Icon(Icons.eco),
-                onPressed: () {
-                  thermostatProvider?.setThermostatMode(
-                      deviceId, ThermostatMode.airflow);
-                },
-              ),
-            ]),
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: ModesToolbar(children: [
+                ModeIconButton(
+                  icon: Text("A"),
+                  onPressed: () {
+                    thermostatProvider?.setThermostatMode(
+                        deviceId, ThermostatMode.auto);
+                  },
+                ),
+                ModeIconButton(
+                  icon: Icon(Icons.ac_unit),
+                  onPressed: () {
+                    thermostatProvider?.setThermostatMode(
+                        deviceId, ThermostatMode.cool);
+                  },
+                ),
+                ModeIconButton(
+                  icon: Icon(Icons.whatshot),
+                  onPressed: () {
+                    thermostatProvider?.setThermostatMode(
+                        deviceId, ThermostatMode.heat);
+                  },
+                ),
+                ModeIconButton(
+                  icon: Icon(Icons.eco),
+                  onPressed: () {
+                    thermostatProvider?.setThermostatMode(
+                        deviceId, ThermostatMode.airflow);
+                  },
+                ),
+              ]),
+            ),
             SizedBox(
               height: 60,
             ),
