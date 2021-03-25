@@ -8,7 +8,6 @@ Widget createArcWidget() {
     home: Column(children: [
       Arc(
           centerWidget: Text('centerWidget'),
-          footerWidget: Text('FooterWidget'),
           initialValue: 5,
           onFinalSetPoint: (double value) => print(value),
           maxValue: 100)
@@ -21,11 +20,5 @@ void main() {
     await tester.pumpWidget(createArcWidget());
 
     expect(find.widgetWithText(Arc, 'centerWidget'), findsOneWidget);
-  });
-
-  testWidgets('Footer widget should be rendered', (WidgetTester tester) async {
-    await tester.pumpWidget(createArcWidget());
-
-    expect(find.widgetWithText(Arc, 'FooterWidget'), findsOneWidget);
   });
 }
