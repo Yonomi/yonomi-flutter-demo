@@ -9,27 +9,40 @@ class DeviceControl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-        leading: Row(
-          children: [
-            Text(
-              'Fan',
-              textScaleFactor: 2,
-              style: TextStyle(color: Colors.black),
-            ),
-            Chip(label: (onOff) ? Text('On') : Text('Off'))
-          ],
-          mainAxisSize: MainAxisSize.min,
-        ),
-        trailing: Row(
-          children: [
-            Switch(
-              value: onOff,
-              onChanged: (bool value) => print(value),
-            ),
-            GestureDetector(child: Icon(Icons.more_vert))
-          ],
-          mainAxisSize: MainAxisSize.min,
-        ));
+    return Container(
+      width: 300,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          border: Border.all(color: Colors.teal[200], width: 3)),
+      child: ListTile(
+          dense: false,
+          leading: Row(
+            children: [
+              Text(
+                'Fan',
+                textScaleFactor: 2,
+                style: Theme.of(context).textTheme.bodyText2,
+              ),
+              Chip(
+                  label: (onOff)
+                      ? Text(
+                          'On',
+                          style: Theme.of(context).textTheme.bodyText1,
+                        )
+                      : Text('Off'))
+            ],
+            mainAxisSize: MainAxisSize.min,
+          ),
+          trailing: Row(
+            children: [
+              Switch(
+                value: onOff,
+                onChanged: (bool value) => print(value),
+              ),
+              GestureDetector(child: Icon(Icons.more_vert))
+            ],
+            mainAxisSize: MainAxisSize.min,
+          )),
+    );
   }
 }
