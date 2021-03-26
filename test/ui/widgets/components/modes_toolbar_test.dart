@@ -38,4 +38,8 @@ void main() {
     expect(find.widgetWithIcon(ModesToolbar, Icons.whatshot), findsOneWidget);
     expect(find.widgetWithIcon(ModesToolbar, Icons.eco), findsOneWidget);
   });
+
+  testWidgets('', (WidgetTester tester) async {
+    await tester.pumpWidget(createModesToolbar());
+  });
 }
