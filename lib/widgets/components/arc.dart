@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Arc extends StatefulWidget {
-  final Widget centerWidget, footerWidget;
+  final Widget centerWidget;
   final Color color;
   final ValueChanged<double> onFinalSetPoint;
   final double maxValue;
@@ -13,7 +13,6 @@ class Arc extends StatefulWidget {
   Arc(
       {Key key,
       @required this.centerWidget,
-      @required this.footerWidget,
       this.color,
       @required this.initialValue,
       @required this.onFinalSetPoint,
