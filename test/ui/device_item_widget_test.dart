@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
-import 'package:mockito/mockito.dart';
 
 Widget createDeviceItemWidget(
     {String state,
@@ -12,7 +11,7 @@ Widget createDeviceItemWidget(
     VoidCallback onPressed}) {
   return MaterialApp(
     home: DeviceItemWidget(
-      icon: iconData,
+      icon: Icon(iconData),
       state: state,
       name: name,
       location: location,

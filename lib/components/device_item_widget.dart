@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
-import 'package:yonomi_flutter_demo/themes/color_constants.dart';
 
 class DeviceItemWidget extends StatelessWidget {
   const DeviceItemWidget(
@@ -13,7 +12,7 @@ class DeviceItemWidget extends StatelessWidget {
       this.onPressed})
       : super(key: key);
 
-  final IconData icon;
+  final Widget icon;
   final String name;
   final String location;
   final String state;
@@ -39,11 +38,7 @@ class DeviceItemWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Icon(
-                    icon,
-                    size: 60,
-                    color: ColorConstants.deviceIconColor,
-                  ),
+                  Container(width: 60, height: 60, child: icon),
                   Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
