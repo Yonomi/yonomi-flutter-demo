@@ -1,15 +1,48 @@
 import 'package:flutter/material.dart';
+import 'package:yonomi_flutter_demo/providers/thermostat_provider.dart';
+import 'package:yonomi_platform_sdk/graphql/devices/thermostat/thermostat_queries.graphql.dart';
 
 class ModesToolbar extends StatelessWidget {
-  List<Widget> children;
+  String deviceId;
 
-  ModesToolbar({this.children});
+  ThermostatProvider thermostatProvider;
+
+  ModesToolbar({this.deviceId, this.thermostatProvider});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: this.children,
+      children: [
+        ModeIconButton(
+          icon: Text("A"),
+          onPressed: () {
+            thermostatProvider?.setThermostatMode(
+                deviceId, ThermostatMode.auto);
+          },
+        ),
+        ModeIconButton(
+          icon: Icon(Icons.ac_unit),
+          onPressed: () {
+            thermostatProvider?.setThermostatMode(
+                deviceId, ThermostatMode.cool);
+          },
+        ),
+        ModeIconButton(
+          icon: Icon(Icons.whatshot),
+          onPressed: () {
+            thermostatProvider?.setThermostatMode(
+                deviceId, ThermostatMode.heat);
+          },
+        ),
+        ModeIconButton(
+          icon: Icon(Icons.eco),
+          onPressed: () {
+            thermostatProvider?.setThermostatMode(
+                deviceId, ThermostatMode.airflow);
+          },
+        ),
+      ],
     );
   }
 }
