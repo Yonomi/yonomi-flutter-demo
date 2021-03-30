@@ -1,15 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:yonomi_flutter_demo/themes/app_themes.dart';
+import 'package:yonomi_flutter_demo/themes/color_constants.dart';
 import 'package:yonomi_platform_sdk/repository/devices/devices_repository.dart';
 
 class DeviceItemIcon {
-  static IconData getIcon(List<Trait> traits) {
-    if (traits[0] is LockUnlockTrait) {
-      return (traits[0].state.value) ? Icons.lock : Icons.lock_open;
+  static Widget getIcon(List<Trait> traits) {
+    Trait determiningTrait = traits[0];
+    if (determiningTrait is LockUnlockTrait) {
+      return (determiningTrait.state.value)
+          ? Icon(
+              Icons.lock,
+              size: 60,
+              color: ColorConstants.deviceIconColor,
+            )
+          : Icon(
+              Icons.lock_open,
+              size: 60,
+              color: ColorConstants.deviceIconColor,
+            );
     }
-    if (traits[0] is ThermostatTrait) {
-      return Icons.thermostat_outlined;
+    if (determiningTrait is ThermostatTrait) {
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            border: Border.all(width: 3, color: Colors.black)),
+        child: Center(
+          child: Text(
+            determiningTrait.state.value.round().toString(),
+            style: AppThemes.deviceItemTextPrimaryState,
+          ),
+        ),
+      );
     }
-    return Icons.device_unknown;
+    return Icon(
+      Icons.device_unknown,
+      size: 60,
+      color: ColorConstants.deviceIconColor,
+    );
   }
 }

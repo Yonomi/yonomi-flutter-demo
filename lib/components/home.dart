@@ -77,7 +77,7 @@ class HomeWidget extends StatelessWidget {
                           );
                         }
                         return DeviceItemWidget(
-                            icon: DeviceItemIcon.getIcon(device.traits),
+                            deviceIcon: DeviceItemIcon.getIcon(device.traits),
                             location: 'entryway',
                             name: device.displayName,
                             onPressed: () {
