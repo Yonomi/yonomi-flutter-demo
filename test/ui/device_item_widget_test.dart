@@ -11,7 +11,7 @@ Widget createDeviceItemWidget(
     VoidCallback onPressed}) {
   return MaterialApp(
     home: DeviceItemWidget(
-      icon: Icon(iconData),
+      deviceIcon: Icon(iconData),
       state: state,
       name: name,
       location: location,
