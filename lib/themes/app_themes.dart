@@ -40,6 +40,11 @@ class AppThemes {
   static const TextStyle deviceItemTextName = TextStyle(
       fontWeight: FontWeight.w700, color: Colors.black, fontSize: 15.0);
 
+  static const TextStyle deviceItemTextPrimaryState = TextStyle(
+      fontWeight: FontWeight.w900,
+      color: ColorConstants.textColorState,
+      fontSize: 19.0);
+
   static const TextStyle deviceItemTextState = TextStyle(
       fontWeight: FontWeight.w700,
       color: ColorConstants.textColorState,

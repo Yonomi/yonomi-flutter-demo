@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 import 'package:yonomi_flutter_demo/themes/color_constants.dart';
 import 'package:yonomi_platform_sdk/repository/devices/devices_repository.dart';
 
@@ -7,7 +8,7 @@ class DeviceItemIcon {
   static Widget getIcon(List<Trait> traits) {
     Trait determiningTrait = traits[0];
     if (determiningTrait is LockUnlockTrait) {
-      return (traits[0].state.value)
+      return (determiningTrait.state.value)
           ? Icon(
               Icons.lock,
               size: 60,
@@ -20,10 +21,16 @@ class DeviceItemIcon {
             );
     }
     if (determiningTrait is ThermostatTrait) {
-      return Icon(
-        Icons.thermostat_outlined,
-        size: 60,
-        color: ColorConstants.deviceIconColor,
+      return Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(100),
+            border: Border.all(width: 3, color: Colors.black)),
+        child: Center(
+          child: Text(
+            determiningTrait.state.value.round().toString(),
+            style: AppThemes.deviceItemTextPrimaryState,
+          ),
+        ),
       );
     }
     return Icon(
