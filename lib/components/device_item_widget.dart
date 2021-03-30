@@ -28,7 +28,7 @@ class DeviceItemWidget extends StatelessWidget {
       constraints: BoxConstraints.tightFor(width: 175, height: 175),
       child: TextButton(
         onPressed: onPressed,
-        style: TextButton().defaultStyleOf(context).copyWith(
+        style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
                 AppThemes.deviceItemBackgroundColor),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
