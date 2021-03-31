@@ -57,6 +57,7 @@ class HomeWidget extends StatelessWidget {
                             .toLowerCase()
                             .contains('thermostat')) {
                           return DeviceItemWidget(
+                            deviceIcon: DeviceItemIcon.getIcon(device.traits),
                             location: 'home',
                             name: device.displayName,
                             onPressed: () {
