@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yonomi_flutter_demo/providers/thermostat_provider.dart';
+import 'package:yonomi_flutter_demo/themes/color_constants.dart';
 import 'package:yonomi_platform_sdk/graphql/devices/thermostat/thermostat_queries.graphql.dart';
 
 class ModesToolbar extends StatelessWidget {
@@ -62,6 +63,7 @@ class ModeIconButton extends ElevatedButton {
           onPressed: onPressed,
           onLongPress: onLongPress,
           style: ElevatedButton.styleFrom(
+              primary: ColorConstants.modesButtonUnpressedColor,
               shape: CircleBorder(side: BorderSide()),
               minimumSize: Size.square(48.0)),
           focusNode: focusNode,
