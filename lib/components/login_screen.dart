@@ -8,6 +8,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SettingsDialog(
       title: "Login",
+      accessToken: YoRequestCreator.token,
       defaultUrl: YoRequestCreator.endpoint,
     );
   }

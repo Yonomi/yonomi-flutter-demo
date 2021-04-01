@@ -33,8 +33,8 @@ class YoApp extends StatelessWidget {
     final MaterialApp app = MaterialApp(
       title: 'Yonomi Flutter Demo',
       theme: AppThemes.getMainTheme(context),
-      initialRoute: YoRequestCreator.token.isEmpty ? "login" : "/",
       debugShowCheckedModeBanner: false,
+      initialRoute: YoRequestCreator.token.isEmpty ? "login" : "/",
       routes: {
         "login": (context) => LoginScreen(),
         '/': (context) => YonomiHomePage(title: 'Yonomi Demo App'),
@@ -99,7 +99,7 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
       extendBodyBehindAppBar: false,
       appBar: YonomiAppBar(
         widget.title,
-        onPressed: () => {},
+        onPressed: () {},
       ),
       body: [homeWidget, settingsWidget, settingsWidget][_selectedIndex],
       bottomNavigationBar: YonomiBottomAppBar(
