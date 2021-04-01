@@ -49,7 +49,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
         TextButton(
           child: const Text('CANCEL'),
           onPressed: () {
-            Navigator.pushNamed(context, "/");
+            Navigator.pushReplacementNamed(context, "/");
           },
         ),
         TextButton(
@@ -94,7 +94,7 @@ class _SettingsDialogState extends State<SettingsDialog> {
       content: Text("Saved"),
     ));
     Future.delayed(const Duration(milliseconds: 250), () {
-      Navigator.pushNamed(context, "/");
+      Navigator.pushReplacementNamed(context, "/");
     });
   }
 }
