@@ -1,10 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SettingsDialog extends StatefulWidget {
-  const SettingsDialog({Key key, this.title}) : super(key: key);
+  const SettingsDialog({Key key, this.title, this.defaultUrl})
+      : super(key: key);
 
   final String title;
+
+  final String defaultUrl;
 
   @override
   _SettingsDialogState createState() => _SettingsDialogState();
@@ -31,17 +33,16 @@ class _SettingsDialogState extends State<SettingsDialog> {
           },
         ),
       ],
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
+      content: Table(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Access Token"), Flexible(child: TextField())],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [Text("Endpoint"), Flexible(child: TextField())],
-          ),
+          TableRow(children: [
+            TableCell(child: Text("Access Token")),
+            TableCell(child: TextField()),
+          ]),
+          TableRow(children: [
+            TableCell(child: Text("Endpoint")),
+            TableCell(child: TextField()),
+          ]),
         ],
       ),
     );
