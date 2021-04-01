@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
+import 'package:yonomi_flutter_demo/components/settings_dialog.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
@@ -92,7 +93,7 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
       extendBodyBehindAppBar: false,
       appBar: YonomiAppBar(
         widget.title,
-        onPressed: () {},
+        onPressed: () => openDialog(context),
       ),
       body: [homeWidget, settingsWidget, settingsWidget][_selectedIndex],
       bottomNavigationBar: YonomiBottomAppBar(
@@ -120,6 +121,16 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
           ))),
     );
   }
+}
+
+AlertDialog openDialog(BuildContext context) {
+  showDialog(
+      context: context,
+      builder: (_) {
+        return SettingsDialog(
+          title: "Configuration",
+        );
+      });
 }
 
 _launchURL(String url) async {
