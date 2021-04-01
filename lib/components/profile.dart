@@ -22,33 +22,38 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: <Widget>[
-        SizedBox(height: 25),
-        Consumer<UserInfoProvider>(builder: (context, userInfoProvider, child) {
-          return userInfoProvider.loading
-              ? Center(child: CircularProgressIndicator())
-              : buildUserCard();
-        }),
-      ],
+    return Expanded(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 25),
+          Consumer<UserInfoProvider>(
+            builder: (context, userInfoProvider, child) {
+              return userInfoProvider.loading
+                  ? Center(child: CircularProgressIndicator())
+                  : buildUserCard(child);
+            },
+            child: ListTile(
+              tileColor: Colors.yellow,
+              title: Text("Profile",
+                  style: const TextStyle(
+                    color: AppThemes.listViewTextColor,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20.0,
+                  )),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
-  Widget buildUserCard() {
+  Widget buildUserCard(Widget cardTitle) {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
         children: [
-          ListTile(
-            tileColor: Colors.yellow,
-            title: Text("Profile",
-                style: const TextStyle(
-                  color: AppThemes.listViewTextColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20.0,
-                )),
-          ),
+          cardTitle,
           SizedBox(height: 20),
           Text(userInfoProvider?.user?.displayName ?? ''),
           Text(userInfoProvider?.user?.firstActivityAt?.toString() ?? ''),

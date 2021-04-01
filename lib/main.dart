@@ -141,7 +141,7 @@ class OffsetFromEndDockedFabLocation extends StandardFabLocation
   double getOffsetX(
       ScaffoldPrelayoutGeometry scaffoldGeometry, double adjustment) {
     final double directionalAdjustment =
-        scaffoldGeometry.textDirection == TextDirection.ltr ? -13.0 : 13.0;
+        scaffoldGeometry.textDirection == TextDirection.ltr ? -2.0 : 2.0;
     return super.getOffsetX(scaffoldGeometry, adjustment) +
         directionalAdjustment;
   }
