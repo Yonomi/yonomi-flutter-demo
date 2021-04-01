@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
-import 'package:yonomi_flutter_demo/components/settings_dialog.dart';
+import 'package:yonomi_flutter_demo/providers/request.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
 import 'components/Home.dart';
 import 'components/accounts.dart';
 import 'components/integrations.dart';
+import 'components/login_screen.dart';
 import 'components/profile.dart';
 import 'components/yonomi_app_bar.dart';
 import 'components/yonomi_bottom_app_bar.dart';
 import 'themes/string_constants.dart';
 
 const integrationId = 'f0885113-68bb-4bb5-af50-0cbd51025ea9';
+
 void main() {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider<DevicesProvider>.value(
@@ -31,8 +33,12 @@ class YoApp extends StatelessWidget {
     final MaterialApp app = MaterialApp(
       title: 'Yonomi Flutter Demo',
       theme: AppThemes.getMainTheme(context),
+      initialRoute: YoRequestCreator.token.isEmpty ? "login" : "/",
       debugShowCheckedModeBanner: false,
-      home: YonomiHomePage(title: 'Yonomi Demo App'),
+      routes: {
+        "login": (context) => LoginScreen(),
+        '/': (context) => YonomiHomePage(title: 'Yonomi Demo App'),
+      },
     );
     return app;
   }
@@ -93,7 +99,7 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
       extendBodyBehindAppBar: false,
       appBar: YonomiAppBar(
         widget.title,
-        onPressed: () => openDialog(context),
+        onPressed: () => {},
       ),
       body: [homeWidget, settingsWidget, settingsWidget][_selectedIndex],
       bottomNavigationBar: YonomiBottomAppBar(
@@ -121,16 +127,6 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
           ))),
     );
   }
-}
-
-AlertDialog openDialog(BuildContext context) {
-  showDialog(
-      context: context,
-      builder: (_) {
-        return SettingsDialog(
-          title: "Configuration",
-        );
-      });
 }
 
 _launchURL(String url) async {
