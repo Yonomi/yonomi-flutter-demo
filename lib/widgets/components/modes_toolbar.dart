@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:yonomi_flutter_demo/providers/thermostat_provider.dart';
 import 'package:yonomi_flutter_demo/themes/color_constants.dart';
+import 'package:yonomi_flutter_demo/themes/ring_border.dart';
 import 'package:yonomi_platform_sdk/graphql/devices/thermostat/thermostat_queries.graphql.dart';
 
 class ModesToolbar extends StatelessWidget {
@@ -53,22 +54,36 @@ class ModeIconButton extends ElevatedButton {
     Key key,
     @required VoidCallback onPressed,
     VoidCallback onLongPress,
-    FocusNode focusNode,
-    bool autofocus,
-    Clip clipBehavior,
     @required Widget icon,
   })  : assert(icon != null),
         super(
           key: key,
           onPressed: onPressed,
           onLongPress: onLongPress,
-          style: ElevatedButton.styleFrom(
-              primary: ColorConstants.modesButtonUnpressedColor,
-              shape: CircleBorder(side: BorderSide()),
-              minimumSize: Size.square(48.0)),
-          focusNode: focusNode,
-          autofocus: autofocus ?? false,
-          clipBehavior: clipBehavior ?? Clip.none,
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.resolveWith<Color>(
+              (Set<MaterialState> states) {
+                if (states.contains(MaterialState.focused) ||
+                    states.contains(MaterialState.pressed)) {
+                  return ColorConstants.modesButtonPressedColor;
+                }
+                return ColorConstants.modesButtonUnpressedColor;
+              },
+            ),
+            shape: MaterialStateProperty.resolveWith<OutlinedBorder>(
+                (Set<MaterialState> states) {
+              if (states.contains(MaterialState.focused) ||
+                  states.contains(MaterialState.pressed)) {
+                return RingBorder(
+                  side: BorderSide(
+                      color: ColorConstants.modesButtonUnpressedColor,
+                      width: 2.0),
+                );
+              }
+              return CircleBorder(side: BorderSide());
+            }),
+            minimumSize: MaterialStateProperty.all<Size>(Size.square(48.0)),
+          ),
           child: ModeButtonIconChild(icon: icon),
         );
 
