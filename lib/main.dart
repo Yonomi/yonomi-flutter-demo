@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
-import 'package:yonomi_flutter_demo/providers/request.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
@@ -34,7 +33,7 @@ class YoApp extends StatelessWidget {
       title: 'Yonomi Flutter Demo',
       theme: AppThemes.getMainTheme(context),
       debugShowCheckedModeBanner: false,
-      initialRoute: YoRequestCreator.token.isEmpty ? "login" : "/",
+      initialRoute: "login",
       routes: {
         "login": (context) => LoginScreen(),
         '/': (context) => YonomiHomePage(title: 'Yonomi Demo App'),
