@@ -17,12 +17,7 @@ import 'themes/string_constants.dart';
 const integrationId = 'f0885113-68bb-4bb5-af50-0cbd51025ea9';
 
 void main() {
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<DevicesProvider>.value(
-      value: YoSDKDevicesProvider(),
-    ),
-    ChangeNotifierProvider(create: (context) => UserInfoProvider()),
-  ], child: YoApp()));
+  runApp(YoApp());
 }
 
 class YoApp extends StatelessWidget {
@@ -36,7 +31,15 @@ class YoApp extends StatelessWidget {
       initialRoute: "login",
       routes: {
         "login": (context) => LoginScreen(),
-        '/': (context) => YonomiHomePage(title: 'Yonomi Demo App'),
+        '/': (context) => MultiProvider(
+              providers: [
+                ChangeNotifierProvider<DevicesProvider>.value(
+                  value: YoSDKDevicesProvider(),
+                ),
+                ChangeNotifierProvider(create: (context) => UserInfoProvider()),
+              ],
+              child: YonomiHomePage(title: 'Yonomi Demo App'),
+            ),
       },
     );
     return app;
