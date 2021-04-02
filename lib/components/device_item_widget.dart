@@ -52,17 +52,26 @@ class DeviceItemWidget extends StatelessWidget {
                     Text(
                       location,
                       style: AppThemes.deviceItemTextLocation,
+                      overflow: TextOverflow.fade,
+                      maxLines: 1,
+                      softWrap: false,
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 4.0, bottom: 4.0),
                       child: Text(
                         name,
                         style: AppThemes.deviceItemTextName,
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
+                        softWrap: false,
                       ),
                     ),
                     Text(
                       state,
                       style: AppThemes.deviceItemTextState,
+                      overflow: TextOverflow.fade,
+                      maxLines: 1,
+                      softWrap: false,
                     ),
                   ]),
             ],
