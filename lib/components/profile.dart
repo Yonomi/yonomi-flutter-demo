@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:yonomi_flutter_demo/models/account_model.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
@@ -28,10 +29,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         children: <Widget>[
           SizedBox(height: 25),
           Consumer<UserInfoProvider>(
-            builder: (context, userInfoProvider, child) {
+            builder: (context, userInfoProvider, cardTitleWidget) {
               return userInfoProvider.loading
                   ? Center(child: CircularProgressIndicator())
-                  : buildUserCard(child);
+                  : buildUserCard(cardTitleWidget, userInfoProvider.user);
             },
             child: ListTile(
               tileColor: Colors.yellow,
@@ -48,16 +49,16 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     );
   }
 
-  Widget buildUserCard(Widget cardTitle) {
+  Widget buildUserCard(Widget cardTitle, UserModel userModel) {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
         children: [
           cardTitle,
           SizedBox(height: 20),
-          Text(userInfoProvider?.user?.displayName ?? ''),
-          Text(userInfoProvider?.user?.firstActivityAt?.toString() ?? ''),
-          Text(userInfoProvider?.user?.lastActivityAt?.toString() ?? ''),
+          Text(userModel?.displayName ?? ''),
+          Text(userModel?.firstActivityAt?.toString() ?? ''),
+          Text(userModel?.lastActivityAt?.toString() ?? ''),
           SizedBox(height: 20),
         ],
       ),
