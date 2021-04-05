@@ -10,10 +10,10 @@ aliases:
 
 commands:
   write-key:
-    description: "Fetch access token from staging playground"
+    description: "Write private key file"
     steps:
       - run:
-          name: Parse
+          name: Write file
           command: |
             echo $PRIVATE_KEY > assets/jwtRS256.key
   flutter-tests:
