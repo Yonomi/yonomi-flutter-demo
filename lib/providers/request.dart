@@ -11,9 +11,11 @@ class YoRequest {
 
   static YoRequest _request;
 
-  factory YoRequest(
-          String userId, String configFileString, String privateKey) =>
-      _request ?? YoRequest._internal(userId, configFileString, privateKey);
+  factory YoRequest(String userId, String configFileString, String privateKey) {
+    _request =
+        _request ?? YoRequest._internal(userId, configFileString, privateKey);
+    return _request;
+  }
 
   YoRequest._internal(
       String userId, String configFileString, String privateKey) {
@@ -21,14 +23,18 @@ class YoRequest {
     Map config = loadYaml(configFileString);
     String tenantId = config['tenantId'];
     _url = config['url'];
+    _token = createToken(userId, tenantId, privateKey);
+  }
 
+  static String createToken(String userId, String tenantId, String privateKey) {
     var builder = new JWTBuilder();
     builder.subject = userId;
     builder.expiresAt = DateTime.now().add(Duration(days: 1));
     builder.issuer = 'www.example.com';
     builder.setClaim('custom:tenant', tenantId);
     var signer = JWTRsaSha256Signer(privateKey: privateKey);
-    _token = builder.getSignedToken(signer).toString();
+
+    return builder.getSignedToken(signer).toString();
   }
 
   String get token => _token;

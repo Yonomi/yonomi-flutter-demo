@@ -41,8 +41,6 @@ class YoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String userId = ModalRoute.of(context).settings.arguments as String;
-    print('reached');
-    print(userId);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<DevicesProvider>.value(
