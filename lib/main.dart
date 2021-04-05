@@ -17,32 +17,41 @@ import 'themes/string_constants.dart';
 const integrationId = 'f0885113-68bb-4bb5-af50-0cbd51025ea9';
 
 void main() {
-  runApp(YoApp());
+  runApp(YoAppWithLoginPage());
+}
+
+class YoAppWithLoginPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Yonomi Flutter Demo',
+      theme: AppThemes.getMainTheme(context),
+      debugShowCheckedModeBanner: false,
+      initialRoute: 'login',
+      routes: {
+        'login': (context) => LoginScreen(),
+        'app': (context) => YoApp()
+      },
+    );
+  }
 }
 
 class YoApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final MaterialApp app = MaterialApp(
-      title: 'Yonomi Flutter Demo',
-      theme: AppThemes.getMainTheme(context),
-      debugShowCheckedModeBanner: false,
-      initialRoute: "login",
-      routes: {
-        "login": (context) => LoginScreen(),
-        '/': (context) => MultiProvider(
-              providers: [
-                ChangeNotifierProvider<DevicesProvider>.value(
-                  value: YoSDKDevicesProvider(),
-                ),
-                ChangeNotifierProvider(create: (context) => UserInfoProvider()),
-              ],
-              child: YonomiHomePage(title: 'Yonomi Demo App'),
-            ),
-      },
+    final String userId = ModalRoute.of(context).settings.arguments as String;
+    print('reached');
+    print(userId);
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<DevicesProvider>.value(
+          value: YoSDKDevicesProvider(userId),
+        ),
+        ChangeNotifierProvider(create: (context) => UserInfoProvider(userId)),
+      ],
+      child: YonomiHomePage(title: 'Yonomi Demo App'),
     );
-    return app;
   }
 }
 

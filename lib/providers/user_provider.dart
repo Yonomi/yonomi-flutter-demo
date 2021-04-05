@@ -8,13 +8,19 @@ import 'package:yonomi_platform_sdk/request/request.dart';
 class UserInfoProvider extends ChangeNotifier {
   UserModel _userModel;
   bool loading = false;
+  String _userId;
+  Request _request;
 
-  Request request = YoRequestCreator.request();
+  UserInfoProvider(String userId) {
+    _userId = userId;
+  }
 
   Future<void> fetchUserDetails() async {
     loading = true;
-
-    final userFromGraph = await UserRepository.getUserDetails(request);
+    if (_request == null) {
+      _request = await YoRequest.request(_userId);
+    }
+    final userFromGraph = await UserRepository.getUserDetails(_request);
     _userModel = UserModel(
         userFromGraph?.id ?? '',
         userFromGraph?.firstActivityAt ?? '',
@@ -26,7 +32,10 @@ class UserInfoProvider extends ChangeNotifier {
   }
 
   Future<String> fetchUrl(String integrationId) async {
-    return AccountRepository.generateAccountUrl(integrationId, request);
+    if (_request == null) {
+      _request = await YoRequest.request(_userId);
+    }
+    return AccountRepository.generateAccountUrl(integrationId, _request);
   }
 
   UserModel get user => _userModel;

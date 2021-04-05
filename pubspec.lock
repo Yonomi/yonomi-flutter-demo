@@ -14,7 +14,7 @@ packages:
       name: analyzer
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.41.1"
+    version: "0.41.2"
   args:
     dependency: transitive
     description:
@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.17.1"
+  asn1lib:
+    dependency: transitive
+    description:
+      name: asn1lib
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.1"
   async:
     dependency: transitive
     description:
@@ -49,7 +56,7 @@ packages:
       name: build
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.2"
+    version: "1.6.2"
   build_config:
     dependency: transitive
     description:
@@ -70,21 +77,21 @@ packages:
       name: build_resolvers
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.4"
+    version: "1.5.3"
   build_runner:
     dependency: "direct dev"
     description:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.10.7"
+    version: "1.11.1"
   build_runner_core:
     dependency: transitive
     description:
       name: build_runner_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.2"
+    version: "6.1.7"
   built_collection:
     dependency: transitive
     description:
@@ -155,6 +162,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
+  corsac_jwt:
+    dependency: "direct main"
+    description:
+      name: corsac_jwt
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.4.0"
   crypto:
     dependency: transitive
     description:
@@ -457,6 +471,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   pool:
     dependency: transitive
     description:
@@ -499,6 +520,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  rsa_pkcs:
+    dependency: transitive
+    description:
+      name: rsa_pkcs
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.1.4"
   shelf:
     dependency: transitive
     description:
@@ -650,7 +678,7 @@ packages:
       name: web_socket_channel
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "1.2.0"
   xml:
     dependency: transitive
     description:
@@ -659,7 +687,7 @@ packages:
     source: hosted
     version: "4.5.1"
   yaml:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: yaml
       url: "https://pub.dartlang.org"
