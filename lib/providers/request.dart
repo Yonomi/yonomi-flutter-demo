@@ -29,7 +29,7 @@ class YoRequest {
   static String createToken(String userId, String tenantId, String privateKey) {
     var builder = new JWTBuilder();
     builder.subject = userId;
-    builder.expiresAt = DateTime.now().add(Duration(days: 1));
+    builder.expiresAt = DateTime.now().add(Duration(days: 30));
     builder.issuer = 'www.example.com';
     builder.setClaim('custom:tenant', tenantId);
     var signer = JWTRsaSha256Signer(privateKey: privateKey);
