@@ -15,7 +15,7 @@ commands:
       - run:
           name: Parse
           command: |
-            echo $PRIVATE_KEY > ~/assets/jwtRS256.key
+            echo $PRIVATE_KEY > assets/jwtRS256.key
   flutter-tests:
     description: "Run flutter tests"
     steps:
