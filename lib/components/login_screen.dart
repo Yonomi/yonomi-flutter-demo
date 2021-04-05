@@ -18,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Retrieve Text Input'),
+        title: Text('Please Enter User Id'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -28,15 +28,16 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          print('reached here');
-          Navigator.pushNamed(
-            context,
-            'app',
-            arguments: loginController.text,
-          );
+          if (loginController.text != '') {
+            Navigator.pushNamed(
+              context,
+              'app',
+              arguments: loginController.text,
+            );
+          }
         },
         tooltip: 'Show me the value!',
-        child: Icon(Icons.text_fields),
+        child: Icon(Icons.arrow_forward),
       ),
     );
   }
