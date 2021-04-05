@@ -15,7 +15,7 @@ commands:
       - run:
           name: Parse
           command: |
-            echo $PRIVATE_KEY > assets/jwtRS256.key
+            echo $PRIVATE_KEY > ~/assets/jwtRS256.key
   flutter-tests:
     description: "Run flutter tests"
     steps:
@@ -70,6 +70,7 @@ jobs:
       - run:
           name: Make folder for test results
           command: mkdir -p test-results/flutter-demo-app-tests
+      - write-key
       - flutter-tests
       - store_test_results:
           path: test-results
