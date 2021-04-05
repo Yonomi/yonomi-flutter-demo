@@ -9,7 +9,7 @@ aliases:
   - &project_dir "~/project"
 
 commands:
-  fetch-staging-token:
+  write-key:
     description: "Fetch access token from staging playground"
     steps:
       - run:
