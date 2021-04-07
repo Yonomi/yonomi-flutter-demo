@@ -3,6 +3,7 @@ version: 2.1
 # Orb declarations
 orbs:
   win: circleci/windows@2.4.0
+  codecov: codecov/codecov@1.0.2
 
 # Simple YAML anchors
 aliases:
@@ -77,3 +78,5 @@ jobs:
       - flutter-tests
       - store_test_results:
           path: test-results
+      - codecov/upload:
+          file: test-results/flutter-demo-app-tests
