@@ -72,4 +72,5 @@ jobs:
       - run:
           name: Make folder for test results
           command: mkdir -p test-results/flutter-demo-app-tests
+      - write-key
       - flutter-tests
