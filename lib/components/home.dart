@@ -7,6 +7,8 @@ import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
 import 'package:yonomi_flutter_demo/providers/thermostat_provider.dart';
 import 'package:yonomi_flutter_demo/widgets/thermostat.dart';
 
+// Trivial change for testing. Do not merge.
+
 class HomeWidget extends StatelessWidget {
   static final String title = "Home";
   static Widget gridIcon = SvgPicture.asset(
