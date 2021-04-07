@@ -1,10 +1,50 @@
-import 'package:yonomi_platform_sdk/request/request.dart';
+import 'dart:io';
 
-class YoRequestCreator {
-  static Request request() {
-    return Request('https://platform-stg.yonomi.cloud/graphql', {
-      'Authorization':
-          'Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzODExYzMxNS1kMGM0LTQ4YTEtOWQwZi04NzdkMjIyYzk1NTYiLCJpc3MiOiIzYWE5NTFlYi0yZDFhLTQ0Y2EtOWZhMi1iZWM2M2Y4ODFjNjUiLCJpYXQiOjE2MTY3MDExMDUsImV4cCI6MTYxNjc4NzUwNX0.N3MfYR_JsfXAlOE5NJG1QsJSB0_UMnrp8gFMO_LZo-vVpi8ICqjjq4Ys0AhQWWyPJdc0rTDeN__lbQw6fNc_xO42pRnWMVMrdTKDARIpnIcRcgD71zin4Zbhi41VOqiM7UkjQXjlZ_Pgvq4qLZE6DMQ8pYJfYw-h6WFRMZ6Dxas3ekxNi0JxB_GUiD_67wy9y9keqqyD-Br_Dc0KU6DmwV2lDBiKVCEcOGVMDbR72ryi8JKgV7wPOjDZlcs2bMESwI_4hQ6KgbHV8Ayw4-AQqW72rcC3jUsAkcaryzlRsWLiu2wML8XonSTo_U7vDMCluhn86JzLMdcYe6D9QVHBBQ'
-    });
+import "package:yaml/yaml.dart";
+import 'package:yonomi_platform_sdk/request/request.dart';
+import 'package:corsac_jwt/corsac_jwt.dart';
+import 'package:flutter/services.dart' show rootBundle;
+
+class YoRequest {
+  String _token;
+  String _url;
+
+  static YoRequest _request;
+
+  factory YoRequest(String userId, String configFileString, String privateKey) {
+    _request =
+        _request ?? YoRequest._internal(userId, configFileString, privateKey);
+    return _request;
+  }
+
+  YoRequest._internal(
+      String userId, String configFileString, String privateKey) {
+    // Read yaml to get url, tenantId, secret
+    Map config = loadYaml(configFileString);
+    String tenantId = config['tenantId'];
+    _url = config['url'];
+    _token = createToken(userId, tenantId, privateKey);
+  }
+
+  static String createToken(String userId, String tenantId, String privateKey) {
+    var builder = new JWTBuilder();
+    builder.subject = userId;
+    builder.expiresAt = DateTime.now().add(Duration(days: 30));
+    builder.issuer = 'www.example.com';
+    builder.setClaim('custom:tenant', tenantId);
+    var signer = JWTRsaSha256Signer(privateKey: privateKey);
+
+    return builder.getSignedToken(signer).toString();
+  }
+
+  String get token => _token;
+  String get url => _url;
+
+  static Future<Request> request(String userId) async {
+    String configFileString = await rootBundle.loadString('assets/config.yaml');
+    String privateKey = await rootBundle.loadString('assets/jwtRS256.key');
+    final yoRequest = YoRequest(userId, configFileString, privateKey);
+    return Request(
+        yoRequest.url, {'Authorization': 'Bearer ${yoRequest._token}'});
   }
 }

@@ -25,6 +25,8 @@ dependencies:
     sdk: flutter
   json_annotation: ^3.1.0
   equatable: ^1.2.5
+  corsac_jwt: ^0.4.0
+  yaml: ^2.2.1
   meta: '>=1.0.0 <2.0.0' # only if you have non nullable fields
   gql: '>=0.12.3 <1.0.0'
   url_launcher: ^5.7.10
@@ -44,9 +46,7 @@ dev_dependencies:
   mockito: ^4.1.4
   flutter_test:
     sdk: flutter
-  build_runner: ^1.10.4
-  json_serializable: ^3.5.0
-
+  test: ^1.16.5
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -61,6 +61,8 @@ flutter:
   assets:
     - assets/
     - assets/icons/
+    - assets/config.yaml
+    - assets/jwtRS256.key
 
   # An image asset can refer to one or more resolution-specific 'variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

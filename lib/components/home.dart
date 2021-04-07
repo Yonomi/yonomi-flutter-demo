@@ -66,7 +66,7 @@ class HomeWidget extends StatelessWidget {
                                 MaterialPageRoute(builder: (context) {
                                   return ChangeNotifierProvider(
                                     create: (_) =>
-                                        ThermostatProvider(device.id),
+                                        ThermostatProvider(device.id, 'userId'),
                                     child:
                                         ThermostatWidget(deviceId: device.id),
                                   );

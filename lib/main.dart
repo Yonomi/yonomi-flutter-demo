@@ -8,32 +8,48 @@ import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 import 'components/Home.dart';
 import 'components/accounts.dart';
 import 'components/integrations.dart';
+import 'components/login_screen.dart';
 import 'components/profile.dart';
 import 'components/yonomi_app_bar.dart';
 import 'components/yonomi_bottom_app_bar.dart';
 import 'themes/string_constants.dart';
 
 const integrationId = 'f0885113-68bb-4bb5-af50-0cbd51025ea9';
+
 void main() {
-  runApp(MultiProvider(providers: [
-    ChangeNotifierProvider<DevicesProvider>.value(
-      value: YoSDKDevicesProvider(),
-    ),
-    ChangeNotifierProvider(create: (context) => UserInfoProvider()),
-  ], child: YoApp()));
+  runApp(YoAppWithLoginPage());
+}
+
+class YoAppWithLoginPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Yonomi Flutter Demo',
+      theme: AppThemes.getMainTheme(context),
+      debugShowCheckedModeBanner: false,
+      initialRoute: 'login',
+      routes: {
+        'login': (context) => LoginScreen(),
+        'app': (context) => YoApp()
+      },
+    );
+  }
 }
 
 class YoApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    final MaterialApp app = MaterialApp(
-      title: 'Yonomi Flutter Demo',
-      theme: AppThemes.getMainTheme(context),
-      debugShowCheckedModeBanner: false,
-      home: YonomiHomePage(title: 'Yonomi Demo App'),
+    final String userId = ModalRoute.of(context).settings.arguments as String;
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<DevicesProvider>.value(
+          value: YoSDKDevicesProvider(userId),
+        ),
+        ChangeNotifierProvider(create: (context) => UserInfoProvider(userId)),
+      ],
+      child: YonomiHomePage(title: 'Yonomi Demo App'),
     );
-    return app;
   }
 }
 
@@ -141,7 +157,7 @@ class OffsetFromEndDockedFabLocation extends StandardFabLocation
   double getOffsetX(
       ScaffoldPrelayoutGeometry scaffoldGeometry, double adjustment) {
     final double directionalAdjustment =
-        scaffoldGeometry.textDirection == TextDirection.ltr ? -13.0 : 13.0;
+        scaffoldGeometry.textDirection == TextDirection.ltr ? -2.0 : 2.0;
     return super.getOffsetX(scaffoldGeometry, adjustment) +
         directionalAdjustment;
   }
