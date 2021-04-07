@@ -1,5 +1,6 @@
 [![Yonomi Flutter Demo][demo-shield]][yonomi]
 [![CircleCI][circle-shield]][circle-pipeline]
+[![codecov](https://codecov.io/gh/Yonomi/yonomi-flutter-demo/branch/main/graph/badge.svg?token=SI9QVPCIEQ)](https://codecov.io/gh/Yonomi/yonomi-flutter-demo)
 
 # Yonomi Flutter Demo
 
