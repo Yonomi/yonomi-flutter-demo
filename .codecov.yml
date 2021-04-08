@@ -1,17 +1,37 @@
+codecov:
+  require_ci_to_pass: yes
+
 coverage:
   precision: 2
   round: down
-  range: "70...100"
-
+  range: "90...100"
   status:
-    project: no
-    patch: yes
-    changes: no
+    project:
+      default:
+        # basic
+        target: auto
+        threshold: 0%
+        base: auto
+        flags:
+          - unit
+        paths:
+          - "lib"
+        # advanced settings
+        branches:
+          - main
+        if_ci_failed: error #success, failure, error, ignore
+        informational: false
+        only_pulls: false
 
-ignore:
-  - "lib/src/**/*.g.dart"
+parsers:
+  gcov:
+    branch_detection:
+      conditional: yes
+      loop: yes
+      method: no
+      macro: no
 
-# https://docs.codecov.io/docs/pull-request-comments
 comment:
-  layout: "reach, diff, flags, files"
+  layout: "reach,diff,flags,files,footer"
   behavior: default
+  require_changes: no
