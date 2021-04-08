@@ -16,8 +16,22 @@ This demo is a great place to start understanding the kind of applications you c
 
 ## Getting Started
 
+### Prerequisites
+#### Flutter
+#### lcov (For test coverage)
+`brew install lcov`
+
+## Running Tests
+
+```
+flutter test --coverage  
+genhtml coverage/lcov.info -o coverage/html
+open coverage/html/index.html
+```
+
 
 [yonomi]: https://www.yonomi.co/
 [demo-shield]: https://img.shields.io/badge/Yonomi-Flutter_Demo-lightgrey.svg?colorA=ffd500&colorB=5c5c5c
 [circle-shield]: https://circleci.com/gh/Yonomi/yonomi-flutter-demo/tree/main.svg?style=shield&circle-token=a80bb5eb3849cd3201f9f8c612aceaa09a4ded09
 [circle-pipeline]: https://app.circleci.com/pipelines/github/Yonomi/yonomi-flutter-demo
+
