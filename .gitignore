@@ -43,3 +43,5 @@ assets/jwtRS256.key
 ios/build/XCBuildData/
 ios/Flutter/*.xcconfig
 coverage/lcov.info
+ios/Flutter/Debug.xcconfig
+ios/Flutter/Release.xcconfig
