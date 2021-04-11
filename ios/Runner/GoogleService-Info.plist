@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>938102908733-ihtd7u0aqo3qpj0mln0nst6595jk7euc.apps.googleusercontent.com</string>
+	<string>938102908733-4e8vlrgce0aa1nata26ufeaapnbia4vi.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.938102908733-ihtd7u0aqo3qpj0mln0nst6595jk7euc</string>
+	<string>com.googleusercontent.apps.938102908733-4e8vlrgce0aa1nata26ufeaapnbia4vi</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBQi5VgPHUoeb17SmJbhNJJ7wYit2xNUhQ</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.yonomi.flutterDemo</string>
+	<string>co.yonomi.flutterDemo</string>
 	<key>PROJECT_ID</key>
 	<string>yonomi-flutter-demo-staging</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:938102908733:ios:d891625db88111c5c10754</string>
+	<string>1:938102908733:ios:62edd227f5a31ebdc10754</string>
 </dict>
 </plist>
