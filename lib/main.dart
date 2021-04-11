@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -17,10 +18,12 @@ import 'themes/string_constants.dart';
 const integrationId = 'f0885113-68bb-4bb5-af50-0cbd51025ea9';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(YoAppWithLoginPage());
 }
 
 class YoAppWithLoginPage extends StatelessWidget {
+  final Future<FirebaseApp> _firebaseApp = Firebase.initializeApp();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +32,20 @@ class YoAppWithLoginPage extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: 'login',
       routes: {
-        'login': (context) => LoginScreen(),
+        'login': (context) => FutureBuilder(
+            future: _firebaseApp,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                print(snapshot.error.toString());
+                return Text("App couldn't initialize");
+              } else if (snapshot.hasData) {
+                return LoginScreen();
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }),
         'app': (context) => YoApp()
       },
     );
