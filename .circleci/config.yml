@@ -3,6 +3,7 @@ version: 2.1
 # Orb declarations
 orbs:
   win: circleci/windows@2.4.0
+  codecov: codecov/codecov@1.0.2
 
 # Simple YAML anchors
 aliases:
@@ -10,10 +11,10 @@ aliases:
 
 commands:
   write-key:
-    description: "Write private key file"
+    description: "Fetch access token from staging playground"
     steps:
       - run:
-          name: Write file
+          name: Parse
           command: |
             echo $PRIVATE_KEY > assets/jwtRS256.key
   flutter-tests:
@@ -22,8 +23,9 @@ commands:
       - run:
           name: command to run flutter tests
           command: |
-            flutter test --machine > test-results/flutter-demo-app-tests/flutter_demo_app_all_tests-report.json
-            $HOME/.pub-cache/bin/tojunit --input test-results/flutter-demo-app-tests/flutter_demo_app_all_tests-report.json --output test-results/flutter-demo-app-tests/flutter_demo_app_all_tests-report.xml
+            flutter test --coverage
+      - codecov/upload:
+          file: coverage/lcov.info
   dependencies:
     description: "Download dependencies and setup global packages"
     parameters:
@@ -72,5 +74,3 @@ jobs:
           command: mkdir -p test-results/flutter-demo-app-tests
       - write-key
       - flutter-tests
-      - store_test_results:
-          path: test-results
