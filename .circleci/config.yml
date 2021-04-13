@@ -21,7 +21,11 @@ commands:
     description: "Run flutter tests"
     steps:
       - run:
-          name: command to run flutter tests
+          name: flutter analyze
+          command: |
+            flutter analyze
+      - run:
+          name: command to run flutter tests and export coverage
           command: |
             flutter test --coverage
       - codecov/upload:
