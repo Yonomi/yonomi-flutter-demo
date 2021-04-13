@@ -41,7 +41,6 @@ dependencies:
   yonomi_platform_sdk:
     git:
       url: ssh://git@github.com/Yonomi/yonomi-dart-sdk.git
-      ref: feature/getAllIntegrations
 
 
 dev_dependencies:
