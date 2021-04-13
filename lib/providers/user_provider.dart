@@ -5,14 +5,18 @@ import 'package:yonomi_platform_sdk/repository/account_repository.dart';
 import 'package:yonomi_platform_sdk/repository/user_repository.dart';
 import 'package:yonomi_platform_sdk/request/request.dart';
 
+typedef GetIntegrationFunction = Future<List<dynamic>> Function(
+    Request request);
+
 class UserInfoProvider extends ChangeNotifier {
   UserModel _userModel;
   bool loading = false;
   String _userId;
   Request _request;
 
-  UserInfoProvider(String userId) {
+  UserInfoProvider(String userId, {Request request}) {
     _userId = userId;
+    _request = request;
   }
 
   Future<void> fetchUserDetails() async {
@@ -31,11 +35,14 @@ class UserInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<List<Integration>> fetchIntegrations() async {
+  Future<List<Integration>> fetchIntegrations(
+      {GetIntegrationFunction getIntegration}) async {
     if (_request == null) {
       _request = await YoRequest.request(_userId);
     }
-    final integrations = (await AccountRepository.getAllIntegrations(_request))
+    GetIntegrationFunction getAllIntegration =
+        getIntegration ?? AccountRepository.getAllIntegrations;
+    final integrations = (await getAllIntegration(_request))
         .map((integration) =>
             Integration(integration?.id, integration?.displayName))
         .toList();
