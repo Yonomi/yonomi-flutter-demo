@@ -31,8 +31,6 @@ Widget createIntegrationListWidget(
   );
 }
 
-void onPressMock(String id) {}
-
 void main() {
   testWidgets('should render chips if integration list is passed',
       (WidgetTester tester) async {
@@ -69,21 +67,19 @@ void main() {
     });
   });
 
-  // testWidgets('passed method should be pressed on tap',
-  //     (WidgetTester tester) async {
-  //   await tester.runAsync(() async {
-  //     when(onPressMock('id1')).thenReturn(null);
-  //     await tester.pumpWidget(createIntegrationListWidget(
-  //         createCorrectIntegrationList(), onPressMock));
-  //     await tester.pumpAndSettle();
-  //     await tester.tap(find.widgetWithText(Text, 'displayName1'));
-  //     verify(onPressMock('id1')).called(1);
-  //   });
-  // });
-  // testWidgets('Off should be rendered if it is off',
-  //     (WidgetTester tester) async {
-  //   await tester.pumpWidget(createIntegrationListWidget(false));
-
-  //   expect(find.widgetWithText(DeviceControl, 'Off'), findsOneWidget);
-  // });
+  testWidgets('passed method should be pressed on tap',
+      (WidgetTester tester) async {
+    await tester.runAsync(() async {
+      final List<String> list = [];
+      await tester.pumpWidget(
+          createIntegrationListWidget(createCorrectIntegrationList(), (id) {
+        list.add(id);
+      }));
+      await tester.pumpAndSettle();
+      final widgetWithDisplayName =
+          find.widgetWithText(ActionChip, 'displayName1');
+      await tester.tap(widgetWithDisplayName);
+      expect(list[0], equals('id1'));
+    });
+  });
 }
