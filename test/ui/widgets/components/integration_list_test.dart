@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
 import 'package:yonomi_flutter_demo/components/integration_list.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
-import 'package:yonomi_flutter_demo/widgets/components/device_control.dart';
 
 Future<List<Integration>> createCorrectIntegrationList() async {
   return [
