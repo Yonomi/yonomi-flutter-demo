@@ -761,7 +761,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "0b162348bc1241b6053594c2ab0b964c8d17400e"
+      resolved-ref: "4c17f59b9f9a44d3d117e8025d500cecfca4460b"
       url: "ssh://git@github.com/Yonomi/yonomi-dart-sdk.git"
     source: git
     version: "0.0.1"
