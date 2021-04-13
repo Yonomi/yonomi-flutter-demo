@@ -31,6 +31,17 @@ class UserInfoProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<List<Integration>> fetchIntegrations() async {
+    if (_request == null) {
+      _request = await YoRequest.request(_userId);
+    }
+    final integrations = (await AccountRepository.getAllIntegrations(_request))
+        .map((integration) =>
+            Integration(integration?.id, integration?.displayName))
+        .toList();
+    return integrations;
+  }
+
   Future<String> fetchUrl(String integrationId) async {
     if (_request == null) {
       _request = await YoRequest.request(_userId);
@@ -39,4 +50,11 @@ class UserInfoProvider extends ChangeNotifier {
   }
 
   UserModel get user => _userModel;
+}
+
+class Integration {
+  final String id;
+  final String displayName;
+
+  Integration(this.id, this.displayName);
 }

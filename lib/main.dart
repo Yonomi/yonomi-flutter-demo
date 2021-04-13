@@ -8,6 +8,7 @@ import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
 import 'components/Home.dart';
 import 'components/accounts.dart';
+import 'components/integration_list.dart';
 import 'components/integrations.dart';
 import 'components/login_screen.dart';
 import 'components/profile.dart';
@@ -140,10 +141,28 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
             backgroundColor: AppThemes.floatingActionButtonColor,
             elevation: 2.0,
             tooltip: StringConstants.add_account,
-            onPressed: () async {
+            onPressed: () {
               var userInfoProvider =
                   Provider.of<UserInfoProvider>(context, listen: false);
-              _launchURL(await userInfoProvider.fetchUrl(integrationId));
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return Dialog(
+                      child: Container(
+                        height: 50,
+                        child: Center(
+                          child: IntegrationList(
+                            integrations: userInfoProvider.fetchIntegrations(),
+                            onPress: (integrationId) async {
+                              Navigator.of(context, rootNavigator: true).pop();
+                              _launchURL(await userInfoProvider
+                                  .fetchUrl(integrationId));
+                            },
+                          ),
+                        ),
+                      ),
+                    );
+                  });
             },
             child: Icon(
               Icons.add,
