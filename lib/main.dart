@@ -9,7 +9,6 @@ import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 import 'components/Home.dart';
 import 'components/accounts.dart';
 import 'components/integration_list.dart';
-import 'components/integrations.dart';
 import 'components/login_screen.dart';
 import 'components/profile.dart';
 import 'components/yonomi_app_bar.dart';
@@ -107,13 +106,6 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
     children: <Widget>[HomeWidget()],
   );
 
-  final Center integrationWidget = Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[IntegrationsWidget()],
-    ),
-  );
-
   final Column settingsWidget = Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: <Widget>[ProfileWidget()],
@@ -127,7 +119,7 @@ class _YonomiHomePageState extends State<YonomiHomePage> {
         widget.title,
         onPressed: () {},
       ),
-      body: [homeWidget, settingsWidget, settingsWidget][_selectedIndex],
+      body: [homeWidget, homeWidget, settingsWidget][_selectedIndex],
       bottomNavigationBar: YonomiBottomAppBar(
         selectedIndex: _selectedIndex,
         onTap: _navigateTo(context),

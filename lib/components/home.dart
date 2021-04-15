@@ -72,8 +72,6 @@ class HomeWidget extends StatelessWidget {
                                   );
                                 }),
                               );
-                              ;
-                              // Navigate to thermostat
                             },
                           );
                         }
