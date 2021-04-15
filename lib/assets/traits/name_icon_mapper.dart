@@ -27,7 +27,9 @@ class DeviceItemIcon {
             border: Border.all(width: 3, color: Colors.black)),
         child: Center(
           child: Text(
-            determiningTrait.state.value.round().toString(),
+            (determiningTrait.state.value != null)
+                ? determiningTrait.state.value.round().toString()
+                : 'N/A',
             style: AppThemes.deviceItemTextPrimaryState,
           ),
         ),
