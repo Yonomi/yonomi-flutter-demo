@@ -760,8 +760,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: "4c17f59b9f9a44d3d117e8025d500cecfca4460b"
+      ref: "bugfix/fixTests"
+      resolved-ref: "5c3ad672a11005706360e7cf57ef1d97a556afc7"
       url: "ssh://git@github.com/Yonomi/yonomi-dart-sdk.git"
     source: git
     version: "0.0.1"
