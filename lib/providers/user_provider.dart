@@ -8,23 +8,29 @@ import 'package:yonomi_platform_sdk/request/request.dart';
 typedef GetIntegrationFunction = Future<List<dynamic>> Function(
     Request request);
 
+typedef GetAccountUrlFunction = Future<String> Function(
+    String integrationid, Request request);
+
+typedef GetUserDetailsFunction = Future<User> Function(Request request);
+
 class UserInfoProvider extends ChangeNotifier {
   UserModel _userModel;
   bool loading = false;
   String _userId;
-  Request _request;
+  Future<Request> _request;
 
-  UserInfoProvider(String userId, {Request request}) {
+  UserInfoProvider(String userId, {Future<Request> request}) {
     _userId = userId;
-    _request = request;
+    _request = request ?? YoRequest.request(_userId);
   }
 
-  Future<void> fetchUserDetails() async {
+  Future<void> fetchUserDetails(
+      {GetUserDetailsFunction getUserDetailsInjected}) async {
     loading = true;
-    if (_request == null) {
-      _request = await YoRequest.request(_userId);
-    }
-    final userFromGraph = await UserRepository.getUserDetails(_request);
+    final request = await _request;
+    final getUserDetails =
+        getUserDetailsInjected ?? UserRepository.getUserDetails;
+    final userFromGraph = await getUserDetails(request);
     _userModel = UserModel(
         userFromGraph?.id ?? '',
         userFromGraph?.firstActivityAt ?? '',
@@ -36,24 +42,23 @@ class UserInfoProvider extends ChangeNotifier {
   }
 
   Future<List<Integration>> fetchIntegrations(
-      {GetIntegrationFunction getIntegration}) async {
-    if (_request == null) {
-      _request = await YoRequest.request(_userId);
-    }
-    GetIntegrationFunction getAllIntegration =
-        getIntegration ?? AccountRepository.getAllIntegrations;
-    final integrations = (await getAllIntegration(_request))
+      {GetIntegrationFunction getIntegrationInjected}) async {
+    final request = await _request;
+    final getAllIntegration =
+        getIntegrationInjected ?? AccountRepository.getAllIntegrations;
+    final integrations = (await getAllIntegration(request))
         .map((integration) =>
             Integration(integration?.id, integration?.displayName))
         .toList();
     return integrations;
   }
 
-  Future<String> fetchUrl(String integrationId) async {
-    if (_request == null) {
-      _request = await YoRequest.request(_userId);
-    }
-    return AccountRepository.generateAccountUrl(integrationId, _request);
+  Future<String> fetchUrl(String integrationId,
+      {GetAccountUrlFunction getAccountUrlInjected}) async {
+    final request = await _request;
+    final getAccountUrl =
+        getAccountUrlInjected ?? AccountRepository.generateAccountUrl;
+    return getAccountUrl(integrationId, request);
   }
 
   UserModel get user => _userModel;
