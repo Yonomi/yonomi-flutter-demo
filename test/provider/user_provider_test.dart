@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:yonomi_flutter_demo/models/account_model.dart';
+import 'package:yonomi_flutter_demo/models/user_model.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
 import 'package:yonomi_platform_sdk/repository/user_repository.dart';
 import 'package:yonomi_platform_sdk/request/request.dart';
