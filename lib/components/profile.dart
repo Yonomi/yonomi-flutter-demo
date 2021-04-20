@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:yonomi_flutter_demo/models/account_model.dart';
+import 'package:yonomi_flutter_demo/models/user_model.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
@@ -56,7 +56,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         children: [
           cardTitle,
           SizedBox(height: 20),
-          Text(userModel?.displayName ?? ''),
+          Text(userModel?.id ?? ''),
           Text(userModel?.firstActivityAt?.toString() ?? ''),
           Text(userModel?.lastActivityAt?.toString() ?? ''),
           SizedBox(height: 20),

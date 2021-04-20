@@ -9,26 +9,27 @@ class ThermostatProvider extends ChangeNotifier {
   ThermostatProvider(String deviceId, String userId) {
     _userId = userId;
     getDeviceDetail(deviceId);
+    _request = YoRequest.request(_userId);
   }
 
   String _userId;
   Device _deviceDetail;
-  Request _request;
+  Future<Request> _request;
 
   Future<void> setPointAction(String deviceId, double temperature) async {
-    if (_request == null) {
-      _request = await YoRequest.request(_userId);
-    }
-    ThermostatRepository.setPointThermostat(_request, deviceId, temperature);
+    final request = await _request;
+    ThermostatRepository.setPointThermostat(request, deviceId, temperature);
   }
 
   Future<void> setThermostatMode(String deviceId, ThermostatMode mode) async {
-    ThermostatRepository.setMode(_request, deviceId, mode);
+    final request = await _request;
+    ThermostatRepository.setMode(request, deviceId, mode);
   }
 
-  Future<Device> getDeviceDetail(String deviceId) async {
+  Future<void> getDeviceDetail(String deviceId) async {
+    final request = await _request;
     _deviceDetail =
-        await DevicesRepository.getThermostatDetails(_request, deviceId);
+        await DevicesRepository.getThermostatDetails(request, deviceId);
     notifyListeners();
   }
 

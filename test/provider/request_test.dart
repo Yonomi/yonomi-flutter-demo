@@ -78,11 +78,4 @@ void main() {
     final request2 = YoRequest('1234', 'tenantId: abc', privateKey);
     expect(request1, same(request2));
   });
-
-  test('create token creates correct token', () {
-    final token = YoRequest.createToken('1234', '1234', privateKey);
-    final validator = JWTValidator();
-    final errors = validator.validate(JWT.parse(token));
-    expect(errors.length, 0);
-  });
 }
