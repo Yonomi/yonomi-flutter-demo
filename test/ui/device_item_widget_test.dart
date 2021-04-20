@@ -20,6 +20,26 @@ Widget createDeviceItemWidget(
   );
 }
 
+Widget createLargeDeviceItemWidget(double scaleFactor,
+    {String state,
+    String name,
+    String location,
+    IconData iconData,
+    VoidCallback onPressed}) {
+  return MaterialApp(
+    home: MediaQuery(
+      data: MediaQueryData(textScaleFactor: scaleFactor),
+      child: DeviceItemWidget(
+        deviceIcon: Icon(iconData),
+        state: state,
+        name: name,
+        location: location,
+        onPressed: onPressed,
+      ),
+    ),
+  );
+}
+
 void main() {
   group("DeviceItemWidget", () {
     testWidgets('empty location - shows default text on label',
@@ -84,6 +104,27 @@ void main() {
       await tester.tap(find.widgetWithText(DeviceItemWidget, "testWidget"));
 
       expect(log.length, 1);
+    });
+
+    testWidgets(
+        'long, overflowing text does not stretch height of DeviceItemWidget',
+        (WidgetTester tester) async {
+      var itemUnderTest = createLargeDeviceItemWidget(3.5,
+          iconData: Icons.home,
+          location:
+              "A super long text that overflows the container A super long text that overflows the container",
+          name:
+              "A super long text that overflows the container A super long text that overflows the container",
+          state: "Off");
+
+      await tester.pumpWidget(itemUnderTest);
+      await tester.pumpAndSettle();
+
+      var deviceItemWidget = tester.firstWidget(find.byType(DeviceItemWidget));
+      expect(deviceItemWidget, isNotNull);
+
+      final Size widgetSize = tester.getSize(find.byType(DeviceItemWidget));
+      expect(widgetSize.height, equals(600.0));
     });
   });
 }
