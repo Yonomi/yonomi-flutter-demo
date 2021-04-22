@@ -42,12 +42,13 @@ You will need to have a machine set up with the Flutter SDK.
 3. Updated the Tenant with your public key
 4. Have users with unique IDs
 
-If you need guidance to complete any of these steps, visit the following guide for the complete walkthrough to onboard with the platform:
-
-[Comprehensive Platform Request Guide](https://yonomi.atlassian.net/wiki/spaces/YP/pages/1740963897/Comprehensive+Platform+Requests+Guide)
-
+If you need guidance on completing any of these steps, please contact our sales team to help you get started using our platform.
 
 ## Getting Started <a name="getting-started"></a>
+
+You will need to obtain tenantId and private key to get started. Once you have private key, the private key file should be placed in asset folder, with filename `jwtRS256.key`
+
+  It is NOT recommended that this file is added in source control and only be generated during CI/CD process.
 
 ### Configuring the app
 
@@ -94,16 +95,23 @@ Request request = await YoRequest.request("1234");
 
 ### Configuring a device to run the app:
 
-You can use either iOS or Android device to run the demo app.
+You can use either iOS or Android devices to run the demo app.
 
 #### iOS
 1. Simulator
 2. Real device
 
+Visit the following link to download XCode:
+
+[https://developer.apple.com/support/xcode/](https://developer.apple.com/support/xcode/)
+
 #### Android
 1. Emulator
 2. Real device
- 
+
+Visit the following link to download Android Studio:
+
+[https://developer.android.com/studio](https://developer.android.com/studio)
 
 ## Brief App overview <a name="app-overview"></a>
 
