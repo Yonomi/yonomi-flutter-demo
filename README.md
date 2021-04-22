@@ -35,20 +35,15 @@ You will need to have a machine set up with the Flutter SDK.
 
 [https://flutter.dev/docs/get-started/install](https://flutter.dev/docs/get-started/install)
 
-#### 2. You will need to be set up with our platform, having fulfilled the following requirements:
+#### 2. You will need to be set up with our platform
 
-1. Created a Tenant
-2. Generated public and private RS256 key pairs
-3. Updated the Tenant with your public key
-4. Have users with unique IDs
+You will need a tenant ID and a private key to get started. Once you have a private key, the private key file should be placed in the `assets` folder, with filename `jwtRS256.key`
 
-If you need guidance on completing any of these steps, please [contact our sales team](https://www.yonomi.co/contact-us) to help you get started using our platform.
+It is NOT recommended that this file is added in source control and only be generated during CI/CD process.
+
+If you need guidance on obtaining any of these, please [contact our sales team](https://www.yonomi.co/contact-us) to help you get started using our platform.
 
 ## Getting Started <a name="getting-started"></a>
-
-You will need to obtain tenantId and private key to get started. Once you have private key, the private key file should be placed in asset folder, with filename `jwtRS256.key`
-
-  It is NOT recommended that this file is added in source control and only be generated during CI/CD process.
 
 ### Configuring the app
 
