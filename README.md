@@ -12,13 +12,14 @@ This demo application is built using Flutter and Yonomi's latest IoT API.
 
 ## For Developers
 
-This is a demo app to help you get aquainted with Yonomi's developer tools, as well as some opinions on best practices for building a Flutter application with Yonomi. You can fork this application as a starting point for your own IoT mobile and web applications and use it as a head start on development.
+This demo app is to help you get acquainted with Yonomi's developer tools. This app also follows best practices for building a Flutter application using Yonomi platform. You can fork this application as a starting point for your own IoT mobile and web applications and use it as a head start on development.
 
 ## For Non-Technical Customers
 
 This demo is a great place to start understanding the kind of applications you can build using Yonomi. You may use the instructions below to get an instance of this demo running on your local machine, or you can work with members of Yonomi's sales team to see this demo in action.
 
-<!--# Table of contents-->
+# Table of contents
+
 1. [Prerequisites](#prerequisites)
 1. [Getting Started](#getting-started)
 2. [Brief App Overview](#app-overview)
@@ -39,7 +40,7 @@ You will need to have a machine set up with the Flutter SDK.
 1. Created a Tenant
 2. Generated public and private RS256 key pairs
 3. Updated the Tenant with your public key
-4. Have users with unique Ids
+4. Have users with unique IDs
 
 If you need guidance to complete any of these steps, visit the following guide for the complete walkthrough to onboard with the platform:
 
@@ -63,7 +64,7 @@ flutter:
 ```
 
 #### Update the `config.yaml` file
-1. Open `assets/config.yaml` and update `tenantId` with your tenant id:
+1. Open `assets/config.yaml` and update `tenantId` with your tenant ID:
 
 ```
 url: https://platform.yonomi.cloud/graphql
@@ -83,12 +84,13 @@ flutter:
 
 You will use `YoRequest.request()` to simplify making requests to the platform.
 
-**Example**: Building a request object using user Id "1234"
+**Example**: Building a request object using user ID "1234"
+
 ```
 Request request = await YoRequest.request("1234");
 ```
 
-**Note:** This method builds a valid request by using the configured graphql endpoint, the user Id passed in as a parameter, the private key stored as `jwtRS256.key`, and the configured tenant id.
+**Note:** This method builds a valid request by using the configured graphql endpoint, the user ID passed in as a parameter, the private key file named `jwtRS256.key`, and the configured tenant ID.
 
 ### Configuring a device to run the app:
 
