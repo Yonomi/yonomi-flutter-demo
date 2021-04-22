@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import "package:yaml/yaml.dart";
+import 'package:yonomi_platform_sdk/repository/artemis_client.dart';
 import 'package:yonomi_platform_sdk/request/request.dart';
 import 'package:corsac_jwt/corsac_jwt.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -23,18 +24,7 @@ class YoRequest {
     Map config = loadYaml(configFileString);
     String tenantId = config['tenantId'];
     _url = config['url'];
-    _token = createToken(userId, tenantId, privateKey);
-  }
-
-  static String createToken(String userId, String tenantId, String privateKey) {
-    var builder = new JWTBuilder();
-    builder.subject = userId;
-    builder.expiresAt = DateTime.now().add(Duration(days: 30));
-    builder.issuer = 'www.example.com';
-    builder.setClaim('custom:tenant', tenantId);
-    var signer = JWTRsaSha256Signer(privateKey: privateKey);
-
-    return builder.getSignedToken(signer).toString();
+    _token = ArtemisClientCreator.createToken(userId, tenantId, privateKey);
   }
 
   String get token => _token;
@@ -45,6 +35,6 @@ class YoRequest {
     String privateKey = await rootBundle.loadString('assets/jwtRS256.key');
     final yoRequest = YoRequest(userId, configFileString, privateKey);
     return Request(
-        yoRequest.url, {'Authorization': 'Bearer ${yoRequest._token}'});
+        yoRequest.url, {'Authorization': 'Bearer ${yoRequest.token}'});
   }
 }

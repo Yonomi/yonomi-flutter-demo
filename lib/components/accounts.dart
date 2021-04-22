@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:yonomi_flutter_demo/models/account_model.dart';
+import 'package:yonomi_flutter_demo/models/user_model.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
 class SettingsWidget extends StatelessWidget {
@@ -15,7 +15,7 @@ class SettingsWidget extends StatelessWidget {
       );
     return ListView(
       children: accounts.map((e) {
-        final innerText = (e.displayName);
+        final innerText = (e.id);
         return Container(
             height: 50,
             decoration: BoxDecoration(

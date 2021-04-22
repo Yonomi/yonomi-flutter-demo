@@ -8,17 +8,16 @@ class YoSDKDevicesProvider extends DevicesProvider {
   List<DeviceModel> _devices = [];
 
   String _userId;
-  Request _request;
+  Future<Request> _request;
 
   YoSDKDevicesProvider(String userId) {
     _userId = userId;
+    _request = YoRequest.request(_userId);
   }
 
   Future<void> hydrateDevices() async {
-    if (_request == null) {
-      _request = await YoRequest.request(_userId);
-    }
-    var devicesFromGraph = (await (DevicesRepository.getDevices(_request)));
+    final request = await _request;
+    var devicesFromGraph = (await (DevicesRepository.getDevices(request)));
     if (devicesFromGraph == null) {
       _devices = [];
       notifyListeners();
@@ -33,15 +32,13 @@ class YoSDKDevicesProvider extends DevicesProvider {
   }
 
   Future<void> performAction(Trait trait, String deviceId) async {
-    if (_request == null) {
-      _request = await YoRequest.request(_userId);
-    }
+    final request = await _request;
     if (trait.name == 'lockUnlock') {
       Device device =
-          await DevicesRepository.getDeviceDetails(_request, deviceId);
+          await DevicesRepository.getDeviceDetails(request, deviceId);
 
       await LockRepository.sendLockUnlockAction(
-          _request, deviceId, !device.traits[0].state.value);
+          request, deviceId, !device.traits[0].state.value);
     }
   }
 
