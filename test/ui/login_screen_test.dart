@@ -9,7 +9,12 @@ Widget createLoginScreenWidget() {
     initialRoute: 'login',
     routes: {
       'login': (context) => LoginScreen(),
-      'app': (context) => Text('Next Page')
+      'app': (context) {
+        final String userId =
+            ModalRoute.of(context).settings.arguments as String;
+
+        return Text(userId);
+      }
     },
   );
 }
@@ -36,12 +41,25 @@ void main() {
   testWidgets('should navigate if string is not empty',
       (WidgetTester tester) async {
     await tester.pumpWidget(createLoginScreenWidget());
-
+    String expectedUserId = '1234';
     expect(find.byType(FloatingActionButton), findsOneWidget);
-    await tester.enterText(find.byType(TextField), '1234');
+    await tester.enterText(find.byType(TextField), expectedUserId);
 
     await tester.tap(find.byType(FloatingActionButton));
     await tester.pumpAndSettle();
-    expect(find.text('Next Page'), findsOneWidget);
+    expect(find.text(expectedUserId), findsOneWidget);
+  });
+
+  testWidgets('should trim values', (WidgetTester tester) async {
+    await tester.pumpWidget(createLoginScreenWidget());
+    String expectedUserId = '1234 ';
+    String trimmedUserId = '1234';
+    expect(find.byType(FloatingActionButton), findsOneWidget);
+    await tester.enterText(find.byType(TextField), expectedUserId);
+
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pumpAndSettle();
+    expect(find.text(expectedUserId), findsNothing);
+    expect(find.text(trimmedUserId), findsOneWidget);
   });
 }

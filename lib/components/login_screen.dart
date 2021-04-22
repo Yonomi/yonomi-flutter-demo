@@ -29,10 +29,11 @@ class _LoginScreenState extends State<LoginScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           if (loginController.text != '') {
+            String trimmedText = loginController.text.trim();
             Navigator.pushNamed(
               context,
               'app',
-              arguments: loginController.text,
+              arguments: trimmedText,
             );
           }
         },
