@@ -42,7 +42,7 @@ You will need to have a machine set up with the Flutter SDK.
 3. Updated the Tenant with your public key
 4. Have users with unique IDs
 
-If you need guidance on completing any of these steps, please contact our sales team to help you get started using our platform.
+If you need guidance on completing any of these steps, please [contact our sales team](https://www.yonomi.co/contact-us) to help you get started using our platform.
 
 ## Getting Started <a name="getting-started"></a>
 
