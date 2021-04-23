@@ -1,11 +1,10 @@
+import 'package:device_widgets/components/arc.dart';
+import 'package:device_widgets/components/device_control.dart';
+import 'package:device_widgets/components/modes_toolbar.dart';
+import 'package:device_widgets/providers/thermostat_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/components/yonomi_app_bar.dart';
-import 'package:yonomi_flutter_demo/providers/thermostat_provider.dart';
-import 'package:yonomi_flutter_demo/widgets/components/arc.dart';
-import 'package:yonomi_flutter_demo/widgets/components/device_control.dart';
-
-import 'components/modes_toolbar.dart';
 
 class ThermostatWidget extends StatelessWidget {
   final String deviceId;
