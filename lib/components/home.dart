@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/assets/traits/name_icon_mapper.dart';
 import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
+import 'package:yonomi_flutter_demo/providers/request.dart';
 import 'package:yonomi_flutter_demo/widgets/thermostat.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -45,7 +46,6 @@ class HomeWidget extends StatelessWidget {
                 Expanded(
                   child: GridView.count(
                     primary: false,
-                    // padding: const EdgeInsets.all(20),
                     shrinkWrap: true,
                     crossAxisSpacing: 15,
                     mainAxisSpacing: 15,
@@ -65,8 +65,8 @@ class HomeWidget extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(builder: (context) {
                                   return ChangeNotifierProvider(
-                                    create: (_) =>
-                                        ThermostatProvider(device.id, 'userId'),
+                                    create: (_) => ThermostatProvider(
+                                        YoRequest.request('userId'), device.id),
                                     child:
                                         ThermostatWidget(deviceId: device.id),
                                   );

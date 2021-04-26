@@ -1,10 +1,7 @@
-import 'dart:io';
-
+import 'package:flutter/services.dart' show rootBundle;
 import "package:yaml/yaml.dart";
 import 'package:yonomi_platform_sdk/repository/artemis_client.dart';
 import 'package:yonomi_platform_sdk/request/request.dart';
-import 'package:corsac_jwt/corsac_jwt.dart';
-import 'package:flutter/services.dart' show rootBundle;
 
 class YoRequest {
   String _token;
