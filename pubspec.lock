@@ -181,7 +181,7 @@ packages:
     description:
       path: "."
       ref: "refactor/move-device-widgets"
-      resolved-ref: b22a1eff396d489bca8b17cc8c2c5f199e275166
+      resolved-ref: "1b3c2a9bb03487458ce3bf49db4ab5f21baee12e"
       url: "git@github.com:Yonomi/yonomi-device-widgets.git"
     source: git
     version: "0.0.1"
