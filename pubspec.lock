@@ -181,10 +181,10 @@ packages:
     description:
       path: "."
       ref: "refactor/move-device-widgets"
-      resolved-ref: "1b3c2a9bb03487458ce3bf49db4ab5f21baee12e"
+      resolved-ref: "9448e3aeb6e9528d5e9776f8a13811192bd7b323"
       url: "git@github.com:Yonomi/yonomi-device-widgets.git"
     source: git
-    version: "0.0.1"
+    version: "0.1.0"
   dotenv:
     dependency: transitive
     description:
