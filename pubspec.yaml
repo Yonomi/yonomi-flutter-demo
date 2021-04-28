@@ -39,7 +39,7 @@ dependencies:
   cupertino_icons: ^1.0.0
   yonomi_platform_sdk:
     git:
-      url: ssh://git@github.com/Yonomi/yonomi-dart-sdk.git
+      url: ssh://git@github.com/Yonomi/yonomi-sdk-dart.git
   device_widgets:
     git:
       url: git@github.com:Yonomi/yonomi-device-widgets.git

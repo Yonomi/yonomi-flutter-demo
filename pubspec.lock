@@ -770,10 +770,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "47bf38349194778c25ee10167017cda955d0ae1d"
-      url: "ssh://git@github.com/Yonomi/yonomi-dart-sdk.git"
+      resolved-ref: "271349fee04a30943457e4737607e38ce432664f"
+      url: "ssh://git@github.com/Yonomi/yonomi-sdk-dart.git"
     source: git
-    version: "0.0.1"
+    version: "0.1.0"
 sdks:
   dart: ">=2.12.0 <3.0.0"
   flutter: ">=1.24.0-10.1.pre"
