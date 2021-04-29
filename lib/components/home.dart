@@ -69,7 +69,9 @@ class HomeWidget extends StatelessWidget {
                                   return ChangeNotifierProvider(
                                     create: (_) => ThermostatProvider(
                                         loginProvider.request, device.id),
-                                    child: Thermostat(deviceId: device.id),
+                                    child: Thermostat(
+                                        request: loginProvider.request,
+                                        deviceId: device.id),
                                   );
                                 }),
                               );
