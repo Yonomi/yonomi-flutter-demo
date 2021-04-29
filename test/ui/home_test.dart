@@ -14,7 +14,6 @@ class MockDevicesProvider extends Mock implements DevicesProvider {}
 class MockLoginProvider extends Mock implements LoginProvider {}
 
 DevicesProvider mockProvider = MockDevicesProvider();
-// LoginProvider mockLoginProvider = MockLoginProvider();
 
 Widget createHomeWidget() {
   return MultiProvider(
