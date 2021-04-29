@@ -176,6 +176,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.3.10"
+  device_widgets:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: "refactor/move-device-widgets"
+      resolved-ref: "58c7b3029043bf86cb398432692c0e8b8c28802e"
+      url: "ssh://git@github.com/Yonomi/yonomi-device-widgets.git"
+    source: git
+    version: "0.1.0"
   dotenv:
     dependency: transitive
     description:
