@@ -2,7 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:yonomi_flutter_demo/assets/config_reader.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
+import 'package:yonomi_flutter_demo/providers/login_provider.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
@@ -24,6 +26,7 @@ void main() {
 
 class YoAppWithLoginPage extends StatelessWidget {
   final Future<FirebaseApp> _firebaseApp = Firebase.initializeApp();
+  final Future<Map> _configuration = Config.readFromConfigFile();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -46,23 +49,46 @@ class YoAppWithLoginPage extends StatelessWidget {
                 );
               }
             }),
-        'app': (context) => YoApp()
+        'app': (context) => FutureBuilder(
+            future: _configuration,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                print(snapshot.error.toString());
+                return Text('Configuration not loaded');
+              } else if (snapshot.hasData) {
+                return YoApp(configuration: snapshot.data);
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            })
       },
     );
   }
 }
 
 class YoApp extends StatelessWidget {
+  final Map configuration;
+
+  const YoApp({Key key, this.configuration}) : super(key: key);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     final String userId = ModalRoute.of(context).settings.arguments as String;
+    final LoginProvider loginProvider = LoginProvider(
+        userId,
+        configuration[Config.URL],
+        configuration[Config.PRIVATE_KEY],
+        configuration[Config.TENANT_ID]);
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<DevicesProvider>.value(
-          value: YoSDKDevicesProvider(userId),
+        Provider<LoginProvider>.value(value: loginProvider),
+        ChangeNotifierProvider<DevicesProvider>(
+          create: (context) => DevicesProvider(loginProvider.request),
         ),
-        ChangeNotifierProvider(create: (context) => UserInfoProvider(userId)),
+        ChangeNotifierProvider(
+            create: (context) => UserInfoProvider(loginProvider.request)),
       ],
       child: YonomiHomePage(title: 'Yonomi Demo App'),
     );

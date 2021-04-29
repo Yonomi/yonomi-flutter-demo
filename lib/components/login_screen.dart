@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
         },
-        tooltip: 'Show me the value!',
+        tooltip: 'Login',
         child: Icon(Icons.arrow_forward),
       ),
     );

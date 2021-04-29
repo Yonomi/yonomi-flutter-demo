@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/assets/traits/name_icon_mapper.dart';
 import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
-import 'package:yonomi_flutter_demo/providers/request.dart';
+import 'package:yonomi_flutter_demo/providers/login_provider.dart';
 import 'package:yonomi_flutter_demo/widgets/thermostat.dart';
 
 class HomeWidget extends StatelessWidget {
@@ -19,6 +19,8 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<DevicesProvider>(
       builder: (context, data, child) {
+        final LoginProvider loginProvider =
+            Provider.of<LoginProvider>(context, listen: false);
         data.hydrateDevices();
         return Expanded(
           child: Padding(
@@ -66,7 +68,7 @@ class HomeWidget extends StatelessWidget {
                                 MaterialPageRoute(builder: (context) {
                                   return ChangeNotifierProvider(
                                     create: (_) => ThermostatProvider(
-                                        YoRequest.request('userId'), device.id),
+                                        loginProvider.request, device.id),
                                     child:
                                         ThermostatWidget(deviceId: device.id),
                                   );

@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:yonomi_flutter_demo/providers/request.dart';
 import 'package:yonomi_platform_sdk/repository/devices/devices_repository.dart';
 import 'package:yonomi_platform_sdk/repository/devices/lock_repository.dart';
 import 'package:yonomi_platform_sdk/request/request.dart';
 
-class YoSDKDevicesProvider extends DevicesProvider {
+class DevicesProvider extends ChangeNotifier {
   List<DeviceModel> _devices = [];
-
-  String _userId;
-  Future<Request> _request;
-
-  YoSDKDevicesProvider(String userId) {
-    _userId = userId;
-    _request = YoRequest.request(_userId);
-  }
+  final Request request;
+  DevicesProvider(this.request);
 
   Future<void> hydrateDevices() async {
-    final request = await _request;
     var devicesFromGraph = (await (DevicesRepository.getDevices(request)));
     if (devicesFromGraph == null) {
       _devices = [];
@@ -32,7 +24,6 @@ class YoSDKDevicesProvider extends DevicesProvider {
   }
 
   Future<void> performAction(Trait trait, String deviceId) async {
-    final request = await _request;
     if (trait.name == 'lockUnlock') {
       Device device =
           await DevicesRepository.getDeviceDetails(request, deviceId);
@@ -43,12 +34,6 @@ class YoSDKDevicesProvider extends DevicesProvider {
   }
 
   List<DeviceModel> get devices => _devices;
-}
-
-abstract class DevicesProvider extends ChangeNotifier {
-  Future<void> hydrateDevices();
-  Future<void> performAction(Trait trait, String deviceId);
-  List<DeviceModel> get devices;
 }
 
 class DeviceModel {

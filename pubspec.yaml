@@ -42,7 +42,7 @@ dependencies:
       url: ssh://git@github.com/Yonomi/yonomi-sdk-dart.git
   device_widgets:
     git:
-      url: git@github.com:Yonomi/yonomi-device-widgets.git
+      url: ssh://git@github.com:Yonomi/yonomi-device-widgets.git
       ref:
         refactor/move-device-widgets
 
@@ -64,9 +64,9 @@ flutter:
 
   assets:
     - assets/
+    - assets/.env
     - assets/icons/
     - assets/config.yaml
-    - assets/jwtRS256.key
 
   # An image asset can refer to one or more resolution-specific 'variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
