@@ -180,9 +180,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "refactor/move-device-widgets"
-      resolved-ref: b2eb36af51db96cbd078e653ae1e3e8b781462f6
-      url: "git@github.com:Yonomi/yonomi-device-widgets.git"
+      ref: HEAD
+      resolved-ref: "5b46665c60d46b742f085db1abb45f233086d02f"
+      url: "ssh://git@github.com/Yonomi/yonomi-device-widgets.git"
     source: git
     version: "0.1.0"
   dotenv:
