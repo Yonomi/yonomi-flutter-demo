@@ -11,12 +11,12 @@ aliases:
 
 commands:
   write-key:
-    description: "Fetch access token from staging playground"
+    description: "Write Private Key and tenant id to .env file"
     steps:
       - run:
-          name: Parse
+          name: Write Private Key and tenant id to .env file
           command: |
-            echo $PRIVATE_KEY > assets/jwtRS256.key
+            echo PRIVATE_KEY: $(echo $PRIVATE_KEY) > ./assets/.env && echo TENANT_ID: $TENANT_ID >> ./assets/.env
   flutter-tests:
     description: "Run flutter tests"
     steps:

@@ -1,11 +1,12 @@
+import 'package:device_widgets/devices/thermostat.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:yonomi_flutter_demo/assets/traits/name_icon_mapper.dart';
 import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
+import 'package:yonomi_flutter_demo/components/yonomi_app_bar.dart';
 import 'package:yonomi_flutter_demo/providers/devices_provider.dart';
-import 'package:yonomi_flutter_demo/providers/thermostat_provider.dart';
-import 'package:yonomi_flutter_demo/widgets/thermostat.dart';
+import 'package:yonomi_flutter_demo/providers/login_provider.dart';
 
 class HomeWidget extends StatelessWidget {
   static final String title = "Home";
@@ -18,6 +19,8 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<DevicesProvider>(
       builder: (context, data, child) {
+        final LoginProvider loginProvider =
+            Provider.of<LoginProvider>(context, listen: false);
         data.hydrateDevices();
         return Expanded(
           child: Padding(
@@ -45,7 +48,6 @@ class HomeWidget extends StatelessWidget {
                 Expanded(
                   child: GridView.count(
                     primary: false,
-                    // padding: const EdgeInsets.all(20),
                     shrinkWrap: true,
                     crossAxisSpacing: 15,
                     mainAxisSpacing: 15,
@@ -64,11 +66,15 @@ class HomeWidget extends StatelessWidget {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(builder: (context) {
-                                  return ChangeNotifierProvider(
-                                    create: (_) =>
-                                        ThermostatProvider(device.id, 'userId'),
-                                    child:
-                                        ThermostatWidget(deviceId: device.id),
+                                  return Scaffold(
+                                    extendBodyBehindAppBar: false,
+                                    appBar: YonomiAppBar(
+                                      'Yonomi Demo App',
+                                      onPressed: () {},
+                                    ),
+                                    body: Thermostat(
+                                        deviceId: device.id,
+                                        request: loginProvider.request),
                                   );
                                 }),
                               );

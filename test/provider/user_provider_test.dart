@@ -9,8 +9,8 @@ Future<List<dynamic>> getEmptyIntegrations(Request request) async {
   return [];
 }
 
-UserInfoProvider createMockProvider() => UserInfoProvider('userId',
-    request: Future<Request>.value(Request('graphUrl', null)));
+UserInfoProvider createMockProvider() =>
+    UserInfoProvider(Request('graphUrl', null));
 
 void main() {
   test('should return correct integration list for correct list', () async {

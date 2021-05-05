@@ -1,6 +1,5 @@
-import 'package:corsac_jwt/corsac_jwt.dart';
 import 'package:test/test.dart';
-import 'package:yonomi_flutter_demo/providers/request.dart';
+import 'package:yonomi_flutter_demo/providers/login_provider.dart';
 
 const String privateKey = '''
 -----BEGIN RSA PRIVATE KEY-----
@@ -56,26 +55,13 @@ BtfTa52H4GdNxN+B5Om0NpDVAklZvSwpAqRMN5i6pxR8kf/8e8WE6hbBAOKT
 -----END RSA PRIVATE KEY-----
 ''';
 
-const String publicKey = '''
------BEGIN PUBLIC KEY-----
-MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA4/DgEEFRA+puZG4iN32n
-xLDqnMNgN03pe9QK7663ws6+7Yek4JXzzESyDexC9U48YrVp2+yxZxjopJHl7gwI
-1/LnXhvkP8BLGK6VTM2qR/n4/KZJNZXJ6+wKnEnTWLF7G3/Q/orubjNR/41/+ozp
-VCl/FNO/E745WRmWidRVJAsFVLF/GmD1XFYl1Nuj0wgu6Jljr1joItP6CzYJ0EiK
-8iP4X9qJysmfWoMPvGVtBhzgrC/Bs4jIYLUFSF+uuNr9n1nRtjXWjvgPG2vtpOQI
-5s4jH0NloF1VIVUtLCVqUkjYkonOWgMl93sQAfa/O99jKKE8+sb1Ndvka37HZtFr
-AKmJkQe9FB+NUW8UJOG6u+6cWCbcl9XLEX4iBB5KYREctcB8ZeopzZ9M63TWfIL6
-y0cB1ZZiheA1CxrziZfhpe2Sb5nrM56UQzxszcldBzP2Yxzq4ni1yC3zhRH2jfqY
-AHPTOHR/pUwBXI9vGI16FCy1AFjen7SuybBKmGiHzI2uY6LW80T/ZONK5r/rC0I6
-xqHRCMDUt2hApzXuGpY4OGv3gOHh/+sf/60+Mhj29YKzLQ4nsWpkc5aMKQN7JCCl
-Kz30NRzwbEkbAmMQH1w9uD8g40zVZ8bBRayYyHmwlf0z/ZDbAHI4vPL0i6oiYDJL
-Bq9+YZ448t/vL5GuJpcaSHcCAwEAAQ==
------END PUBLIC KEY-----
-''';
 void main() {
-  test('Request object returns singleton', () {
-    final request1 = YoRequest('1234', 'tenantId: abc', privateKey);
-    final request2 = YoRequest('1234', 'tenantId: abc', privateKey);
-    expect(request1, same(request2));
+  test('create token creates correct token', () {
+    final loginProvider =
+        LoginProvider('userId', 'url', privateKey, 'tenantId');
+
+    expect(loginProvider.request.graphUrl, equals('url'));
+    expect(loginProvider.request.headers['Authorization'].length, isPositive);
+    expect(loginProvider.userId, equals('userId'));
   });
 }
