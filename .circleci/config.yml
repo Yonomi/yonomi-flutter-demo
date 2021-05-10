@@ -60,7 +60,7 @@ commands:
       - run:
           name: Download deps
           shell: << parameters.shell >>
-          command: flutter pub get
+          command: flutter clean && flutter pub get
       - run:
           name: Get junitreporter
           shell: << parameters.shell >>
