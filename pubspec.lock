@@ -63,7 +63,7 @@ packages:
       name: build_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.4"
+    version: "0.4.7"
   built_collection:
     dependency: transitive
     description:
@@ -98,7 +98,7 @@ packages:
       name: checked_yaml
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.4"
   cli_util:
     dependency: transitive
     description:
@@ -181,7 +181,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "5b46665c60d46b742f085db1abb45f233086d02f"
+      resolved-ref: "292970ef5778bbde9fd495b74955475d14354359"
       url: "ssh://git@github.com/Yonomi/yonomi-device-widgets.git"
     source: git
     version: "0.1.0"
@@ -535,7 +535,7 @@ packages:
       name: pubspec_parse
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.5"
+    version: "0.1.8"
   quiver:
     dependency: transitive
     description:
@@ -770,10 +770,10 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "271349fee04a30943457e4737607e38ce432664f"
+      resolved-ref: "95bdc05da0e5d5a79a3cfca3c735dc8ab7c9406b"
       url: "ssh://git@github.com/Yonomi/yonomi-sdk-dart.git"
     source: git
-    version: "0.1.0"
+    version: "1.0.0"
 sdks:
   dart: ">=2.12.0 <3.0.0"
   flutter: ">=1.24.0-10.1.pre"
