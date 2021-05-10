@@ -182,7 +182,7 @@ packages:
       path: "."
       ref: HEAD
       resolved-ref: "292970ef5778bbde9fd495b74955475d14354359"
-      url: "ssh://git@github.com/Yonomi/yonomi-device-widgets.git"
+      url: "git@github.com:Yonomi/yonomi-device-widgets.git"
     source: git
     version: "0.1.0"
   dotenv:
