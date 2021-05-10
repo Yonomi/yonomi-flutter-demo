@@ -40,9 +40,6 @@ dependencies:
   yonomi_platform_sdk:
     git:
       url: ssh://git@github.com/Yonomi/yonomi-sdk-dart.git
-  device_widgets:
-    git:
-      url: git@github.com:Yonomi/yonomi-device-widgets.git
 dev_dependencies:
   mockito: ^4.1.4
   flutter_test:
