@@ -17,8 +17,6 @@ import 'components/yonomi_app_bar.dart';
 import 'components/yonomi_bottom_app_bar.dart';
 import 'themes/string_constants.dart';
 
-const integrationId = 'f0885113-68bb-4bb5-af50-0cbd51025ea9';
-
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(YoAppWithLoginPage());

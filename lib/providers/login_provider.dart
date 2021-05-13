@@ -8,7 +8,6 @@ class LoginProvider {
       String url, String privateKey, String tenantId, userId) {
     final token =
         ArtemisClientCreator.createToken(userId, tenantId, privateKey);
-
     return Request(url, {'Authorization': 'Bearer $token'});
   }
 
