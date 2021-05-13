@@ -47,7 +47,6 @@ void main() {
     when(mockProvider.devices).thenReturn([
       DeviceModel('id', 'Test Device', [lockTrait], 'description')
     ]);
-    // when(mockProvider.)
     await tester.pumpWidget(createHomeWidget());
     await tester.tap(find.widgetWithText(DeviceItemWidget, 'Test Device'));
     verify(mockProvider.performAction(lockTrait, 'id'));
