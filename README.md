@@ -21,9 +21,9 @@ This demo is a great place to start understanding the kind of applications you c
 # Table of contents
 
 1. [Prerequisites](#prerequisites)
-1. [Getting Started](#getting-started)
-2. [Brief App Overview](#app-overview)
-3. [Running tests](#run-tests)
+1. [Getting Started](#getting_started)
+2. [Brief App Overview](#app_overview)
+3. [Running tests](#run_tests)
 4. [License](#license)
 
 ## Prerequisites<a name="prerequisites"></a>
@@ -43,7 +43,7 @@ It is NOT recommended that this file is added in source control and only be gene
 
 If you need guidance on obtaining any of these, please [contact our sales team](https://www.yonomi.co/contact-us) to help you get started using our platform.
 
-## Getting Started <a name="getting-started"></a>
+## Getting Started <a name="getting_started"></a>
 
 ### Configuring the app
 
@@ -75,6 +75,22 @@ flutter:
   assets:
     - assets/config.yaml
 ```
+
+#### (Optional) Configure with Firebase
+We use Firebase in the demo app to collect crash logs and to easily distribute app builds.
+If you wish to include Firebase and use any of its features in the app, use the following guides below to set it up on your desired platform(s):
+
+##### For Android
+
+[Firebase Android guide](https://firebase.google.com/docs/flutter/setup?platform=android)
+
+Make sure you follow the steps under `Add a Firebase Configuration File` to know where to place your `google-services.json` file
+
+##### For iOS
+
+[Firebase iOS guide](https://firebase.google.com/docs/flutter/setup?platform=ios)
+
+Make sure you follow the steps under `Add a Firebase Configuration File` to know where to place your `GoogleService-Info.plist` file.
 
 #### Building a Request object
 
@@ -108,7 +124,7 @@ Visit the following link to download Android Studio:
 
 [https://developer.android.com/studio](https://developer.android.com/studio)
 
-## Brief App overview <a name="app-overview"></a>
+## Brief App overview <a name="app_overview"></a>
 
 When you open the app, you will be prompted for a User ID.
 You can input anything as your User ID or you can use one previously used to navigate to the next screen.
@@ -122,7 +138,7 @@ You will be taken to that integration's authentication page.
 
 Input your credentials for that account, and if you authenticated successfully, you will be taken back to the app and see all devices under that account.
 
-## Running tests<a name="run-tests"></a>
+## Running tests<a name="run_tests"></a>
 ### Prerequisites
 
 * Install lcov:
