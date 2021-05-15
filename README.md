@@ -85,8 +85,9 @@ flutter:
 ```
 
 #### Configure with Firebase
-We use Firebase in the demo app to collect crash logs and to easily distribute app builds.
-To use Firebase and its features, use the following guides below to set it up on your desired platform(s):
+We have used Firebase to collect crash logs and to easily distribute app builds.
+To correctly run the app you will need firebase related config files. Each for ios and android. 
+Use the following guides below to set it up on your desired platform(s):
 
 ##### For Android
 
