@@ -100,6 +100,8 @@ Make sure you follow the steps under `Add a Firebase Configuration File` to know
 
 Make sure you follow the steps under `Add a Firebase Configuration File` to know where to place your `GoogleService-Info.plist` file.
 
+Update gitignore to be able to track these files if needed by the organization.
+
 #### Building a Request object
 
 You will use `YoRequest.request()` to simplify making requests to the platform.
