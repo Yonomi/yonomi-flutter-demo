@@ -21,9 +21,9 @@ This demo is a great place to start understanding the kind of applications you c
 # Table of contents
 
 1. [Prerequisites](#prerequisites)
-1. [Getting Started](#getting-started)
-2. [Brief App Overview](#app-overview)
-3. [Running tests](#run-tests)
+1. [Getting Started](#getting_started)
+2. [Brief App Overview](#app_overview)
+3. [Running tests](#run_tests)
 4. [License](#license)
 
 ## Prerequisites<a name="prerequisites"></a>
@@ -43,28 +43,36 @@ It is NOT recommended that this file is added in source control and only be gene
 
 If you need guidance on obtaining any of these, please [contact our sales team](https://www.yonomi.co/contact-us) to help you get started using our platform.
 
-## Getting Started <a name="getting-started"></a>
+## Getting Started <a name="getting_started"></a>
 
 ### Configuring the app
 
-#### Add your private key to the app
-1. Name your private key file `jwtRS256.key` and move it to the `assets` folder.
+#### Add your configuration
+Add your tenant ID and private key to the app:
 
-2. Double-check your `pubspec.yaml` file to make sure that this file is defined under the `assets` section:
+1. Create a file `.env` in your app's `assets` folder.
+
+2. Add the following entries in your `.env` file. Make sure to replace `YOUR-TENANT-ID` with your Tenant ID and `YOUR-PRIVATE-KEY` with your private key.
+
+```
+TENANT_ID: YOUR-TENANT-ID
+PRIVATE_KEY: YOUR-PRIVATE-KEY
+```
+
+3. Double-check your `pubspec.yaml` file to make sure that the file is defined under the `assets` section:
 
 ```
 flutter:
   ...
   assets:
-    - assets/jwtRS256.key
+    - assets/.env
 ```
 
 #### Update the `config.yaml` file
-1. Open `assets/config.yaml` and update `tenantId` with your tenant ID:
+1. Open `assets/config.yaml` and update `url` with the platform's graphQL endpoint:
 
 ```
-url: https://platform.yonomi.cloud/graphql
-tenantId: YOUR-TENANT-ID
+URL: https://platform.yonomi.cloud/graphql
 ```
 
 2. Double-check your `pubspec.yaml` file to make sure that this file is defined under the `assets` section:
@@ -75,6 +83,25 @@ flutter:
   assets:
     - assets/config.yaml
 ```
+
+#### Configure with Firebase
+We have used Firebase to collect crash logs and to easily distribute app builds.
+To correctly run the app you will need firebase related config files. Each for ios and android. 
+Use the following guides below to set it up on your desired platform(s):
+
+##### For Android
+
+[Firebase Android guide](https://firebase.google.com/docs/flutter/setup?platform=android)
+
+Make sure you follow the steps under `Add a Firebase Configuration File` to know where to place your `google-services.json` file
+
+##### For iOS
+
+[Firebase iOS guide](https://firebase.google.com/docs/flutter/setup?platform=ios)
+
+Make sure you follow the steps under `Add a Firebase Configuration File` to know where to place your `GoogleService-Info.plist` file.
+
+Update gitignore to be able to track these files if needed by the organization.
 
 #### Building a Request object
 
@@ -108,7 +135,7 @@ Visit the following link to download Android Studio:
 
 [https://developer.android.com/studio](https://developer.android.com/studio)
 
-## Brief App overview <a name="app-overview"></a>
+## Brief App overview <a name="app_overview"></a>
 
 When you open the app, you will be prompted for a User ID.
 You can input anything as your User ID or you can use one previously used to navigate to the next screen.
@@ -118,11 +145,11 @@ At the bottom you can select three tabs to navigate to the **Home**, **Devices**
 ### To add an integration
 Press the '+' floating action button and select an integration from the list.
 
-You will be taken to that integration's authentication page. 
+You will be taken to that integration's authentication page.
 
 Input your credentials for that account, and if you authenticated successfully, you will be taken back to the app and see all devices under that account.
 
-## Running tests<a name="run-tests"></a>
+## Running tests<a name="run_tests"></a>
 ### Prerequisites
 
 * Install lcov:
@@ -148,4 +175,3 @@ This application is released under the [Apache license v2.0](LICENSE)
 [demo-shield]: https://img.shields.io/badge/Yonomi-Flutter_Demo-lightgrey.svg?colorA=ffd500&colorB=5c5c5c
 [circle-shield]: https://circleci.com/gh/Yonomi/yonomi-flutter-demo/tree/main.svg?style=shield&circle-token=a80bb5eb3849cd3201f9f8c612aceaa09a4ded09
 [circle-pipeline]: https://app.circleci.com/pipelines/github/Yonomi/yonomi-flutter-demo
-

@@ -32,7 +32,6 @@
 .pub/
 build/
 coverage/
-test/.test_coverage.dart
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -42,9 +41,11 @@ app.*.symbols
 
 # Obfuscation related
 app.*.map.json
+
+# private assets
 assets/jwtRS256.key
+
 ios/build/XCBuildData/
-ios/Flutter/*.xcconfig
 coverage/lcov.info
-ios/Flutter/Debug.xcconfig/
-ios/Flutter/Release.xcconfig/
+ios/Runner/GoogleService-Info.plist
+android/app/google-services.json
