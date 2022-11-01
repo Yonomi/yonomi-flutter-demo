@@ -12,7 +12,7 @@ class ProfileWidget extends StatefulWidget {
 }
 
 class _ProfileWidgetState extends State<ProfileWidget> {
-  UserInfoProvider userInfoProvider;
+  late UserInfoProvider userInfoProvider;
 
   @override
   void initState() {
@@ -32,7 +32,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             builder: (context, userInfoProvider, cardTitleWidget) {
               return userInfoProvider.loading
                   ? Center(child: CircularProgressIndicator())
-                  : buildUserCard(cardTitleWidget, userInfoProvider.user);
+                  : buildUserCard(cardTitleWidget!, userInfoProvider.user);
             },
             child: ListTile(
               tileColor: Colors.yellow,
@@ -49,7 +49,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     );
   }
 
-  Widget buildUserCard(Widget cardTitle, UserModel userModel) {
+  Widget buildUserCard(Widget cardTitle, UserModel? userModel) {
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -57,8 +57,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           cardTitle,
           SizedBox(height: 20),
           Text(userModel?.id ?? ''),
-          Text(userModel?.firstActivityAt?.toString() ?? ''),
-          Text(userModel?.lastActivityAt?.toString() ?? ''),
+          Text(userModel?.firstActivityAt.toString() ?? ''),
+          Text(userModel?.lastActivityAt.toString() ?? ''),
           SizedBox(height: 20),
         ],
       ),

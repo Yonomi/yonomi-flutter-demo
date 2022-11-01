@@ -1,14 +1,13 @@
+import 'package:flutter_test/flutter_test.dart';
 import 'package:yonomi_flutter_demo/providers/user_provider.dart';
-import 'package:yonomi_platform_sdk/repository/user_repository.dart';
-import 'package:yonomi_platform_sdk/request/request.dart';
-import 'package:test/test.dart';
+import 'package:yonomi_platform_sdk/yonomi-sdk.dart';
 
 Future<List<dynamic>> getEmptyIntegrations(Request request) async {
   return [];
 }
 
 UserInfoProvider createMockProvider() =>
-    UserInfoProvider(Request('graphUrl', null));
+    UserInfoProvider(Request('graphUrl', {}));
 
 void main() {
   test('should return correct integration list for correct list', () async {
@@ -47,8 +46,8 @@ void main() {
     final userProvider = createMockProvider();
     await userProvider.fetchUserDetails(getUserDetailsInjected: getUserDetails);
 
-    expect(userProvider.user.id, expectedId);
-    expect(userProvider.user.firstActivityAt, expectedFirstActivityAt);
-    expect(userProvider.user.lastActivityAt, expectedLastActivityAt);
+    expect(userProvider.user!.id, expectedId);
+    expect(userProvider.user!.firstActivityAt, expectedFirstActivityAt);
+    expect(userProvider.user!.lastActivityAt, expectedLastActivityAt);
   });
 }

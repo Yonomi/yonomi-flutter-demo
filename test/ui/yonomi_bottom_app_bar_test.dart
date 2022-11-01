@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:yonomi_flutter_demo/components/yonomi_bottom_app_bar.dart';
 
 Widget createYonomiBottomAppBarWidget(
-    {int selectedIndex, ValueChanged<int> onPressed}) {
+    {int? selectedIndex, ValueChanged<int>? onPressed}) {
   return MaterialApp(
       home: Scaffold(
     body: Text("Test"),

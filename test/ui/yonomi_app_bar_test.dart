@@ -4,14 +4,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:yonomi_flutter_demo/components/yonomi_app_bar.dart';
 
 Widget createYonomiAppBarWidget(
-    {String titleString, bool notified, Function onPressed}) {
+    {required String titleString, required bool notified, Function? onPressed}) {
   return MaterialApp(
       home: Scaffold(
     body: Text("Test"),
     bottomNavigationBar: YonomiAppBar(
       titleString,
       notification: notified,
-      onPressed: onPressed,
+      onPressed: onPressed as dynamic Function()?,
     ),
   ));
 }

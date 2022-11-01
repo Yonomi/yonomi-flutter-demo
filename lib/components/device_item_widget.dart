@@ -4,19 +4,21 @@ import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
 class DeviceItemWidget extends StatelessWidget {
   const DeviceItemWidget(
-      {Key key,
+      {Key? key,
       this.name,
       this.location,
       this.state,
       this.deviceIcon,
-      this.onPressed})
+      this.onPressed,
+      this.onLongPressed})
       : super(key: key);
 
-  final Widget deviceIcon;
-  final String name;
-  final String location;
-  final String state;
-  final VoidCallback onPressed;
+  final Widget? deviceIcon;
+  final String? name;
+  final String? location;
+  final String? state;
+  final VoidCallback? onPressed;
+  final VoidCallback? onLongPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class DeviceItemWidget extends StatelessWidget {
       constraints: BoxConstraints.tightFor(width: 175, height: 175),
       child: TextButton(
         onPressed: onPressed,
+        onLongPress: onLongPressed,
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all<Color>(
                 AppThemes.deviceItemBackgroundColor),

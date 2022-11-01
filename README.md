@@ -37,9 +37,7 @@ You will need to have a machine set up with the Flutter SDK.
 
 #### 2. You will need to be set up with our platform
 
-You will need a tenant ID and a private key to get started. Once you have a private key, the private key file should be placed in the `assets` folder, with filename `jwtRS256.key`
-
-It is NOT recommended that this file is added in source control and only be generated during CI/CD process.
+You will need an Auth0 application. You will need your Auth0 application's domain, client ID and will have to define an OAuth callback URL for your app.
 
 If you need guidance on obtaining any of these, please [contact our sales team](https://www.yonomi.co/contact-us) to help you get started using our platform.
 
@@ -48,18 +46,32 @@ If you need guidance on obtaining any of these, please [contact our sales team](
 ### Configuring the app
 
 #### Add your configuration
-Add your tenant ID and private key to the app:
+Add your Auth0 application's Domain, Client ID and your OAuth callback URL to the app:
 
 1. Create a file `.env` in your app's `assets` folder.
 
-2. Add the following entries in your `.env` file. Make sure to replace `YOUR-TENANT-ID` with your Tenant ID and `YOUR-PRIVATE-KEY` with your private key.
+2. Add the following entries in your `.env` file. 
 
 ```
-TENANT_ID: YOUR-TENANT-ID
-PRIVATE_KEY: YOUR-PRIVATE-KEY
+DOMAIN: <REPLACE WITH YOUR DOMAIN HERE>
+CLIENT_ID: <REPLACE WITH YOUR CLIENT ID HERE>
+OAUTH_CALLBACK_URL: <REPLACE WITH YOUR OAUTH CALLBACK URL>
 ```
 
-3. Double-check your `pubspec.yaml` file to make sure that the file is defined under the `assets` section:
+3. Open the `pubspec.yaml` file and look for the `assets` section:
+
+```
+flutter:
+  ...
+  assets:
+    
+```
+
+4. Add the following line under the `assets` section:
+
+`- assets/.env`
+
+It should look like this:
 
 ```
 flutter:
@@ -69,13 +81,26 @@ flutter:
 ```
 
 #### Update the `config.yaml` file
-1. Open `assets/config.yaml` and update `url` with the platform's graphQL endpoint:
+1. Open `assets/config.yaml` and update `url` with Yonomi Platform's graphQL endpoint:
 
 ```
 URL: https://platform.yonomi.cloud/graphql
 ```
 
-2. Double-check your `pubspec.yaml` file to make sure that this file is defined under the `assets` section:
+2. Open the `pubspec.yaml` file and look for the `assets` section:
+
+```
+flutter:
+  ...
+  assets:
+    
+```
+
+3. Add the following line under the `assets` section:
+
+`- assets/config.yaml`
+
+It should look like this:
 
 ```
 flutter:

@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>Yonomi Flutter Demo</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -41,7 +43,20 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>io.flutter.embedded_views_preview</key>
-	<string>YES</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>CFBundleURLTypes</key>
+       <array>
+          <dict>
+             <key>CFBundleTypeRole</key>
+             <string>Editor</string>
+             <key>CFBundleURLSchemes</key>
+             <array>
+                <string>co.yonomi.flutterdemo</string>
+             </array>
+          </dict>
+       </array>
 </dict>
 </plist>
