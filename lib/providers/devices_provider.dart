@@ -1,35 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:yonomi_platform_sdk/repository/devices/devices_repository.dart';
-import 'package:yonomi_platform_sdk/repository/devices/lock_repository.dart';
-import 'package:yonomi_platform_sdk/request/request.dart';
+import 'package:yonomi_platform_sdk/yonomi-sdk.dart';
+
+typedef GetDevicesFunction = Future<List<Device>> Function(Request request);
+
+typedef GetDeviceDetailsFunction = Future<Device> Function(
+    Request request, String id);
+
+typedef SendLockUnlockFunction = Future<void> Function(
+    Request request, String id, bool lockUnlock);
 
 class DevicesProvider extends ChangeNotifier {
   List<DeviceModel> _devices = [];
+
   final Request request;
-  DevicesProvider(this.request);
 
-  Future<void> hydrateDevices() async {
-    var devicesFromGraph = (await (DevicesRepository.getDevices(request)));
-    if (devicesFromGraph == null) {
-      _devices = [];
-      notifyListeners();
-      return;
-    }
+  DevicesProvider(this.request, {GetDevicesFunction? injectGetDevicesMethod}) {
+    this.hydrateDevices(injectGetDevicesMethod: injectGetDevicesMethod);
+  }
 
+  Future<void> hydrateDevices(
+      {GetDevicesFunction? injectGetDevicesMethod}) async {
+    final getDevicesMethod =
+        injectGetDevicesMethod ?? DevicesRepository.getDevices;
+    var devicesFromGraph = await getDevicesMethod(request);
     _devices = devicesFromGraph
         .map((device) => DeviceModel(
             device.id, device.displayName, device.traits, device.description))
         .toList();
+
     notifyListeners();
   }
 
-  Future<void> performAction(Trait trait, String deviceId) async {
-    if (trait.name == 'lockUnlock') {
-      Device device =
-          await DevicesRepository.getDeviceDetails(request, deviceId);
+  Future<void> performAction(Trait trait, String deviceId,
+      {GetDeviceDetailsFunction? injectGetDeviceDetailsMethod,
+      SendLockUnlockFunction? injectSendLockUnlockMethod}) async {
+    final getDeviceDetailsMethod =
+        injectGetDeviceDetailsMethod ?? DevicesRepository.getDeviceDetails;
 
-      await LockRepository.sendLockUnlockAction(
-          request, deviceId, !device.traits[0].state.value);
+    final sendLockUnlockMethod =
+        injectSendLockUnlockMethod ?? LockRepository.sendLockUnlockAction;
+
+    if (trait.runtimeType == LockTrait) {
+      Device device = await getDeviceDetailsMethod(request, deviceId);
+      sendLockUnlockMethod(
+          request, deviceId, !device.traits[0].states.first.value);
     }
   }
 

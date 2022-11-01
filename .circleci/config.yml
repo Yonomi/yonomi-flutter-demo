@@ -5,9 +5,17 @@ orbs:
   codecov: codecov/codecov@1.0.2
 
 executors:
-  default-executor:
+  flutter-executor:
     docker:
-      - image: cirrusci/flutter:stable
+      - image: cirrusci/flutter
+    shell: /bin/bash --login -eo pipefail
+  node-executor:
+    docker:
+      - image: node:16.13
+  macos-executor:
+    macos:
+      xcode: 13.1.0
+    shell: /bin/bash --login -eo pipefail
 
 commands:
   tests:
@@ -37,11 +45,12 @@ commands:
             git config --global user.email "developer@yonomi.co"
             git config --global user.name "CircleCI"
       - run:
-          name: Install npm 
+          name: Install npm
           command: |
-            sudo apt-get update
-            sudo apt-get -y install npm
-      - run: 
+            apt-get update
+            apt-get -y install npm
+            npm version
+      - run:
           name: Download Semantic Release
           command: |
             npm init -y
@@ -51,24 +60,23 @@ commands:
             npx semantic-release --branches main
   dependencies:
     description: "Download dependencies and setup global packages"
-    parameters:
-      shell:
-        type: string
-        default: "/bin/bash --login -eo pipefail"
     steps:
       - checkout
       - run:
+          name: run flutter doctor
+          command: flutter doctor
+      - run:
           name: Download deps
-          shell: << parameters.shell >>
           command: flutter clean && flutter pub get
       - run:
           name: Get junitreporter
-          shell: << parameters.shell >>
           command: flutter pub global activate junitreport
       - run:
           name: Write Private Key and tenant id to .env file
           command: |
-            echo PRIVATE_KEY: $(echo $PRIVATE_KEY) > ./assets/.env && echo TENANT_ID: $TENANT_ID >> ./assets/.env
+            echo DOMAIN: $DOMAIN >> ./assets/.env
+            echo CLIENT_ID: $CLIENT_ID >> ./assets/.env
+            echo OAUTH_CALLBACK_URL: $OAUTH_CALLBACK_URL >> ./assets/.env
   flutter-tests:
     description: "Run flutter tests"
     steps:
@@ -78,12 +86,73 @@ commands:
             flutter test --coverage
       - codecov/upload:
           file: coverage/lcov.info
+  install-firebase-cli:
+    description: "Installs Firebase CLI tool"
+    steps:
+      - run:
+          name: install firebase CLI
+          command: |
+            curl -sL https://firebase.tools | bash
+  deploy-android-to-firebase:
+    description: "Send artifact to Firebase App Distribution"
+    parameters:
+      artifact_path:
+        type: string
+      group_name:
+        type: string
+        default: "developers"
+      release_notes:
+        type: string
+        default: $(git log --pretty=format:'%s (%h)' -1)
+    steps:
+      - run:
+          name: Deploy to firebase app distribution
+          command: |
+            firebase appdistribution:distribute << parameters.artifact_path >> \
+            --app $ANDROID_FIREBASE_PROJECT_ID \
+            --groups << parameters.group_name >> \
+            --release-notes "$APP_RELEASE_NOTES" \
+            --token $FIREBASE_TOKEN
+  android-build-apk:
+    description: "Build a distributable Android APK"
+    steps:
+      - run:
+          name: Build APK
+          command: |
+            echo $GOOGLE_SERVICES_JSON | base64 -d > ./android/app/google-services.json
+            flutter -v build apk --release
+  ios-setup:
+    description: "Setup iOS command-line tools"
+    steps:
+      - run:
+          name: Setup iOS tools & flutter SDK
+          command: |
+            sudo xcode-select --switch /Applications/Xcode.app/Contents/Developer
+            sudo xcodebuild -runFirstLaunch
+            sudo xcodebuild -license accept
+            /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+            brew install fastlane flutter
+            echo 'export PATH=/usr/local/opt/flutter/bin:$PATH' >> $BASH_ENV
+            source $BASH_ENV
+            flutter --version
+  ios-build:
+    description: "Build iOS IPA with fastlane"
+    steps:
+      - run:
+          name: Build IPA
+          command: |
+            cd ./ios
+            echo $APPLE_DIST_CERT_P12_BASE64 | base64 -d > ./fastlane/distribution.p12
+            echo $APPLE_PROVISIONING_PROFILE | base64 -d > ./fastlane/provision_profile.mobileprovision
+            echo $APPLE_GOOGLE_SERVICE_PLIST | base64 -d > ./GoogleService-Info.plist
+
+            flutter build ios --release --no-codesign
+            fastlane distribute
 jobs:
   test:
-    executor: default-executor
+    executor: flutter-executor
     steps:
-      - dependencies:
-          shell: "/bin/bash -eo pipefail"
+      - dependencies
       - run:
           name: Make folder for test results
           command: mkdir -p test-results/dart-tests
@@ -92,11 +161,40 @@ jobs:
       - store_test_results:
           path: test-results
   semantic-versioning:
-    executor: default-executor
+    executor: node-executor
     steps:
-      - dependencies:
-          shell: "/bin/bash -eo pipefail"
+      - checkout
       - run-semantic-versioning
+  build-android:
+    working_directory: ~/project
+    executor: flutter-executor
+    steps:
+      - dependencies
+      - restore_cache:
+          key: v1-android-{{ checksum "android/build.gradle" }}-{{ checksum "android/app/build.gradle" }}
+      - android-build-apk
+      - install-firebase-cli
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-android-{{ checksum "android/build.gradle" }}-{{ checksum "android/app/build.gradle" }}
+      - deploy-android-to-firebase:
+          artifact_path: "build/app/outputs/flutter-apk/app-release.apk"
+          group_name: "testing"
+
+  build-ios:
+    working_directory: ~/project
+    executor: macos-executor
+    steps:
+      - ios-setup
+      - dependencies
+      - restore_cache:
+          key: v1-ios-{{ checksum "ios/Podfile.lock" }}
+      - ios-build
+      - save_cache:
+          key: v1-ios-{{ checksum "ios/Podfile.lock" }}
+          paths:
+            - ios/Pods
 
 workflows:
   version: 2.1
@@ -119,6 +217,20 @@ workflows:
             - org-global
           requires:
               - test
+          filters:
+            branches:
+              only:
+                - main
+      - build-android:
+          requires:
+            - test
+          filters:
+            branches:
+              only:
+                - main
+      - build-ios:
+          requires:
+            - test
           filters:
             branches:
               only:

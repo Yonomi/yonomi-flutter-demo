@@ -4,11 +4,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:yonomi_flutter_demo/components/device_item_widget.dart';
 
 Widget createDeviceItemWidget(
-    {String state,
-    String name,
-    String location,
-    IconData iconData,
-    VoidCallback onPressed}) {
+    {String? state,
+    String? name,
+    String? location,
+    IconData? iconData,
+    VoidCallback? onPressed}) {
   return MaterialApp(
     home: DeviceItemWidget(
       deviceIcon: Icon(iconData),
@@ -21,11 +21,11 @@ Widget createDeviceItemWidget(
 }
 
 Widget createLargeDeviceItemWidget(double scaleFactor,
-    {String state,
-    String name,
-    String location,
-    IconData iconData,
-    VoidCallback onPressed}) {
+    {String? state,
+    String? name,
+    String? location,
+    IconData? iconData,
+    VoidCallback? onPressed}) {
   return MaterialApp(
     home: MediaQuery(
       data: MediaQueryData(textScaleFactor: scaleFactor),

@@ -4,17 +4,25 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yonomi_flutter_demo/themes/app_themes.dart';
 
 class YonomiBottomAppBar extends StatelessWidget {
-  final ValueChanged<int> onTap;
+  final ValueChanged<int>? onTap;
 
-  final int selectedIndex;
+  final int? selectedIndex;
+
+  static final sizedBoxHeight = 8.0;
+
+  static const String DEVICES_TAB_TEXT = "DEV";
+
+  static const String GENERIC_TAB_TEXT = "GEN";
+
+  static const String DYNAMIC_WIDGETS_TAB_TEXT = "DYN";
 
   YonomiBottomAppBar(
-      {Key key, @required this.onTap, @required this.selectedIndex})
+      {Key? key, required this.onTap, required this.selectedIndex})
       : super(key: key);
 
   static Widget dotIcon = Icon(
     Icons.circle,
-    size: 10,
+    size: 6.0,
   );
 
   static Widget homeIcon = SvgPicture.asset(
@@ -41,35 +49,49 @@ class YonomiBottomAppBar extends StatelessWidget {
     children: [
       Text("HOME"),
       SizedBox(
-        height: 8.0,
+        height: sizedBoxHeight,
       ),
       dotIcon
     ],
   );
 
   static Widget devicesUnselectedWidget = Column(
-    children: [devicesIcon, Text("DEVICES")],
+    children: [devicesIcon, Text(DEVICES_TAB_TEXT)],
   );
 
   static Widget devicesSelectedWidget = Column(
     children: [
-      Text("DEVICES"),
+      Text(DEVICES_TAB_TEXT),
       SizedBox(
-        height: 8.0,
+        height: sizedBoxHeight,
+      ),
+      dotIcon
+    ],
+  );
+
+  static Widget dynamicUnselectedWidget = Column(
+    children: [devicesIcon, Text(DYNAMIC_WIDGETS_TAB_TEXT)],
+  );
+
+  static Widget dynamicDevicesSelectedWidget = Column(
+    children: [
+      Text(DYNAMIC_WIDGETS_TAB_TEXT),
+      SizedBox(
+        height: sizedBoxHeight,
       ),
       dotIcon
     ],
   );
 
   static Widget settingsUnselectedWidget = Column(
-    children: [settingsIcon, Text("SETTINGS")],
+    children: [settingsIcon, Text(GENERIC_TAB_TEXT)],
   );
 
   static Widget settingsSelectedWidget = Column(
     children: [
-      Text("SETTINGS"),
+      Text(GENERIC_TAB_TEXT),
       SizedBox(
-        height: 8.0,
+        height: sizedBoxHeight,
       ),
       dotIcon
     ],
@@ -78,21 +100,28 @@ class YonomiBottomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BottomNavigationBarItem homeItem = BottomNavigationBarItem(
-      icon: homeUnselectedWidget,
-      activeIcon: homeSelectedWidget,
-      label: "Home",
-    );
+        icon: homeUnselectedWidget,
+        activeIcon: homeSelectedWidget,
+        label: "Home",
+        backgroundColor: AppThemes.bottomAppBarBgColor);
 
     BottomNavigationBarItem devicesItem = BottomNavigationBarItem(
-      icon: devicesUnselectedWidget,
-      activeIcon: devicesSelectedWidget,
-      label: "Devices",
-    );
+        icon: devicesUnselectedWidget,
+        activeIcon: devicesSelectedWidget,
+        label: "Devices",
+        backgroundColor: AppThemes.bottomAppBarBgColor);
 
     BottomNavigationBarItem accountsItem = BottomNavigationBarItem(
       icon: settingsUnselectedWidget,
       activeIcon: settingsSelectedWidget,
       label: "Settings",
+      backgroundColor: AppThemes.bottomAppBarBgColor,
+    );
+
+    BottomNavigationBarItem dynamicDeviceItem = BottomNavigationBarItem(
+      icon: dynamicUnselectedWidget,
+      activeIcon: dynamicDevicesSelectedWidget,
+      label: "Dynamic",
     );
 
     return BottomAppBar(
@@ -113,8 +142,9 @@ class YonomiBottomAppBar extends StatelessWidget {
                 homeItem,
                 devicesItem,
                 accountsItem,
+                dynamicDeviceItem
               ],
-              currentIndex: selectedIndex,
+              currentIndex: selectedIndex!,
               unselectedItemColor: AppThemes.bottomAppBarUnselectedItemColor,
               selectedItemColor: AppThemes.bottomAppBarSelectedItemColor,
               onTap: onTap),

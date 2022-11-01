@@ -20,7 +20,7 @@ Future<List<Integration>> createErrorSituation() async {
 }
 
 Widget createIntegrationListWidget(
-    Future<List<Integration>> integrations, ValueChanged<String> onPress) {
+    Future<List<Integration>> integrations, ValueChanged<String?>? onPress) {
   return MaterialApp(
     home: Scaffold(
       body: IntegrationList(
@@ -70,7 +70,7 @@ void main() {
   testWidgets('passed method should be pressed on tap',
       (WidgetTester tester) async {
     await tester.runAsync(() async {
-      final List<String> list = [];
+      final List<String?> list = [];
       await tester.pumpWidget(
           createIntegrationListWidget(createCorrectIntegrationList(), (id) {
         list.add(id);

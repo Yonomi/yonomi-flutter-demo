@@ -1,20 +1,13 @@
-import 'package:yonomi_platform_sdk/repository/artemis_client.dart';
-import 'package:yonomi_platform_sdk/request/request.dart';
+import 'package:yonomi_platform_sdk/yonomi-sdk.dart';
 
 class LoginProvider {
-  final String _userId;
+  final String _accessToken;
   final Request _request;
-  static Request _createRequest(
-      String url, String privateKey, String tenantId, userId) {
-    final token =
-        ArtemisClientCreator.createToken(userId, tenantId, privateKey);
-    return Request(url, {'Authorization': 'Bearer $token'});
-  }
 
-  LoginProvider(String userId, String url, String privateKey, String tenantId)
-      : _userId = userId,
-        _request = _createRequest(url, privateKey, tenantId, userId);
+  LoginProvider(String accessToken, String url)
+      : _accessToken = accessToken,
+        _request = Request(url, {'Authorization': 'Bearer $accessToken'});
 
-  String get userId => _userId;
+  String get accessToken => _accessToken;
   Request get request => _request;
 }

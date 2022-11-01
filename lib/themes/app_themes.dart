@@ -74,7 +74,7 @@ class AppThemes {
       textTheme: Theme.of(context).textTheme.copyWith(
               headline6: TextStyle(
             color: appBarTextColor,
-            fontSize: 26.0,
+            fontSize: 22.0,
           )),
     );
   }
@@ -82,7 +82,7 @@ class AppThemes {
   // Create a ColorSwatch from a single Color
   static MaterialColor createMaterialColor(Color color) {
     List strengths = <double>[.05];
-    Map swatch = <int, Color>{};
+    final swatch = <int, Color>{};
     final int r = color.red, g = color.green, b = color.blue;
 
     for (int i = 1; i < 10; i++) {

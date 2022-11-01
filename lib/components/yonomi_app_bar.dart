@@ -32,5 +32,5 @@ class YonomiAppBar extends AppBar {
 
   final String titleString;
   final bool notification;
-  final Function() onPressed;
+  final Function()? onPressed;
 }
